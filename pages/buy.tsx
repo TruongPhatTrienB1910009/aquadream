@@ -10,7 +10,7 @@ export default function Buy() {
   const { data, isLoading } = useNFTs(contract);
 
   return (
-    <Container maxWidth="lg">
+    <div>
       <h1>Buy NFTs</h1>
       <p>Browse which NFTs are available from the collection.</p>
       <NFTGrid
@@ -20,6 +20,6 @@ export default function Buy() {
           "Looks like there are no NFTs in this collection. Did you import your contract on the thirdweb dashboard? https://thirdweb.com/dashboard"
         }
       />
-    </Container>
+    </div>
   );
 }

@@ -12,6 +12,8 @@ type Props = {
  */
 export default function Container({ maxWidth, children }: Props) {
   return (
-    <div className={`${styles.container} ${styles[maxWidth]}`}>{children}</div>
+    <div>
+      <div className={`${styles.container} ${styles[maxWidth]}`}>{children}</div>
+    </div>
   );
 }
