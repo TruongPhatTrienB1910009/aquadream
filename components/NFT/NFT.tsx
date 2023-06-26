@@ -39,6 +39,9 @@ export default function NFTComponent({ nft }: Props) {
 
   return (
     <>
+      {
+        console.log("nft.metadata", nft.metadata)
+      }
       <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
 
       <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p>
