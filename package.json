@@ -2,6 +2,7 @@
   "name": "thirdweb-nft-marketplace",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -17,6 +18,8 @@
     "@thirdweb-dev/chains": "^0.1.18",
     "@thirdweb-dev/react": "^3.12.2",
     "@thirdweb-dev/sdk": "^3.10.17",
+    "alchemy-sdk": "^2.9.1",
+    "dotenv": "^16.3.1",
     "ethers": "^5.7.2",
     "next": "^13",
     "nextjs-progressbar": "^0.0.16",
