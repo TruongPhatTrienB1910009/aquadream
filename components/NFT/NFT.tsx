@@ -41,8 +41,8 @@ export default function NFTComponent({ nft }: Props) {
     <>
       <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
 
-      <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p>
-      <p className={styles.nftName}>{nft.metadata.name}</p>
+      {/* <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p> */}
+      {/* <p className={styles.nftName}>{nft.metadata.name}</p> */}
 
       <div className={styles.priceContainer}>
         {loadingContract || loadingDirect || loadingAuction ? (

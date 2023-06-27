@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   useContract,
   useOwnedNFTs,
@@ -5,7 +6,7 @@ import {
   useValidEnglishAuctions,
 } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../../components/Container/Container";
 import ListingWrapper from "../../components/ListingWrapper/ListingWrapper";
 import NFTGrid from "../../components/NFT/NFTGrid";
@@ -16,6 +17,7 @@ import {
 } from "../../const/contractAddresses";
 import styles from "../../styles/Profile.module.css";
 import randomColor from "../../util/randomColor";
+import { useAddress } from "@thirdweb-dev/react";
 
 import { GetNFTs } from "./hook/getNFTs";
 
@@ -28,6 +30,7 @@ const [randomColor1, randomColor2, randomColor3, randomColor4] = [
 
 export default function ProfilePage() {
   const router = useRouter();
+  const account = useAddress();
   const [tab, setTab] = useState<"nfts" | "listings" | "auctions">("nfts");
 
   const { contract: nftCollection } = useContract(NFT_COLLECTION_ADDRESS);
@@ -37,10 +40,13 @@ export default function ProfilePage() {
     "marketplace-v3"
   );
 
-  const { data: ownedNfts, isLoading: loadingOwnedNfts } = useOwnedNFTs(
-    nftCollection,
-    router.query.address as string
-  );
+  // const { data: ownedNfts, isLoading: loadingOwnedNfts } = useOwnedNFTs(
+  //   nftCollection,
+  //   router.query.address as string
+  // );
+
+  const { nftList: ownedNfts, isLoadingNFTs: loadingOwnedNfts } = GetNFTs(router.query.address);
+
 
   const { data: directListings, isLoading: loadingDirects } =
     useValidDirectListings(marketplace, {
@@ -52,7 +58,11 @@ export default function ProfilePage() {
       seller: router.query.address as string,
     });
 
-  const { nftList } = GetNFTs();
+  useEffect(() => {
+    if (account !== router.query.address) {
+      router.push(`/profile/${account}`)
+    }
+  }, [account])
 
   return (
     <Container maxWidth="lg">

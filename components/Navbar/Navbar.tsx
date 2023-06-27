@@ -13,7 +13,6 @@ export function Navbar() {
   const showMenu = () => {
     document.querySelector("#dropdown")?.classList.toggle(`${styles.showDropdowMenu}`)
     document.querySelector("#svgIcon")?.classList.toggle(`${styles.svgRotate}`)
-
   }
 
   return (

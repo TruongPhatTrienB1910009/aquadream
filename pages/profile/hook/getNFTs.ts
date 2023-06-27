@@ -6,17 +6,32 @@ const settings = {
 };
 const alchemy = new Alchemy(settings);
 
-export const GetNFTs = () => {
+export const GetNFTs = (account: any) => {
     const [nftList, setNftList] = useState<any[]>([]);
+    const [isLoadingNFTs, setIsLoadingNFTs] = useState(false);
 
     useEffect(() => {
         const getNFTs = async () => {
-            const walletAddress = "0x279E5F0e77A435FA38e894CF6D856DfF6bfB49FD";
-            const nfts: any[] = (await alchemy.nft.getNftsForOwner(walletAddress)).ownedNfts;
-            setNftList([...nfts])
+            try {
+                setIsLoadingNFTs(true);
+                const nfts: any[] = (await alchemy.nft.getNftsForOwner(account)).ownedNfts;
+                if (nfts.length > 0) {
+                    nfts.forEach((nft, index) => {
+                        nfts[index].rawMetadata.id = nfts[index].tokenId
+                        nfts[index].rawMetadata.image = `https://alchemy.mypinata.cloud/${nfts[index].rawMetadata.image}`
+                        nfts[index].rawMetadata.image = nfts[index].rawMetadata.image.replace("ipfs:/", "ipfs");
+                        nfts[index].metadata = nfts[index].rawMetadata
+                    })
+                    setNftList([...nfts])
+                }
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setIsLoadingNFTs(false);
+            }
         }
         getNFTs();
-    }, [])
+    }, [account])
 
-    return { nftList }
+    return { nftList, isLoadingNFTs }
 }
