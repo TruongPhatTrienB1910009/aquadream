@@ -19,6 +19,9 @@ export default function NFTGrid({
   overrideOnclickBehavior,
   emptyText = "No NFTs found for this collection.",
 }: Props) {
+
+  console.log("data", data)
+
   return (
     <div className={styles.nftGridContainer}>
       {isLoading ? (
@@ -31,7 +34,7 @@ export default function NFTGrid({
         data.map((nft) =>
           !overrideOnclickBehavior ? (
             <Link
-              href={`/token/${NFT_COLLECTION_ADDRESS}/${nft.metadata.id}`}
+              href={`/token/${nft.metadata.address}/${nft.metadata.id}`}
               key={nft.metadata.id}
               className={styles.nftContainer}
             >

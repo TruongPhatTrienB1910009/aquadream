@@ -15,6 +15,7 @@ type Props = {
  * Accepts a listing and renders the associated NFT for it
  */
 export default function ListingWrapper({ listing }: Props) {
+
   const { contract: nftContract } = useContract(NFT_COLLECTION_ADDRESS);
 
   const { data: nft, isLoading } = useNFT(nftContract, listing.asset.id);

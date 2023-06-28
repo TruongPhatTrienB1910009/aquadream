@@ -26,14 +26,14 @@ export default function NFTComponent({ nft }: Props) {
   // 1. Load if the NFT is for direct listing
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
-      tokenContract: NFT_COLLECTION_ADDRESS,
+      tokenContract: `${nft.metadata.address}`,
       tokenId: nft.metadata.id,
     });
 
   // 2. Load if the NFT is for auction
   const { data: auctionListing, isLoading: loadingAuction } =
     useValidEnglishAuctions(marketplace, {
-      tokenContract: NFT_COLLECTION_ADDRESS,
+      tokenContract: `${nft.metadata.address}`,
       tokenId: nft.metadata.id,
     });
 
@@ -41,8 +41,8 @@ export default function NFTComponent({ nft }: Props) {
     <>
       <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
 
-      {/* <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p> */}
-      {/* <p className={styles.nftName}>{nft.metadata.name}</p> */}
+      <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p>
+      <p className={styles.nftName}>{nft.metadata.name}</p>
 
       <div className={styles.priceContainer}>
         {loadingContract || loadingDirect || loadingAuction ? (

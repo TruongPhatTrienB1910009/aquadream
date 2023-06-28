@@ -40,11 +40,6 @@ export default function ProfilePage() {
     "marketplace-v3"
   );
 
-  // const { data: ownedNfts, isLoading: loadingOwnedNfts } = useOwnedNFTs(
-  //   nftCollection,
-  //   router.query.address as string
-  // );
-
   const { nftList: ownedNfts, isLoadingNFTs: loadingOwnedNfts } = GetNFTs(router.query.address);
 
 

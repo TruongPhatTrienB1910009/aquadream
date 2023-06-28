@@ -100,6 +100,8 @@ export default function SaleInfo({ nft }: Props) {
       }
     }
 
+    console.log("hasApproval", hasApproval)
+
     return true;
   }
 
@@ -131,6 +133,7 @@ export default function SaleInfo({ nft }: Props) {
 
   async function handleSubmissionDirect(data: DirectFormData) {
     await checkAndProvideApproval();
+    console.log("data", data)
     const txResult = await createDirectListing({
       assetContractAddress: data.nftContractAddress,
       tokenId: data.tokenId,
@@ -165,11 +168,10 @@ export default function SaleInfo({ nft }: Props) {
 
         {/* Direct listing fields */}
         <div
-          className={`${
-            tab === "direct"
-              ? styles.activeTabContent
-              : profileStyles.tabContent
-          }`}
+          className={`${tab === "direct"
+            ? styles.activeTabContent
+            : profileStyles.tabContent
+            }`}
           style={{ flexDirection: "column" }}
         >
           <h4 className={styles.formSectionTitle}>When </h4>
@@ -231,11 +233,10 @@ export default function SaleInfo({ nft }: Props) {
 
         {/* Auction listing fields */}
         <div
-          className={`${
-            tab === "auction"
-              ? styles.activeTabContent
-              : profileStyles.tabContent
-          }`}
+          className={`${tab === "auction"
+            ? styles.activeTabContent
+            : profileStyles.tabContent
+            }`}
           style={{ flexDirection: "column" }}
         >
           <h4 className={styles.formSectionTitle}>When </h4>
