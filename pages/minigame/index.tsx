@@ -7,6 +7,11 @@ const CountdownTimer = dynamic(
   { ssr: false }
 );
 
+export class AppComponent {
+  title = "angular-ui";
+  imagesrc = "../../const/images/cardSecret.jpg";
+}
+
 const Index = () => {
   const { contract } = useContract(
     "0xfa9b53553e528DBb97E9c27ebE87F938E4D0bB96"
@@ -26,7 +31,8 @@ const Index = () => {
               className={styles.nftImage}
             />
           ) : (
-            <h1>No image</h1>
+            <Image {src: "imagesrc"} height="26"/>
+
           )}
           <p className={styles.nftTokenId}>tokenId: #1</p>
           <p className={styles.nftName}>name nft</p>
