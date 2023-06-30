@@ -13,6 +13,8 @@ export const MARKETPLACE_ADDRESS = "0x0886f5b1e0278c938b4D8045f51d1dedD7aB0B52";
 export const NFT_COLLECTION_ADDRESS =
   "0x904D3ECDa84b938252879D8b5e146e484f1a2d20";
 
+export const MINI_GAME_ADDRESS = "0x6Cab4A1c5ec3C8ab63ff8C4e5cb802207745471e"
+
 // (Optional) Set up the URL of where users can view transactions on
 // For example, below, we use Mumbai.polygonscan to view transactions on the Mumbai testnet.
-export const ETHERSCAN_URL = "https://bscscan.com/";
+export const ETHERSCAN_URL = "https://goerli.etherscan.io/";

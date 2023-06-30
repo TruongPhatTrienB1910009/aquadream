@@ -6,11 +6,8 @@ import { NFT_COLLECTION_ADDRESS } from "../const/contractAddresses";
 import { GetNFTs, GetAllDataNFTsMarketplace } from "./profile/hook/getNFTs"
 
 
-export default function Buy() {
-
+const Buy = () => {
   const { listingNFTs: data, isLoading: isLoading } = GetAllDataNFTsMarketplace();
-
-  console.log("data", data);
 
   return (
     <div>
@@ -26,3 +23,6 @@ export default function Buy() {
     </div>
   );
 }
+
+
+export default Buy;

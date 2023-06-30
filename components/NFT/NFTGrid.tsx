@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { NFT_COLLECTION_ADDRESS } from "../../const/contractAddresses";
 import Skeleton from "../Skeleton/Skeleton";
-import NFT from "./NFT";
+import NFTComponent from "./NFT";
 import styles from "../../styles/Buy.module.css";
 
 type Props = {
@@ -13,12 +13,12 @@ type Props = {
   emptyText?: string;
 };
 
-export default function NFTGrid({
+const NFTGrid = ({
   isLoading,
   data,
   overrideOnclickBehavior,
   emptyText = "No NFTs found for this collection.",
-}: Props) {
+}: Props) => {
 
   return (
     <div className={styles.nftGridContainer}>
@@ -36,7 +36,7 @@ export default function NFTGrid({
               key={nft.metadata.id}
               className={styles.nftContainer}
             >
-              <NFT nft={nft} />
+              <NFTComponent nft={nft} />
             </Link>
           ) : (
             <div
@@ -44,7 +44,7 @@ export default function NFTGrid({
               className={styles.nftContainer}
               onClick={() => overrideOnclickBehavior(nft)}
             >
-              <NFT nft={nft} />
+              <NFTComponent nft={nft} />
             </div>
           )
         )
@@ -54,3 +54,5 @@ export default function NFTGrid({
     </div>
   );
 }
+
+export default NFTGrid;

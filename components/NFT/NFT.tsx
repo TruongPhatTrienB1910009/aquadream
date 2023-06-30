@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import {
   ThirdwebNftMedia,
   useContract,
@@ -5,10 +6,9 @@ import {
   useValidEnglishAuctions,
 } from "@thirdweb-dev/react";
 import { NFT } from "@thirdweb-dev/sdk";
-import React from "react";
+import React, { memo, useEffect } from "react";
 import {
   MARKETPLACE_ADDRESS,
-  NFT_COLLECTION_ADDRESS,
 } from "../../const/contractAddresses";
 import Skeleton from "../Skeleton/Skeleton";
 import styles from "./NFT.module.css";
@@ -17,11 +17,14 @@ type Props = {
   nft: NFT;
 };
 
-export default function NFTComponent({ nft }: Props) {
+const NFTComponent = React.memo(({ nft }: Props) => {
   const { contract: marketplace, isLoading: loadingContract } = useContract(
     MARKETPLACE_ADDRESS,
     "marketplace-v3"
   );
+
+  console.log("A")
+  console.log("nft", nft)
 
   // 1. Load if the NFT is for direct listing
   const { data: directListing, isLoading: loadingDirect } =
@@ -78,4 +81,11 @@ export default function NFTComponent({ nft }: Props) {
       </div>
     </>
   );
-}
+}, (prevProps, nextProps) => {
+  if (prevProps === nextProps) {
+    return true;
+  }
+  return false;
+});
+
+export default NFTComponent;

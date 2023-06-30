@@ -356,32 +356,9 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
   );
 }
 
-export async function getServerSideProps(context: { params: { tokenId: string; contractAddress: string; }; }) {
+// export async function getServerSideProps(context: { params: { tokenId: string; contractAddress: string; }; }) {
 
-  const tokenId = context.params?.tokenId as string;
-  const sdk = new ThirdwebSDK(NETWORK);
-
-  const contract = await sdk.getContract(context.params?.contractAddress as string);
-
-  const nft = await contract.erc721.get(tokenId);
-
-  let contractMetadata;
-
-  try {
-    contractMetadata = await contract.metadata.get();
-  } catch (e) { }
-
-  return {
-    props: {
-      nft,
-      contractMetadata: contractMetadata || null,
-    },
-  };
-}
-
-// export const getStaticProps: GetStaticProps = async (context) => {
 //   const tokenId = context.params?.tokenId as string;
-
 //   const sdk = new ThirdwebSDK(NETWORK);
 
 //   const contract = await sdk.getContract(context.params?.contractAddress as string);
@@ -399,27 +376,51 @@ export async function getServerSideProps(context: { params: { tokenId: string; c
 //       nft,
 //       contractMetadata: contractMetadata || null,
 //     },
-//     revalidate: 1,
 //   };
-// };
+// }
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const sdk = new ThirdwebSDK(NETWORK);
-//   const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS);
+export const getStaticProps: GetStaticProps = async (context) => {
+  const tokenId = context.params?.tokenId as string;
 
-//   const nfts = await contract.erc721.getAll();
+  const sdk = new ThirdwebSDK(NETWORK);
 
-//   const paths = nfts.map((nft) => {
-//     return {
-//       params: {
-//         contractAddress: NFT_COLLECTION_ADDRESS,
-//         tokenId: nft.metadata.id,
-//       },
-//     };
-//   });
+  const contract = await sdk.getContract(context.params?.contractAddress as string);
 
-//   return {
-//     paths,
-//     fallback: "blocking", // can also be true or 'blocking'
-//   };
-// };
+  const nft = await contract.erc721.get(tokenId);
+
+  let contractMetadata;
+
+  try {
+    contractMetadata = await contract.metadata.get();
+  } catch (e) { }
+
+  return {
+    props: {
+      nft,
+      contractMetadata: contractMetadata || null,
+    },
+    revalidate: 1,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const sdk = new ThirdwebSDK(NETWORK);
+  const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS);
+
+  const nfts = await contract.erc721.getAll();
+
+  const paths = nfts.map((nft) => {
+    return {
+      params: {
+        contractAddress: NFT_COLLECTION_ADDRESS,
+        tokenId: nft.metadata.id,
+      },
+    };
+  });
+
+
+  return {
+    paths,
+    fallback: "blocking", // can also be true or 'blocking'
+  };
+};
