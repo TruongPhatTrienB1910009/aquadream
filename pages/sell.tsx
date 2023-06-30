@@ -11,7 +11,7 @@ import { NFT_COLLECTION_ADDRESS } from "../const/contractAddresses";
 import tokenPageStyles from "../styles/Token.module.css";
 import { NFT as NFTType } from "@thirdweb-dev/sdk";
 import SaleInfo from "../components/SaleInfo/SaleInfo";
-import { GetNFTs } from "./profile/hook/getNFTs"
+import { GetNFTs } from "../components/NFT/hook/getNFTs"
 
 export default function Sell() {
   // Load all of the NFTs from the NFT Collection
