@@ -7,20 +7,18 @@ const CountdownTimer = dynamic(
   { ssr: false }
 );
 
-export class AppComponent {
-  title = "angular-ui";
-  imagesrc = "../../const/images/cardSecret.jpg";
-}
+import { CONTRACT_MINIGAME } from "../../const/contractAddresses";
 
 const Index = () => {
   const { contract } = useContract(
-    "0xfa9b53553e528DBb97E9c27ebE87F938E4D0bB96"
+    "0xf58e3a5A014Db7D8275a872e76D4B63d755b4984"
   );
   const { data: nft, isLoading, error } = useNFT(contract, "0");
 
   const startDate = new Date("July 3, 2023 14:43:00");
   const dateTimeAfterThreeDays = startDate;
   // hello
+  console.log("CONTRACT", contract);
   return (
     <div className={styles.minigameContainer}>
       <div className={styles.leftSide}>
@@ -31,8 +29,8 @@ const Index = () => {
               className={styles.nftImage}
             />
           ) : (
-            <Image {src: "imagesrc"} height="26"/>
-
+            // eslint-disable-next-line @next/next/no-img-element
+            <img height={500} src="/images/cardSecret.jpg" alt="" />
           )}
           <p className={styles.nftTokenId}>tokenId: #1</p>
           <p className={styles.nftName}>name nft</p>

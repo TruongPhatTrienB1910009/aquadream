@@ -3,7 +3,7 @@
 // 1. Set up the network your smart contracts are deployed to.
 // First, import the chain from the package, then set the NETWORK variable to the chain.
 import { Mumbai, BinanceTestnet, Goerli } from "@thirdweb-dev/chains";
-export const NETWORK = Goerli;
+export const NETWORK = Mumbai;
 
 // 2. The address of the marketplace V3 smart contract.
 // Deploy your own: https://thirdweb.com/thirdweb.eth/MarketplaceV3
@@ -15,4 +15,6 @@ export const NFT_COLLECTION_ADDRESS =
 
 // (Optional) Set up the URL of where users can view transactions on
 // For example, below, we use Mumbai.polygonscan to view transactions on the Mumbai testnet.
-export const ETHERSCAN_URL = "https://bscscan.com/";
+export const ETHERSCAN_URL = "https://mumbai.polygonscan.com/";
+
+export const CONTRACT_MINIGAME = "0xf58e3a5A014Db7D8275a872e76D4B63d755b4984";
