@@ -24,7 +24,6 @@ import Skeleton from "../../../components/Skeleton/Skeleton";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
 
-
 type Props = {
   nft: NFT;
   contractMetadata: any;
@@ -33,7 +32,6 @@ type Props = {
 const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
 export default function TokenPage({ nft, contractMetadata }: Props) {
-
   const [bidValue, setBidValue] = useState<string>();
 
   // Connect to marketplace smart contract
@@ -298,11 +296,11 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                     });
                   }}
                   onError={(e) => {
-                    toast(`Purchase failed! Reason: ${e.message}`, {
+                    (e as any).info.reason !== "user rejected transaction" ? (toast('Please try again. Confirm the transaction and make sure you are paying enough gas!', {
                       icon: "❌",
                       style: toastStyle,
                       position: "bottom-center",
-                    });
+                    })) : ''
                   }}
                 >
                   Buy at asking price
@@ -318,6 +316,7 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                     auctionListing?.[0]?.minimumBidCurrencyValue
                       ?.displayValue || 0
                   }
+                  min={0}
                   type="number"
                   step={0.000001}
                   onChange={(e) => {
@@ -345,7 +344,7 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                     });
                   }}
                 >
-                  Place bid
+                  Make Offer
                 </Web3Button>
               </>
             )}
@@ -384,7 +383,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const sdk = new ThirdwebSDK(NETWORK);
 
-  const contract = await sdk.getContract(context.params?.contractAddress as string);
+  const contract = await sdk.getContract(
+    context.params?.contractAddress as string
+  );
 
   const nft = await contract.erc721.get(tokenId);
 
@@ -392,7 +393,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   try {
     contractMetadata = await contract.metadata.get();
-  } catch (e) { }
+  } catch (e) {}
 
   return {
     props: {
@@ -417,7 +418,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
       },
     };
   });
-
 
   return {
     paths,

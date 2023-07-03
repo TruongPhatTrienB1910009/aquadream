@@ -2,7 +2,8 @@ import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
-
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faBars} from "@fortawesome/free-solid-svg-icons"
 /**
  * Navigation bar that shows up on all pages.
  * Rendered in _app.tsx file above the page content.
@@ -14,7 +15,6 @@ export function Navbar() {
     document.querySelector("#dropdown")?.classList.toggle(`${styles.showDropdowMenu}`)
     document.querySelector("#svgIcon")?.classList.toggle(`${styles.svgRotate}`)
   }
-
   return (
     <div className={styles.navContainer}>
       <nav className={styles.nav}>
@@ -22,8 +22,8 @@ export function Navbar() {
           <Link href="/" className={`${styles.homeLink} ${styles.navLeft}`}>
             <Image
               src="/images/logo.png"
-              width={54}
-              height={54}
+              width={45}
+              height={45}
               alt="NFT marketplace logo"
             />
           </Link>
@@ -43,10 +43,7 @@ export function Navbar() {
           <div className={styles.dropDownMenu}>
             <div className={styles.dropdown}>
               <span onClick={() => showMenu()} className={styles.menuText}>
-                Menu
-              </span>
-              <span className={styles.dropdownIcon}>
-                <svg id="svgIcon" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><style>{`svg{fill:#e7ebf3}`}</style><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" /></svg>
+                <FontAwesomeIcon style={{fontSize: '2em', color: '#dad7d7'}} icon={faBars}/>
               </span>
               <div id="dropdown" className={styles.dropdown_content}>
                 <Link href="/buy" className={styles.link}>
@@ -64,10 +61,7 @@ export function Navbar() {
         </div>
 
         <div className={styles.navRight}>
-          <div className={styles.navConnect}>
-            <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
-          </div>
-          {address && (
+          {address ? (
             <Link className={styles.link} href={`/profile/${address}`}>
               <Image
                 className={styles.profileImage}
@@ -77,7 +71,9 @@ export function Navbar() {
                 alt="Profile"
               />
             </Link>
-          )}
+          ) :<div className={styles.navConnect}>
+          <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
+        </div> }
         </div>
       </nav>
     </div >

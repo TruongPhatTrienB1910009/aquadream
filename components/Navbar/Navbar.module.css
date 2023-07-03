@@ -18,7 +18,6 @@
   padding-right: 2em;
   display: flex;
   padding-top: 20px;
-  padding-bottom: 20px;
   align-items: center;
   justify-content: space-between;
   width: 98%;
@@ -44,7 +43,7 @@
 
 .link {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.2px;
   line-height: 16px;
@@ -52,7 +51,7 @@
 }
 
 .link:hover {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 255);
 }
 
 .homeLink:hover {
@@ -127,7 +126,7 @@
 /* Sreens less than 720px */
 @media (max-width: 500px) {
   .navConnect {
-    display: none !important;
+    margin-left: 10px;
   }
 
   .navMiddle {
