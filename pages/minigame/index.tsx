@@ -8,7 +8,6 @@ import {
   useAddress,
   useContract,
   useChainId,
-  useNetworkMismatch,
   useNetwork,
 } from "@thirdweb-dev/react";
 const CountdownTimer = dynamic(
@@ -33,14 +32,14 @@ const Index = () => {
   const dateTimeAfterThreeDays = startDate;
   const chainId = useChainId();
   const [{ data, error, loading }, switchNetwork] = useNetwork();
-  console.log(chainId);
 
   // read contract
   const [balanceOf, setBalanceOf] = useState(0);
 
-  // loading
+  // loading when mint
   const [loadingMint, setLoadingMint] = useState(false);
-
+  //loading when change network
+  const [loadingChange, setLoadingChange] = useState(false);
   // handle status
   const [status, setStatus] = useState({
     statusMessage: "",
@@ -50,16 +49,23 @@ const Index = () => {
   const [openToast, setOpenToast] = useState(false);
 
   const changeNetwork = async () => {
-    if (!switchNetwork) {
-      console.log("can not switch network");
-      return;
-    }
+    try {
+      setLoadingChange(true);
+      if (!switchNetwork) {
+        console.log("can not switch network");
+        return;
+      }
 
-    const result = await switchNetwork(5);
-    if (result.data) {
-      console.log("Switched to Mumbai testnet successfully");
-    } else {
-      console.log("Error switching to Mumbai testnet", result.error);
+      const result = await switchNetwork(5);
+      if (result.data) {
+        console.log("Switched to Goerli testnet successfully");
+      } else {
+        console.log("Error switching to Mumbai testnet", result.error);
+      }
+    } catch (e) {
+      console.log("Error switching to Mumbai testnet", e);
+    } finally {
+      setLoadingChange(false);
     }
   };
   const useMintNFT = async () => {
@@ -92,9 +98,7 @@ const Index = () => {
   const checkBalanceOf = async () => {
     const data = await miniGameContract?.call("balanceOf", [address]);
     if (data) {
-      if (data.toNumber() > 0 && balanceOf == 0) {
-        setBalanceOf(data.toNumber());
-      }
+      setBalanceOf(data.toNumber());
     }
   };
 
@@ -103,7 +107,8 @@ const Index = () => {
     if (status.message !== "") {
       setOpenToast(true);
     }
-  }, [address, balanceOf, status.message]);
+    console.log(balanceOf);
+  }, [address, balanceOf, status.message, chainId]);
 
   return (
     <>
@@ -123,22 +128,42 @@ const Index = () => {
               Exploring the Deep Sea of BASE NFTs
             </p>
             <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-            {balanceOf ? (
-              <button>Minted</button>
-            ) : (
+            {balanceOf > 0 ? (
+              <button disabled={true} style={{ cursor: "not-allowed" }}>
+                Minted
+              </button>
+            ) : chainId === 5 ? (
               <button
-                onClick={
-                  chainId === 5 ? () => useMintNFT() : () => changeNetwork()
-                }
+                onClick={() => useMintNFT()}
+                disabled={loadingMint}
+                style={{ cursor: (loadingMint && "not-allowed") || "" }}
               >
+                Mint NFT{" "}
                 {loadingMint ? (
                   <FontAwesomeIcon
                     icon={faSpinner}
                     spin
-                    style={{ color: "#d0d8e7" }}
+                    style={{ color: "#d0d8e7", marginLeft: "10px" }}
                   />
                 ) : (
-                  `Mint NFT`
+                  ``
+                )}
+              </button>
+            ) : (
+              <button
+                onClick={() => changeNetwork()}
+                disabled={loadingChange}
+                style={{ cursor: (loadingChange && "not-allowed") || "" }}
+              >
+                Switch Network{""}
+                {loadingChange ? (
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                    style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                  />
+                ) : (
+                  ``
                 )}
               </button>
             )}
