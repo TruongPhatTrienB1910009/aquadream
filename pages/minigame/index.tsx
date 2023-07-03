@@ -100,7 +100,7 @@ const Index = () => {
         0,
       ]);
       const index = new BigNumber(data.toString()).toNumber();
-      if (index) {
+      if (index !== -1) {
         setTokenOfOwnerByIndex(index);
       }
     } catch (e) {
