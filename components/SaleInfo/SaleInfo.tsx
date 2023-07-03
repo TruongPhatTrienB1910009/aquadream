@@ -100,8 +100,6 @@ export default function SaleInfo({ nft }: Props) {
       }
     }
 
-    console.log("hasApproval", hasApproval)
-
     return true;
   }
 
@@ -157,13 +155,13 @@ export default function SaleInfo({ nft }: Props) {
           >
             Direct
           </h3>
-          <h3
+          {/* <h3
             className={`${profileStyles.tab} 
         ${tab === "auction" ? profileStyles.activeTab : ""}`}
             onClick={() => setTab("auction")}
           >
             Auction
-          </h3>
+          </h3> */}
         </div>
 
         {/* Direct listing fields */}

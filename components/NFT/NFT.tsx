@@ -23,9 +23,6 @@ const NFTComponent = React.memo(({ nft }: Props) => {
     "marketplace-v3"
   );
 
-  console.log("A")
-  console.log("nft", nft)
-
   // 1. Load if the NFT is for direct listing
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
@@ -40,6 +37,9 @@ const NFTComponent = React.memo(({ nft }: Props) => {
       tokenId: nft.metadata.id,
     });
 
+  if (directListing) {
+    console.log("directListing", directListing[0])
+  }
   return (
     <>
       <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
@@ -48,7 +48,7 @@ const NFTComponent = React.memo(({ nft }: Props) => {
       <p className={styles.nftName}>{nft.metadata.name}</p>
 
       <div className={styles.priceContainer}>
-        {loadingContract || loadingDirect || loadingAuction ? (
+        {loadingContract || loadingDirect ? (
           <Skeleton width="100%" height="100%" />
         ) : directListing && directListing[0] ? (
           <div className={styles.nftPriceContainer}>
@@ -57,16 +57,6 @@ const NFTComponent = React.memo(({ nft }: Props) => {
               <p className={styles.nftPriceValue}>
                 {`${directListing[0]?.currencyValuePerToken.displayValue}
           ${directListing[0]?.currencyValuePerToken.symbol}`}
-              </p>
-            </div>
-          </div>
-        ) : auctionListing && auctionListing[0] ? (
-          <div className={styles.nftPriceContainer}>
-            <div>
-              <p className={styles.nftPriceLabel}>Minimum Bid</p>
-              <p className={styles.nftPriceValue}>
-                {`${auctionListing[0]?.minimumBidCurrencyValue.displayValue}
-          ${auctionListing[0]?.minimumBidCurrencyValue.symbol}`}
               </p>
             </div>
           </div>

@@ -14,6 +14,7 @@ import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import {
   ETHERSCAN_URL,
   MARKETPLACE_ADDRESS,
+  MINI_GAME_ADDRESS,
   NETWORK,
   NFT_COLLECTION_ADDRESS,
 } from "../../../const/contractAddresses";
@@ -23,10 +24,10 @@ import randomColor from "../../../util/randomColor";
 import Skeleton from "../../../components/Skeleton/Skeleton";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
+import minigameABI from "../../../const/abi/minigame.json"
 
 type Props = {
   nft: NFT;
-  contractMetadata: any;
 };
 
 const [randomColor1, randomColor2] = [randomColor(), randomColor()];
@@ -196,15 +197,15 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
           </div>
 
           <div className={styles.listingContainer}>
-            {contractMetadata && (
-              <div className={styles.contractMetadataContainer}>
-                <MediaRenderer
-                  src={contractMetadata.image}
-                  className={styles.collectionImage}
-                />
-                <p className={styles.collectionName}>{contractMetadata.name}</p>
-              </div>
-            )}
+
+            <div className={styles.contractMetadataContainer}>
+              <MediaRenderer
+                src={nft.metadata.image}
+                className={styles.collectionImage}
+              />
+              <p className={styles.collectionName}>{nft.metadata.name}</p>
+            </div>
+
             <h1 className={styles.title}>{nft.metadata.name}</h1>
             <p className={styles.collectionName}>Token ID #{nft.metadata.id}</p>
 
@@ -232,7 +233,7 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
               <div className={styles.pricingInfo}>
                 <p className={styles.label}>Price</p>
                 <div className={styles.pricingValue}>
-                  {loadingContract || loadingDirect || loadingAuction ? (
+                  {loadingContract || loadingDirect ? (
                     <Skeleton width="120" height="24" />
                   ) : (
                     <>
@@ -241,11 +242,6 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                           {directListing[0]?.currencyValuePerToken.displayValue}
                           {" " + directListing[0]?.currencyValuePerToken.symbol}
                         </>
-                      ) : auctionListing && auctionListing[0] ? (
-                        <>
-                          {auctionListing[0]?.buyoutCurrencyValue.displayValue}
-                          {" " + auctionListing[0]?.buyoutCurrencyValue.symbol}
-                        </>
                       ) : (
                         "Not for sale"
                       )}
@@ -253,7 +249,7 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                   )}
                 </div>
 
-                <div>
+                {/* <div>
                   {loadingAuction ? (
                     <Skeleton width="120" height="24" />
                   ) : (
@@ -276,11 +272,11 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                       )}
                     </>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
 
-            {loadingContract || loadingDirect || loadingAuction ? (
+            {loadingContract || loadingDirect ? (
               <Skeleton width="100%" height="164" />
             ) : (
               <>
@@ -306,7 +302,7 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                   Buy at asking price
                 </Web3Button>
 
-                <div className={`${styles.listingTimeContainer} ${styles.or}`}>
+                {/* <div className={`${styles.listingTimeContainer} ${styles.or}`}>
                   <p className={styles.listingTime}>or</p>
                 </div>
 
@@ -322,9 +318,9 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                   onChange={(e) => {
                     setBidValue(e.target.value);
                   }}
-                />
+                /> */}
 
-                <Web3Button
+                {/* <Web3Button
                   contractAddress={MARKETPLACE_ADDRESS}
                   action={async () => await createBidOrOffer()}
                   className={styles.btn}
@@ -397,8 +393,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
-      nft,
-      contractMetadata: contractMetadata || null,
+      nft
     },
     revalidate: 1,
   };
