@@ -32,7 +32,8 @@ type Props = {
 
 const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
-export default function TokenPage({ nft, contractMetadata }: Props) {
+export default function TokenPage({ nft }: Props) {
+
   const [bidValue, setBidValue] = useState<string>();
 
   // Connect to marketplace smart contract
@@ -340,8 +341,8 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                     });
                   }}
                 >
-                  Make Offer
-                </Web3Button>
+                  Place bid
+                </Web3Button> */}
               </>
             )}
           </div>
@@ -379,17 +380,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const sdk = new ThirdwebSDK(NETWORK);
 
-  const contract = await sdk.getContract(
-    context.params?.contractAddress as string
-  );
-
+  const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, minigameABI);
   const nft = await contract.erc721.get(tokenId);
-
-  let contractMetadata;
-
-  try {
-    contractMetadata = await contract.metadata.get();
-  } catch (e) {}
 
   return {
     props: {
