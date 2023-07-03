@@ -78,6 +78,7 @@
 }
 
 .rightSide button {
+    min-width: 120px;
     padding: 12px;
     border-radius: 5px;
     font-size: 24px;

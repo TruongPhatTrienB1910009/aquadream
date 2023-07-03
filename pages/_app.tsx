@@ -7,10 +7,11 @@ import { NETWORK } from "../const/contractAddresses";
 import "../styles/globals.css";
 import Container from "../components/Container/Container";
 
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <ThirdwebProvider activeChain={NETWORK}>
+      <ThirdwebProvider activeChain={NETWORK} supportedChains={[NETWORK]}>
         {/* Progress bar when navigating between pages */}
         <NextNProgress
           color="var(--color-tertiary)"
@@ -27,7 +28,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </Container>
         <Footer />
-      </ThirdwebProvider></>
+      </ThirdwebProvider>
+    </>
   );
 }
 

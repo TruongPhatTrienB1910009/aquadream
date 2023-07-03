@@ -18,8 +18,7 @@ import {
 import styles from "../../styles/Profile.module.css";
 import randomColor from "../../util/randomColor";
 import { useAddress } from "@thirdweb-dev/react";
-
-import { GetNFTs } from "./hook/getNFTs";
+import { GetNFTs } from "../../components/NFT/hook/getNFTs";
 
 const [randomColor1, randomColor2, randomColor3, randomColor4] = [
   randomColor(),
@@ -40,8 +39,9 @@ export default function ProfilePage() {
     "marketplace-v3"
   );
 
-  const { nftList: ownedNfts, isLoadingNFTs: loadingOwnedNfts } = GetNFTs(router.query.address);
-
+  const { nftList: ownedNfts, isLoadingNFTs: loadingOwnedNfts } = GetNFTs(
+    router.query.address
+  );
 
   const { data: directListings, isLoading: loadingDirects } =
     useValidDirectListings(marketplace, {
@@ -55,9 +55,9 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (account !== router.query.address) {
-      router.push(`/profile/${account}`)
+      router.push(`/profile/${account}`);
     }
-  }, [account])
+  }, [account]);
 
   return (
     <Container maxWidth="lg">
@@ -100,13 +100,13 @@ export default function ProfilePage() {
         >
           Listings
         </h3>
-        <h3
+        {/* <h3
           className={`${styles.tab}
         ${tab === "auctions" ? styles.activeTab : ""}`}
           onClick={() => setTab("auctions")}
         >
           Auctions
-        </h3>
+        </h3> */}
       </div>
 
       <div
