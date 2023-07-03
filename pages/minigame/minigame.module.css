@@ -77,7 +77,7 @@
 }
 
 .rightSide button {
- width: 100%;
+  width: 100%;
   padding: 12px;
   border-radius: 5px;
   font-size: 24px;
@@ -89,7 +89,25 @@
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
-
+.nftContainer button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 24px;
+  margin: 4px 0;
+  color: white;
+  border: none;
+  background-color: #1b5d8d;
+  transition: 0.2s;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.nftContainer button:hover {
+  cursor: pointer;
+  background-color: #1e71ad;
+  color: rgb(241, 202, 202);
+  transform: scale(1.02);
+}
 .rightSide button:hover {
   cursor: pointer;
   background-color: #1e71ad;

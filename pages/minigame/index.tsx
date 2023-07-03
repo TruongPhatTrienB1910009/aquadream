@@ -10,17 +10,18 @@ import {
   useChainId,
   useNetwork,
 } from "@thirdweb-dev/react";
+import BigNumber from "bignumber.js";
 const CountdownTimer = dynamic(
   () => import("../../components/MiniGame/Timer/CountdownTimer"),
   { ssr: false }
 );
 import { MINI_GAME_ADDRESS } from "../../const/contractAddresses";
 import minigameABI from "../../const/abi/minigame.json";
-import { BigNumber, ethers } from "ethers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../util/toastConfig";
+import { ethers } from "ethers";
 
 const Index = () => {
   const { contract: miniGameContract } = useContract(
@@ -30,17 +31,22 @@ const Index = () => {
   const address = useAddress();
   const startDate = new Date("July 30, 2023 14:43:00");
   const dateTimeAfterThreeDays = startDate;
-
+  const [{ data, error, loading }, switchNetwork] = useNetwork();
+  const chainId = useChainId();
   // read contract
   const [balanceOf, setBalanceOf] = useState(0);
   const [minted, setMinted] = useState(0);
   const [dataNft, setDataNft] = useState<any>([]);
   const [tokenOfOwnerByIndex, setTokenOfOwnerByIndex] = useState(-1);
   const [totalMinted, setTotalMinted] = useState(-1);
-
+  //get nftType claim
+  const [claim, setClaim] = useState([]);
   // loading
   const [loadingMint, setLoadingMint] = useState(false);
-
+  //loading when change network
+  const [loadingChange, setLoadingChange] = useState(false);
+  //loading when claim ETH
+  const [loadingClaim, setLoadingClaim] = useState(false);
   // handle status
   const [status, setStatus] = useState({
     statusMessage: "",
@@ -48,7 +54,26 @@ const Index = () => {
   });
 
   const [openToast, setOpenToast] = useState(false);
+  const changeNetwork = async () => {
+    try {
+      setLoadingChange(true);
+      if (!switchNetwork) {
+        console.log("can not switch network");
+        return;
+      }
 
+      const result = await switchNetwork(5);
+      if (result.data) {
+        console.log("Switched to Goerli testnet successfully");
+      } else {
+        console.log("Error switching to Mumbai testnet", result.error);
+      }
+    } catch (e) {
+      console.log("Error switching to Mumbai testnet", e);
+    } finally {
+      setLoadingChange(false);
+    }
+  };
   const useMintNFT = async () => {
     try {
       setLoadingMint(true);
@@ -62,10 +87,12 @@ const Index = () => {
           style: toastStyle,
           position: "bottom-center",
         });
+        tokenOfOwner();
+        getDataNFT();
       }
     } catch (error) {
-      const err = (error as Error).message;
-      toast(`Mint NFT Failed!`, {
+      const err = (error as any).info.reason;
+      toast(err, {
         icon: "❌",
         style: toastStyle,
         position: "bottom-center",
@@ -74,7 +101,25 @@ const Index = () => {
       setLoadingMint(false);
     }
   };
-
+  const claimETH = async () => {
+    try {
+      setLoadingClaim(true);
+      const data = await miniGameContract?.call("claimETH", [],{
+        value: 0,
+      });
+      if (data) {
+        toast.success("Claim NFT Successfully", {
+          icon: "👍",
+          style: toastStyle,
+          position: "bottom-center",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingClaim(false);
+    }
+  };
   const checkBalanceOf = async () => {
     const data = await miniGameContract?.call("balanceOf", [address]);
     if (data) {
@@ -86,7 +131,14 @@ const Index = () => {
       }
     }
   };
-
+  const GetChaim = async () => {
+    try {
+      const data = await miniGameContract?.call("nfts", [tokenOfOwnerByIndex]);
+      setClaim(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const GetTotalMinted = async () => {
     const data = await miniGameContract?.call("totalSupply", []);
     if (data) {
@@ -96,7 +148,6 @@ const Index = () => {
       setTotalMinted(-1);
     }
   };
-
   const tokenOfOwner = async () => {
     try {
       const data = await miniGameContract?.call("tokenOfOwnerByIndex", [
@@ -115,12 +166,10 @@ const Index = () => {
   };
 
   const getDataNFT = async () => {
-    console.log("hi", tokenOfOwnerByIndex);
     if (tokenOfOwnerByIndex !== -1) {
       const data = await miniGameContract?.call("tokenURI", [
         tokenOfOwnerByIndex,
       ]);
-      console.log(data);
       if (data !== undefined) {
         fetch(data)
           .then((res) => res.json())
@@ -155,13 +204,12 @@ const Index = () => {
     tokenOfOwner();
     getDataNFT();
     GetTotalMinted();
-    console.log("minted", minted);
-    console.log(dataNft);
     if (status.message !== "") {
       setOpenToast(true);
     }
+    if (tokenOfOwnerByIndex !== -1) GetChaim();
+    console.log(claim);
   }, [address, balanceOf, minted, status.message, tokenOfOwnerByIndex]);
-
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
@@ -171,6 +219,43 @@ const Index = () => {
             <div className={styles.nftContainer}>
               <img className={styles.nftImage} src={dataNft.image} alt="" />
               <p className={styles.nftName}>{dataNft.name}</p>
+              {chainId === 5 ? (
+                claim[0] > 0 && !claim[1] ? (
+                  <button disabled={loadingClaim} style={{ cursor: (loadingClaim && "not-allowed") || "" }} onClick={() => claimETH()}>
+                    Claim{" "}
+                    {loadingClaim ? (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                      />
+                    ) : (
+                      ``
+                    )}
+                  </button>
+                ) : (
+                  <button disabled={true} style={{ cursor: "not-allowed"}} >
+                    You are Claim NFT
+                  </button>
+                )
+              ) : (
+                <button
+                  onClick={() => changeNetwork()}
+                  disabled={loadingChange}
+                  style={{ cursor: (loadingChange && "not-allowed") || "" }}
+                >
+                  Switch Network{""}
+                  {loadingClaim ? (
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                    />
+                  ) : (
+                    ``
+                  )}
+                </button>
+              )}
             </div>
           </div>
           <div className={styles.rightSide}>
@@ -180,7 +265,9 @@ const Index = () => {
                 Exploring the Deep Sea of BASE NFTs
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-              <button>Minted</button>
+              <button disabled={true} style={{ cursor: "not-allowed" }}>
+                Minted
+              </button>
             </div>
           </div>
         </div>
@@ -203,17 +290,41 @@ const Index = () => {
                 Exploring the Deep Sea of BASE NFTs
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-              <button onClick={() => useMintNFT()}>
-                {loadingMint ? (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    style={{ color: "#d0d8e7" }}
-                  />
-                ) : (
-                  `Mint NFT`
-                )}
-              </button>
+              {chainId === 5 ? (
+                <button
+                  onClick={() => useMintNFT()}
+                  disabled={loadingMint}
+                  style={{ cursor: (loadingMint && "not-allowed") || "" }}
+                >
+                  Mint NFT{" "}
+                  {loadingMint ? (
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                    />
+                  ) : (
+                    ``
+                  )}
+                </button>
+              ) : (
+                <button
+                  onClick={() => changeNetwork()}
+                  disabled={loadingChange}
+                  style={{ cursor: (loadingChange && "not-allowed") || "" }}
+                >
+                  Switch Network{""}
+                  {loadingChange ? (
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                    />
+                  ) : (
+                    ``
+                  )}
+                </button>
+              )}
             </div>
           </div>
         </div>
