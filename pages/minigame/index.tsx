@@ -100,7 +100,8 @@ const Index = () => {
         0,
       ]);
       const index = new BigNumber(data.toString()).toNumber();
-      if (index) {
+      console.log(index);
+      if (index !== -1) {
         setTokenOfOwnerByIndex(index);
       }
     } catch (e) {
@@ -115,6 +116,7 @@ const Index = () => {
       const data = await miniGameContract?.call("tokenURI", [
         tokenOfOwnerByIndex,
       ]);
+      console.log(data);
       if (data !== undefined) {
         fetch(data)
           .then((res) => res.json())
@@ -150,6 +152,7 @@ const Index = () => {
     getDataNFT();
     GetTotalMinted();
     console.log("minted", minted);
+    console.log(dataNft);
     if (status.message !== "") {
       setOpenToast(true);
     }
