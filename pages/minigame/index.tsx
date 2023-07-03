@@ -126,16 +126,20 @@ const Index = () => {
   };
 
   const checkMinted = async () => {
-    if (address) {
-      const data = await miniGameContract?.call("walletMints", [address]);
-      const index = new BigNumber(data.toString()).toNumber();
-      if (index === 1) {
-        setMinted(1);
+    try {
+      if (address) {
+        const data = await miniGameContract?.call("walletMints", [address]);
+        const index = new BigNumber(data.toString()).toNumber();
+        if (index === 1) {
+          setMinted(1);
+        } else {
+          setMinted(0);
+        }
       } else {
         setMinted(0);
       }
-    } else {
-      setMinted(0);
+    } catch (e) {
+      console.log(e);
     }
   };
 
