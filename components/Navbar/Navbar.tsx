@@ -2,8 +2,8 @@ import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faBars} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 /**
  * Navigation bar that shows up on all pages.
  * Rendered in _app.tsx file above the page content.
@@ -12,9 +12,11 @@ export function Navbar() {
   const address = useAddress();
 
   const showMenu = () => {
-    document.querySelector("#dropdown")?.classList.toggle(`${styles.showDropdowMenu}`)
-    document.querySelector("#svgIcon")?.classList.toggle(`${styles.svgRotate}`)
-  }
+    document
+      .querySelector("#dropdown")
+      ?.classList.toggle(`${styles.showDropdowMenu}`);
+    document.querySelector("#svgIcon")?.classList.toggle(`${styles.svgRotate}`);
+  };
   return (
     <div className={styles.navContainer}>
       <nav className={styles.nav}>
@@ -43,7 +45,10 @@ export function Navbar() {
           <div className={styles.dropDownMenu}>
             <div className={styles.dropdown}>
               <span onClick={() => showMenu()} className={styles.menuText}>
-                <FontAwesomeIcon style={{fontSize: '2em', color: '#dad7d7'}} icon={faBars}/>
+                <FontAwesomeIcon
+                  style={{ fontSize: "2em", color: "#dad7d7" }}
+                  icon={faBars}
+                />
               </span>
               <div id="dropdown" className={styles.dropdown_content}>
                 <Link href="/buy" className={styles.link}>
@@ -61,6 +66,9 @@ export function Navbar() {
         </div>
 
         <div className={styles.navRight}>
+          <div className={styles.navConnect}>
+            <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
+          </div>
           {address ? (
             <Link className={styles.link} href={`/profile/${address}`}>
               <Image
@@ -71,11 +79,11 @@ export function Navbar() {
                 alt="Profile"
               />
             </Link>
-          ) :<div className={styles.navConnect}>
-          <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
-        </div> }
+          ) : (
+            ''
+          )}
         </div>
       </nav>
-    </div >
+    </div>
   );
 }

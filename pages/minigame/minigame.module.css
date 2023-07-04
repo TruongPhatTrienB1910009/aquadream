@@ -13,7 +13,7 @@
 }
 
 .nftContainer {
-  width: 60%;
+  width: 45%;
   margin: 8px;
   position: relative;
   overflow: hidden;
@@ -72,7 +72,7 @@
 }
 
 .heading {
-  font-size: 36px;
+  font-size: 26px;
   margin: 0 0 12px 0;
 }
 
@@ -80,7 +80,7 @@
   width: 100%;
   padding: 12px;
   border-radius: 5px;
-  font-size: 24px;
+  font-size: 18px;
   margin: 4px 0;
   color: white;
   border: none;
@@ -93,7 +93,7 @@
   width: 100%;
   padding: 12px;
   border-radius: 5px;
-  font-size: 24px;
+  font-size: 18px;
   margin: 4px 0;
   color: white;
   border: none;

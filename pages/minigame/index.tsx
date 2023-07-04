@@ -104,7 +104,7 @@ const Index = () => {
   const claimETH = async () => {
     try {
       setLoadingClaim(true);
-      const data = await miniGameContract?.call("claimETH", [],{
+      const data = await miniGameContract?.call("claimETH", [], {
         value: 0,
       });
       if (data) {
@@ -113,6 +113,7 @@ const Index = () => {
           style: toastStyle,
           position: "bottom-center",
         });
+        GetChaim();
       }
     } catch (error) {
       console.log(error);
@@ -197,7 +198,6 @@ const Index = () => {
       console.log(e);
     }
   };
-
   useEffect(() => {
     checkBalanceOf();
     checkMinted();
@@ -219,9 +219,13 @@ const Index = () => {
             <div className={styles.nftContainer}>
               <img className={styles.nftImage} src={dataNft.image} alt="" />
               <p className={styles.nftName}>{dataNft.name}</p>
-              {chainId === 5 ? (
-                claim[0] > 0 && !claim[1] ? (
-                  <button disabled={loadingClaim} style={{ cursor: (loadingClaim && "not-allowed") || "" }} onClick={() => claimETH()}>
+              {claim[0] > 0 && !claim[1] ? (
+                chainId === 5 ? (
+                  <button
+                    disabled={loadingClaim}
+                    style={{ cursor: (loadingClaim && "not-allowed") || "" }}
+                    onClick={() => claimETH()}
+                  >
                     Claim{" "}
                     {loadingClaim ? (
                       <FontAwesomeIcon
@@ -234,26 +238,28 @@ const Index = () => {
                     )}
                   </button>
                 ) : (
-                  <button disabled={true} style={{ cursor: "not-allowed"}} >
-                    You are Claim NFT
+                  <button
+                    onClick={() => changeNetwork()}
+                    disabled={loadingChange}
+                    style={{ cursor: (loadingChange && "not-allowed") || "" }}
+                  >
+                    Switch Network{""}
+                    {loadingClaim ? (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                      />
+                    ) : (
+                      ``
+                    )}
                   </button>
                 )
+              ) : claim[0] === 0 ? (
+                ""
               ) : (
-                <button
-                  onClick={() => changeNetwork()}
-                  disabled={loadingChange}
-                  style={{ cursor: (loadingChange && "not-allowed") || "" }}
-                >
-                  Switch Network{""}
-                  {loadingClaim ? (
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      style={{ color: "#d0d8e7", marginLeft: "10px" }}
-                    />
-                  ) : (
-                    ``
-                  )}
+                <button disabled={true} style={{ cursor: "not-allowed" }}>
+                  You are Claim NFT
                 </button>
               )}
             </div>
