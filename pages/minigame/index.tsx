@@ -147,7 +147,7 @@ const Index = () => {
       const index = new BigNumber(data.toString()).toNumber();
       setTotalMinted(index);
     } else {
-      setTotalMinted(-1);
+      setTotalMinted(0);
     }
   };
   const tokenOfOwner = async () => {
@@ -211,9 +211,7 @@ const Index = () => {
     }
     GetTotalMinted();
     if (tokenOfOwnerByIndex !== -1) GetClaim();
-    console.log(claim);
-    console.log('sadas');
-  }, [address, balanceOf, minted, status.message, tokenOfOwnerByIndex]);
+  }, [address, balanceOf, minted, status.message, tokenOfOwnerByIndex, totalMinted]);
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />

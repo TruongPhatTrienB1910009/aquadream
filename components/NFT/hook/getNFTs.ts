@@ -58,7 +58,7 @@ export const GetAllDataNFTsMarketplace = () => {
             try {
                 setIsloading(true);
                 const contract = await sdk.getContract(MARKETPLACE_ADDRESS);
-                const allListings = await contract.directListings.getAll();
+                const allListings = await contract.directListings.getAllValid();
                 const arr: any = [...allListings];
                 if (arr.length > 0) {
                     arr.forEach((NFT: any, index: string | number) => {
