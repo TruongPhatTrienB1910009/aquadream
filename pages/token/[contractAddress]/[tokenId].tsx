@@ -293,11 +293,11 @@ export default function TokenPage({ nft }: Props) {
                     });
                   }}
                   onError={(e) => {
-                    toast(`Purchase failed! Reason: ${e.message}`, {
+                    (e as any).info.reason !== "user rejected transaction" ? (toast('Please try again. Confirm the transaction and make sure you are paying enough gas!', {
                       icon: "❌",
                       style: toastStyle,
                       position: "bottom-center",
-                    });
+                    })) : ''
                   }}
                 >
                   Buy at asking price
@@ -313,6 +313,7 @@ export default function TokenPage({ nft }: Props) {
                     auctionListing?.[0]?.minimumBidCurrencyValue
                       ?.displayValue || 0
                   }
+                  min={0}
                   type="number"
                   step={0.000001}
                   onChange={(e) => {
@@ -404,7 +405,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
       },
     };
   });
-
 
   return {
     paths,

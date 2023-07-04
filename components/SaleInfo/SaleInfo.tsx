@@ -208,7 +208,7 @@ export default function SaleInfo({ nft }: Props) {
               await handleSubmitDirect(handleSubmissionDirect)();
             }}
             onError={(error) => {
-              toast(`Listed Failed! Reason: ${error.cause}`, {
+              toast(`Listed Failed! Reason: ${error.message}`, {
                 icon: "❌",
                 style: toastStyle,
                 position: "bottom-center",

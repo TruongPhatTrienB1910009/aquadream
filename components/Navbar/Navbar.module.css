@@ -1,8 +1,5 @@
 .navContainer {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -18,11 +15,9 @@
   padding-right: 2em;
   display: flex;
   padding-top: 20px;
-  padding-bottom: 20px;
   align-items: center;
   justify-content: space-between;
   width: 98%;
-  max-width: 1260px;
   background-color: transparent !important;
 }
 
@@ -36,7 +31,7 @@
 
 .navMiddle {
   display: flex;
-  margin-left: 12px;
+  margin-left: 20px;
   flex-direction: row;
   align-items: center;
   gap: 24px;
@@ -44,15 +39,16 @@
 
 .link {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.2px;
   line-height: 16px;
   transition: 0.2s ease-in-out;
+  
 }
 
 .link:hover {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 255);
 }
 
 .homeLink:hover {
@@ -64,8 +60,7 @@
   display: flex;
   flex-direction: row;
   gap: 16px;
-  align-items: center;
-  justify-content: center;
+  float: right;
 }
 
 .profileImage {
@@ -127,7 +122,7 @@
 /* Sreens less than 720px */
 @media (max-width: 500px) {
   .navConnect {
-    display: none !important;
+    margin-left: 10px;
   }
 
   .navMiddle {
