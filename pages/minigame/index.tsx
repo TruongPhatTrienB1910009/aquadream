@@ -113,7 +113,7 @@ const Index = () => {
           style: toastStyle,
           position: "bottom-center",
         });
-        GetChaim();
+        GetClaim();
       }
     } catch (error) {
       console.log(error);
@@ -132,7 +132,7 @@ const Index = () => {
       }
     }
   };
-  const GetChaim = async () => {
+  const GetClaim = async () => {
     try {
       const data = await miniGameContract?.call("nfts", [tokenOfOwnerByIndex]);
       setClaim(data);
@@ -207,7 +207,7 @@ const Index = () => {
     if (status.message !== "") {
       setOpenToast(true);
     }
-    if (tokenOfOwnerByIndex !== -1) GetChaim();
+    if (tokenOfOwnerByIndex !== -1) GetClaim();
     console.log(claim);
   }, [address, balanceOf, minted, status.message, tokenOfOwnerByIndex]);
   return (
