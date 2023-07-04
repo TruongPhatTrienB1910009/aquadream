@@ -211,6 +211,8 @@ const Index = () => {
     }
     GetTotalMinted();
     if (tokenOfOwnerByIndex !== -1) GetClaim();
+    console.log(claim);
+    console.log('sadas');
   }, [address, balanceOf, minted, status.message, tokenOfOwnerByIndex]);
   return (
     <>
