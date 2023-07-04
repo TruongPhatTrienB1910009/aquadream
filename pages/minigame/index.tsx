@@ -156,10 +156,6 @@ const Index = () => {
         0,
       ]);
       const index = new BigNumber(data.toString()).toNumber();
-<<<<<<< HEAD
-=======
-      console.log(index);
->>>>>>> khoaXeKoo
       if (index !== -1) {
         setTokenOfOwnerByIndex(index);
       }
@@ -263,7 +259,7 @@ const Index = () => {
                 ""
               ) : (
                 <button disabled={true} style={{ cursor: "not-allowed" }}>
-                  You are Claim NFT
+                  You claimed reward!
                 </button>
               )}
             </div>
