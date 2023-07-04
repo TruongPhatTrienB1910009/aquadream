@@ -26,10 +26,8 @@ export const GetNFTs = (account: any) => {
                         nfts[index].rawMetadata.id = nfts[index].tokenId
                         const search = nfts[index].rawMetadata.image.search("ipfs:/");
                         if (search != -1) {
-                            // nfts[index].rawMetadata.image = `https://alchemy.mypinata.cloud/${nfts[index].rawMetadata.image}`
-                            // nfts[index].rawMetadata.image = nfts[index].rawMetadata.image.replace("ipfs:/", "ipfs");
-                            let x = nfts[index].rawMetadata.image.replace("ipfs:/", "ipfs");
-                            nfts[index].rawMetadata.image = `https://alchemy.mypinata.cloud/${x}`
+                            let x = `https://alchemy.mypinata.cloud/${nfts[index].rawMetadata.image}`
+                            nfts[index].rawMetadata.image = x.replace("ipfs:/", "ipfs");
                         }
                         nfts[index].owner = `${account}`
                         nfts[index].rawMetadata.address = nfts[index].contract.address;
