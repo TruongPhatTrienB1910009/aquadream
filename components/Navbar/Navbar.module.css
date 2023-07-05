@@ -44,7 +44,7 @@
   letter-spacing: 0.2px;
   line-height: 16px;
   transition: 0.2s ease-in-out;
-  
+
 }
 
 .link:hover {
@@ -123,7 +123,6 @@
 @media (max-width: 500px) {
   .navConnect {
     display: none;
-    margin-left: 10px;
   }
 
   .navMiddle {
