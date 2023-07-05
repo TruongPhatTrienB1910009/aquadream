@@ -11,7 +11,7 @@ export const MARKETPLACE_ADDRESS = "0x0886f5b1e0278c938b4D8045f51d1dedD7aB0B52";
 
 // 3. The address of your NFT collection smart contract.
 export const NFT_COLLECTION_ADDRESS =
-  "0x904D3ECDa84b938252879D8b5e146e484f1a2d20";
+  "0x6cab4a1c5ec3c8ab63ff8c4e5cb802207745471e";
 
 export const MINI_GAME_ADDRESS = "0x6Cab4A1c5ec3C8ab63ff8C4e5cb802207745471e";
 
