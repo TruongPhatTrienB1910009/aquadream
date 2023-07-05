@@ -13,18 +13,13 @@ const alchemy = new Alchemy(settings);
 
 export const GetNFTs = (account: any) => {
   const [nftList, setNftList] = useState<any[]>([]);
-  console.log("hello1", account);
   const [isLoadingNFTs, setIsLoadingNFTs] = useState(false);
 
   useEffect(() => {
-    console.log("hello2");
     const getNFTs = async () => {
-      console.log("hello3");
       try {
         const nfts: any[] = (await alchemy.nft.getNftsForOwner(account))
           .ownedNfts;
-        console.log("nfts", nfts);
-        console.log("nfts.lengh", nfts.length);
         setIsLoadingNFTs(true);
         if (nfts.length > 0) {
           nfts.forEach((nft, index) => {
