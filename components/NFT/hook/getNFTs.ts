@@ -1,80 +1,94 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ThirdwebSDK } from '@thirdweb-dev/sdk';
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { useEffect, useState } from "react";
-import { Network, Alchemy } from 'alchemy-sdk';
+import { Network, Alchemy } from "alchemy-sdk";
 import { MARKETPLACE_ADDRESS, NETWORK } from "../../../const/contractAddresses";
 import { useContract, useNFTs } from "@thirdweb-dev/react";
 
-
 const settings = {
-    apiKey: process.env.ALCHEMY_API_KEY,
-    network: Network.ETH_GOERLI,
+  apiKey: process.env.ALCHEMY_API_KEY,
+  network: Network.ETH_GOERLI,
 };
 const alchemy = new Alchemy(settings);
 
 export const GetNFTs = (account: any) => {
-    const [nftList, setNftList] = useState<any[]>([]);
-    const [isLoadingNFTs, setIsLoadingNFTs] = useState(false);
+  const [nftList, setNftList] = useState<any[]>([]);
+  console.log("hello1", account);
+  const [isLoadingNFTs, setIsLoadingNFTs] = useState(false);
 
-    useEffect(() => {
-        const getNFTs = async () => {
-            try {
-                setIsLoadingNFTs(true);
-                const nfts: any[] = (await alchemy.nft.getNftsForOwner(account)).ownedNfts;
-                if (nfts.length > 0) {
-                    nfts.forEach((nft, index) => {
-                        nfts[index].rawMetadata.id = nfts[index].tokenId
-                        const search = nfts[index].rawMetadata.image.search("ipfs:/");
-                        if (search != -1) {
-                            nfts[index].rawMetadata.image = `https://alchemy.mypinata.cloud/${nfts[index].rawMetadata.image}`
-                            nfts[index].rawMetadata.image = nfts[index].rawMetadata.image.replace("ipfs:/", "ipfs");
-                        }
-                        nfts[index].owner = `${account}`
-                        nfts[index].rawMetadata.address = nfts[index].contract.address;
-                        nfts[index].metadata = nfts[index].rawMetadata;
-                        console.log(search)
-                    })
-                    setNftList([...nfts])
-                }
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setIsLoadingNFTs(false);
+  useEffect(() => {
+    console.log("hello2");
+    const getNFTs = async () => {
+      console.log("hello3");
+      try {
+        const nfts: any[] = (await alchemy.nft.getNftsForOwner(account))
+          .ownedNfts;
+        console.log("nfts", nfts);
+        console.log("nfts.lengh", nfts.length);
+        setIsLoadingNFTs(true);
+        if (nfts.length > 0) {
+          nfts.forEach((nft, index) => {
+            nfts[index].rawMetadata.id = nfts[index].tokenId;
+            const search = nfts[index].rawMetadata.image.search("ipfs:/");
+            if (search != -1) {
+              nfts[
+                index
+              ].rawMetadata.image = `https://alchemy.mypinata.cloud/${nfts[index].rawMetadata.image}`;
+              nfts[index].rawMetadata.image = nfts[
+                index
+              ].rawMetadata.image.replace("ipfs:/", "ipfs");
             }
+            nfts[index].owner = `${account}`;
+            nfts[index].rawMetadata.address = nfts[index].contract.address;
+            nfts[index].metadata = nfts[index].rawMetadata;
+          });
+          setNftList([...nfts]);
+        } else {
+          setNftList([]);
         }
-        getNFTs();
-    }, [account])
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoadingNFTs(false);
+      }
+    };
+    if (account) {
+      getNFTs();
+    } else {
+      setNftList([]);
+    }
+  }, [account]);
 
-    return { nftList, isLoadingNFTs }
-}
+  console.log("getNfts", nftList);
 
+  return { nftList, isLoadingNFTs };
+};
 
 export const GetAllDataNFTsMarketplace = () => {
-    const [listingNFTs, setListingNFTs] = useState<any>([]);
-    const [isLoading, setIsloading] = useState(false);
-    const sdk = new ThirdwebSDK(NETWORK);
-    useEffect(() => {
-        async function getData() {
-            try {
-                setIsloading(true);
-                const contract = await sdk.getContract(MARKETPLACE_ADDRESS);
-                const allListings = await contract.directListings.getAll();
-                const arr: any = [...allListings];
-                if (arr.length > 0) {
-                    arr.forEach((NFT: any, index: string | number) => {
-                        arr[index].asset.address = arr[index].assetContractAddress
-                        arr[index].metadata = arr[index].asset
-                    })
-                    setListingNFTs(arr);
-                }
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setIsloading(false);
-            }
-
+  const [listingNFTs, setListingNFTs] = useState<any>([]);
+  const [isLoading, setIsloading] = useState(false);
+  const sdk = new ThirdwebSDK(NETWORK);
+  useEffect(() => {
+    async function getData() {
+      try {
+        setIsloading(true);
+        const contract = await sdk.getContract(MARKETPLACE_ADDRESS);
+        const allListings = await contract.directListings.getAllValid();
+        const arr: any = [...allListings];
+        if (arr.length > 0) {
+          arr.forEach((NFT: any, index: string | number) => {
+            arr[index].asset.address = arr[index].assetContractAddress;
+            arr[index].metadata = arr[index].asset;
+          });
+          setListingNFTs(arr);
         }
-        getData();
-    }, [])
-    return { listingNFTs, isLoading }
-}
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsloading(false);
+      }
+    }
+    getData();
+  }, []);
+  return { listingNFTs, isLoading };
+};

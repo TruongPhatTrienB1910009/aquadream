@@ -7,9 +7,7 @@ import {
 } from "@thirdweb-dev/react";
 import { NFT } from "@thirdweb-dev/sdk";
 import React, { memo, useEffect } from "react";
-import {
-  MARKETPLACE_ADDRESS,
-} from "../../const/contractAddresses";
+import { MARKETPLACE_ADDRESS } from "../../const/contractAddresses";
 import Skeleton from "../Skeleton/Skeleton";
 import styles from "./NFT.module.css";
 
@@ -17,65 +15,71 @@ type Props = {
   nft: NFT;
 };
 
-const NFTComponent = React.memo(({ nft }: Props) => {
-  const { contract: marketplace, isLoading: loadingContract } = useContract(
-    MARKETPLACE_ADDRESS,
-    "marketplace-v3"
-  );
+const NFTComponent = React.memo(
+  ({ nft }: Props) => {
+    const { contract: marketplace, isLoading: loadingContract } = useContract(
+      MARKETPLACE_ADDRESS,
+      "marketplace-v3"
+    );
+    console.log("marketplace", marketplace);
 
-  // 1. Load if the NFT is for direct listing
-  const { data: directListing, isLoading: loadingDirect } =
-    useValidDirectListings(marketplace, {
-      tokenContract: `${nft.metadata.address}`,
-      tokenId: nft.metadata.id,
-    });
+    // 1. Load if the NFT is for direct listing
+    const { data: directListing, isLoading: loadingDirect } =
+      useValidDirectListings(marketplace, {
+        tokenContract: `${nft.metadata.address}`,
+        tokenId: nft.metadata.id,
+      });
+    console.log("nft.metadata.address", nft.metadata.address);
+    console.log("nft.metadata.id", nft.metadata.id);
 
-  // 2. Load if the NFT is for auction
-  const { data: auctionListing, isLoading: loadingAuction } =
-    useValidEnglishAuctions(marketplace, {
-      tokenContract: `${nft.metadata.address}`,
-      tokenId: nft.metadata.id,
-    });
+    // 2. Load if the NFT is for auction
+    const { data: auctionListing, isLoading: loadingAuction } =
+      useValidEnglishAuctions(marketplace, {
+        tokenContract: `${nft.metadata.address}`,
+        tokenId: nft.metadata.id,
+      });
 
-  if (directListing) {
-    console.log("directListing", directListing[0])
-  }
-  return (
-    <>
-      <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
+    if (directListing) {
+      console.log("directListing", directListing);
+    }
+    return (
+      <>
+        <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
 
-      <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p>
-      <p className={styles.nftName}>{nft.metadata.name}</p>
+        <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p>
+        <p className={styles.nftName}>{nft.metadata.name}</p>
 
-      <div className={styles.priceContainer}>
-        {loadingContract || loadingDirect ? (
-          <Skeleton width="100%" height="100%" />
-        ) : directListing && directListing[0] ? (
-          <div className={styles.nftPriceContainer}>
-            <div>
-              <p className={styles.nftPriceLabel}>Price</p>
-              <p className={styles.nftPriceValue}>
-                {`${directListing[0]?.currencyValuePerToken.displayValue}
+        <div className={styles.priceContainer}>
+          {loadingContract || loadingDirect ? (
+            <Skeleton width="100%" height="100%" />
+          ) : directListing && directListing[0] ? (
+            <div className={styles.nftPriceContainer}>
+              <div>
+                <p className={styles.nftPriceLabel}>Price</p>
+                <p className={styles.nftPriceValue}>
+                  {`${directListing[0]?.currencyValuePerToken.displayValue}
           ${directListing[0]?.currencyValuePerToken.symbol}`}
-              </p>
+                </p>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className={styles.nftPriceContainer}>
-            <div>
-              <p className={styles.nftPriceLabel}>Price</p>
-              <p className={styles.nftPriceValue}>Not for sale</p>
+          ) : (
+            <div className={styles.nftPriceContainer}>
+              <div>
+                <p className={styles.nftPriceLabel}>Price</p>
+                <p className={styles.nftPriceValue}>Not for sale</p>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    </>
-  );
-}, (prevProps, nextProps) => {
-  if (prevProps === nextProps) {
-    return true;
+          )}
+        </div>
+      </>
+    );
+  },
+  (prevProps, nextProps) => {
+    if (prevProps === nextProps) {
+      return true;
+    }
+    return false;
   }
-  return false;
-});
+);
 
 export default NFTComponent;

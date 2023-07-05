@@ -122,13 +122,15 @@ const Index = () => {
     }
   };
   const checkBalanceOf = async () => {
-    const data = await miniGameContract?.call("balanceOf", [address]);
-    if (data) {
-      const index = new BigNumber(data.toString()).toNumber();
-      if (index === 1) {
-        setBalanceOf(1);
-      } else {
-        setBalanceOf(0);
+    if (address) {
+      const data = await miniGameContract?.call("balanceOf", [address]);
+      if (data) {
+        const index = new BigNumber(data.toString()).toNumber();
+        if (index === 1) {
+          setBalanceOf(1);
+        } else {
+          setBalanceOf(0);
+        }
       }
     }
   };
@@ -143,25 +145,29 @@ const Index = () => {
   const GetTotalMinted = async () => {
     const data = await miniGameContract?.call("totalSupply", []);
     if (data) {
+      console.log("hello", data);
       const index = new BigNumber(data.toString()).toNumber();
+      console.log("hello2", index);
       setTotalMinted(index);
     } else {
-      setTotalMinted(-1);
+      setTotalMinted(-2);
     }
   };
   const tokenOfOwner = async () => {
-    try {
-      const data = await miniGameContract?.call("tokenOfOwnerByIndex", [
-        address,
-        0,
-      ]);
-      const index = new BigNumber(data.toString()).toNumber();
-      if (index !== -1) {
-        setTokenOfOwnerByIndex(index);
+    if (address) {
+      try {
+        const data = await miniGameContract?.call("tokenOfOwnerByIndex", [
+          address,
+          0,
+        ]);
+        const index = new BigNumber(data.toString()).toNumber();
+        if (index !== -1) {
+          setTokenOfOwnerByIndex(index);
+        }
+      } catch (e) {
+        console.log(e);
+        setTokenOfOwnerByIndex(-1);
       }
-    } catch (e) {
-      console.log(e);
-      setTokenOfOwnerByIndex(-1);
     }
   };
 
@@ -207,9 +213,14 @@ const Index = () => {
       setOpenToast(true);
     }
     if (tokenOfOwnerByIndex !== -1) GetClaim();
-    console.log(claim);
-    console.log('sadas');
-  }, [address, balanceOf, minted, status.message, tokenOfOwnerByIndex]);
+  }, [
+    address,
+    balanceOf,
+    minted,
+    status.message,
+    tokenOfOwnerByIndex,
+    totalMinted,
+  ]);
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
