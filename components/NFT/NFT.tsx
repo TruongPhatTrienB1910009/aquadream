@@ -30,16 +30,12 @@ const NFTComponent = React.memo(({ nft }: Props) => {
       tokenId: nft.metadata.id,
     });
 
-  // 2. Load if the NFT is for auction
-  const { data: auctionListing, isLoading: loadingAuction } =
-    useValidEnglishAuctions(marketplace, {
-      tokenContract: `${nft.metadata.address}`,
-      tokenId: nft.metadata.id,
-    });
 
-  if (directListing) {
-    console.log("directListing", directListing[0])
-  }
+  // if (directListing) {
+  //   console.log("directListing", directListing[0])
+  // }
+
+  console.log("nft", nft)
   return (
     <>
       <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />

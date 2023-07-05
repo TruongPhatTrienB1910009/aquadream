@@ -6,21 +6,25 @@ import { NFT_COLLECTION_ADDRESS } from "../../const/contractAddresses";
 import styles from "../../styles/Buy.module.css";
 import NFT from "../NFT/NFT";
 import Skeleton from "../Skeleton/Skeleton";
+import { getABI } from "../NFT/hook/getNFTs";
 
 type Props = {
   listing: DirectListingV3 | EnglishAuction;
+  abi: any;
 };
 
 /**
  * Accepts a listing and renders the associated NFT for it
  */
-export default function ListingWrapper({ listing }: Props) {
+export default function ListingWrapper({ listing, abi }: Props) {
 
-  console.log("listing", listing)
-
-  const { contract: nftContract } = useContract(NFT_COLLECTION_ADDRESS);
+  const { contract: nftContract } = useContract(listing.assetContractAddress, abi);
 
   const { data: nft, isLoading } = useNFT(nftContract, listing.asset.id);
+
+  if (nft) {
+    nft.metadata.address = listing.assetContractAddress;
+  }
 
   if (isLoading) {
     return (
@@ -30,11 +34,13 @@ export default function ListingWrapper({ listing }: Props) {
     );
   }
 
+
+
   if (!nft) return null;
 
   return (
     <Link
-      href={`/token/${NFT_COLLECTION_ADDRESS}/${nft.metadata.id}`}
+      href={`/token/${listing.assetContractAddress}/${nft.metadata.id}`}
       key={nft.metadata.id}
       className={styles.nftContainer}
     >
