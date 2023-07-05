@@ -25,6 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Navbar />
         {/* Render the actual component (page) */}
         <Container maxWidth="lg">
+          
           <Component {...pageProps} />
         </Container>
         <Footer />

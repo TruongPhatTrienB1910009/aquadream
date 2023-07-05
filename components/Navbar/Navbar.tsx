@@ -10,7 +10,6 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
  */
 export function Navbar() {
   const address = useAddress();
-
   const showMenu = () => {
     document
       .querySelector("#dropdown")
@@ -32,12 +31,12 @@ export function Navbar() {
 
           <div className={styles.navMiddle}>
             <Link href="/buy" className={styles.link}>
-              Buy
+              Buy 
             </Link>
             <Link href="/sell" className={styles.link}>
               Sell
             </Link>
-            <Link href="/minigame" className={styles.link}>
+            <Link href="/minigame" style={{}} className={styles.link}>
               Mini Game
             </Link>
           </div>
