@@ -25,6 +25,7 @@ import Skeleton from "../../../components/Skeleton/Skeleton";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
 import minigameABI from "../../../const/abi/minigame.json"
+import { useRouter } from "next/router";
 
 type Props = {
   nft: NFT;
@@ -36,6 +37,8 @@ export default function TokenPage({ nft }: Props) {
 
   const [bidValue, setBidValue] = useState<string>();
 
+  const router = useRouter();
+
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
     MARKETPLACE_ADDRESS,
@@ -43,18 +46,18 @@ export default function TokenPage({ nft }: Props) {
   );
 
   // Connect to NFT Collection smart contract
-  const { contract: nftCollection } = useContract(NFT_COLLECTION_ADDRESS);
+  const { contract: nftCollection } = useContract(router.query.contractAddress as string);
 
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
-      tokenContract: NFT_COLLECTION_ADDRESS,
+      tokenContract: router.query.contractAddress as string,
       tokenId: nft.metadata.id,
     });
 
   // 2. Load if the NFT is for auction
   const { data: auctionListing, isLoading: loadingAuction } =
     useValidEnglishAuctions(marketplace, {
-      tokenContract: NFT_COLLECTION_ADDRESS,
+      tokenContract: router.query.contractAddress as string,
       tokenId: nft.metadata.id,
     });
 
@@ -87,7 +90,7 @@ export default function TokenPage({ nft }: Props) {
       );
     } else if (directListing?.[0]) {
       txResult = await marketplace?.offers.makeOffer({
-        assetContractAddress: NFT_COLLECTION_ADDRESS,
+        assetContractAddress: router.query.contractAddress as string,
         tokenId: nft.metadata.id,
         totalPrice: bidValue,
       });
@@ -249,31 +252,6 @@ export default function TokenPage({ nft }: Props) {
                     </>
                   )}
                 </div>
-
-                {/* <div>
-                  {loadingAuction ? (
-                    <Skeleton width="120" height="24" />
-                  ) : (
-                    <>
-                      {auctionListing && auctionListing[0] && (
-                        <>
-                          <p className={styles.label} style={{ marginTop: 12 }}>
-                            Bids starting from
-                          </p>
-
-                          <div className={styles.pricingValue}>
-                            {
-                              auctionListing[0]?.minimumBidCurrencyValue
-                                .displayValue
-                            }
-                            {" " +
-                              auctionListing[0]?.minimumBidCurrencyValue.symbol}
-                          </div>
-                        </>
-                      )}
-                    </>
-                  )}
-                </div> */}
               </div>
             </div>
 
@@ -302,47 +280,6 @@ export default function TokenPage({ nft }: Props) {
                 >
                   Buy at asking price
                 </Web3Button>
-
-                {/* <div className={`${styles.listingTimeContainer} ${styles.or}`}>
-                  <p className={styles.listingTime}>or</p>
-                </div>
-
-                <input
-                  className={styles.input}
-                  defaultValue={
-                    auctionListing?.[0]?.minimumBidCurrencyValue
-                      ?.displayValue || 0
-                  }
-                  min={0}
-                  type="number"
-                  step={0.000001}
-                  onChange={(e) => {
-                    setBidValue(e.target.value);
-                  }}
-                /> */}
-
-                {/* <Web3Button
-                  contractAddress={MARKETPLACE_ADDRESS}
-                  action={async () => await createBidOrOffer()}
-                  className={styles.btn}
-                  onSuccess={() => {
-                    toast(`Bid success!`, {
-                      icon: "✅",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    });
-                  }}
-                  onError={(e) => {
-                    console.log(e);
-                    toast(`Bid failed! Reason: ${e.message}`, {
-                      icon: "❌",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    });
-                  }}
-                >
-                  Place bid
-                </Web3Button> */}
               </>
             )}
           </div>
@@ -357,7 +294,13 @@ export async function getServerSideProps(context: { params: { tokenId: string; c
   const tokenId = context.params?.tokenId as string;
   const sdk = new ThirdwebSDK(NETWORK);
 
-  const contract = await sdk.getContract(context.params?.contractAddress as string);
+  let contract: any = ''
+
+  if ((context?.params.contractAddress as string).toLowerCase === MINI_GAME_ADDRESS.toLowerCase) {
+    contract = await sdk.getContract(context.params?.contractAddress as string, minigameABI);
+  } else {
+    contract = await sdk.getContract(context.params?.contractAddress as string);
+  }
 
   const nft = await contract.erc721.get(tokenId);
 
@@ -370,7 +313,7 @@ export async function getServerSideProps(context: { params: { tokenId: string; c
   return {
     props: {
       nft,
-      contractMetadata: contractMetadata || null,
+      contractMetadata: JSON.parse(JSON.stringify(contractMetadata)) || null,
     },
   };
 }
