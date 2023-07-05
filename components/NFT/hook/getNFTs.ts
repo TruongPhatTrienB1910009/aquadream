@@ -14,7 +14,7 @@ const alchemy = new Alchemy(settings);
 export const GetNFTs = (account: any) => {
   const [nftList, setNftList] = useState<any[]>([]);
   const [isLoadingNFTs, setIsLoadingNFTs] = useState(false);
-  console.log("hello");
+  console.log("hello1");
   useEffect(() => {
     const getNFTs = async () => {
       try {
