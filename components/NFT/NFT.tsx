@@ -31,11 +31,6 @@ const NFTComponent = React.memo(({ nft }: Props) => {
     });
 
 
-  // if (directListing) {
-  //   console.log("directListing", directListing[0])
-  // }
-
-  console.log("nft", nft)
   return (
     <>
       <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />

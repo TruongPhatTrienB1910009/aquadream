@@ -24,8 +24,8 @@ import randomColor from "../../../util/randomColor";
 import Skeleton from "../../../components/Skeleton/Skeleton";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
-import minigameABI from "../../../const/abi/minigame.json"
 import { useRouter } from "next/router";
+import { getABI } from "../../../components/NFT/hook/getNFTs";
 
 type Props = {
   nft: NFT;
@@ -293,14 +293,8 @@ export async function getServerSideProps(context: { params: { tokenId: string; c
 
   const tokenId = context.params?.tokenId as string;
   const sdk = new ThirdwebSDK(NETWORK);
-
-  let contract: any = ''
-
-  if ((context?.params.contractAddress as string).toLowerCase === MINI_GAME_ADDRESS.toLowerCase) {
-    contract = await sdk.getContract(context.params?.contractAddress as string, minigameABI);
-  } else {
-    contract = await sdk.getContract(context.params?.contractAddress as string);
-  }
+  const abi: any = await getABI(context.params?.contractAddress);
+  const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, abi);
 
   const nft = await contract.erc721.get(tokenId);
 
