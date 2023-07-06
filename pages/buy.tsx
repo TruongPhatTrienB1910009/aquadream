@@ -3,12 +3,15 @@ import React from "react";
 import Container from "../components/Container/Container";
 import NFTGrid from "../components/NFT/NFTGrid";
 import { NFT_COLLECTION_ADDRESS } from "../const/contractAddresses";
-import { GetNFTs, GetAllDataNFTsMarketplace } from "../components/NFT/hook/getNFTs"
-
+import {
+  GetNFTs,
+  GetAllDataNFTsMarketplace,
+} from "../components/NFT/hook/getNFTs";
 
 const Buy = () => {
-  const { listingNFTs: data, isLoading: isLoading } = GetAllDataNFTsMarketplace();
-
+  const { listingNFTs: data, isLoading: isLoading } =
+    GetAllDataNFTsMarketplace();
+  console.log("buy", data);
   return (
     <div>
       <h1>Buy NFTs</h1>
@@ -22,7 +25,6 @@ const Buy = () => {
       />
     </div>
   );
-}
-
+};
 
 export default Buy;

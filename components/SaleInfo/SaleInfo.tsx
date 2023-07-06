@@ -107,7 +107,7 @@ export default function SaleInfo({ nft }: Props) {
   const { register: registerDirect, handleSubmit: handleSubmitDirect } =
     useForm<DirectFormData>({
       defaultValues: {
-        nftContractAddress: NFT_COLLECTION_ADDRESS,
+        nftContractAddress: `${nft.metadata.address}`, // change thanh address game.
         tokenId: nft.metadata.id,
         startDate: new Date(),
         endDate: new Date(),

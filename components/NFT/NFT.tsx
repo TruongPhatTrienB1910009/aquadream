@@ -19,9 +19,9 @@ const NFTComponent = React.memo(
   ({ nft }: Props) => {
     const { contract: marketplace, isLoading: loadingContract } = useContract(
       MARKETPLACE_ADDRESS,
-      "marketplace-v3"
+      "marketplace-v3" // contract-type.
     );
-    console.log("marketplace", marketplace);
+    console.log("marketplace", nft);
 
     // 1. Load if the NFT is for direct listing
     const { data: directListing, isLoading: loadingDirect } =
@@ -29,8 +29,8 @@ const NFTComponent = React.memo(
         tokenContract: `${nft.metadata.address}`,
         tokenId: nft.metadata.id,
       });
-    console.log("nft.metadata.address", nft.metadata.address);
-    console.log("nft.metadata.id", nft.metadata.id);
+
+    console.log("directListing", directListing);
 
     // 2. Load if the NFT is for auction
     const { data: auctionListing, isLoading: loadingAuction } =
@@ -39,9 +39,6 @@ const NFTComponent = React.memo(
         tokenId: nft.metadata.id,
       });
 
-    if (directListing) {
-      console.log("directListing", directListing);
-    }
     return (
       <>
         <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />

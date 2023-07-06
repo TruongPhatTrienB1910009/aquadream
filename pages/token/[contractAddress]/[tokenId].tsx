@@ -18,23 +18,29 @@ import {
   NETWORK,
   NFT_COLLECTION_ADDRESS,
 } from "../../../const/contractAddresses";
+
 import styles from "../../../styles/Token.module.css";
+
 import Link from "next/link";
 import randomColor from "../../../util/randomColor";
 import Skeleton from "../../../components/Skeleton/Skeleton";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
-import minigameABI from "../../../const/abi/minigame.json"
+import minigameABI from "../../../const/abi/minigame.json";
+import { id } from "ethers/lib/utils";
 
 type Props = {
   nft: NFT;
+  id: string;
 };
 
 const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
-export default function TokenPage({ nft }: Props) {
-
+export default function TokenPage({ nft, id }: Props) {
+  console.log("nft", nft);
+  console.log("id", id);
   const [bidValue, setBidValue] = useState<string>();
+  console.log("bidValue", bidValue);
 
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
@@ -45,11 +51,15 @@ export default function TokenPage({ nft }: Props) {
   // Connect to NFT Collection smart contract
   const { contract: nftCollection } = useContract(NFT_COLLECTION_ADDRESS);
 
+  console.log("nftCollect", nftCollection);
+
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
-      tokenContract: NFT_COLLECTION_ADDRESS,
+      tokenContract: `${nft.metadata.address}`,
       tokenId: nft.metadata.id,
     });
+
+  console.log("derect", directListing);
 
   // 2. Load if the NFT is for auction
   const { data: auctionListing, isLoading: loadingAuction } =
@@ -198,7 +208,6 @@ export default function TokenPage({ nft }: Props) {
           </div>
 
           <div className={styles.listingContainer}>
-
             <div className={styles.contractMetadataContainer}>
               <MediaRenderer
                 src={nft.metadata.image}
@@ -293,11 +302,16 @@ export default function TokenPage({ nft }: Props) {
                     });
                   }}
                   onError={(e) => {
-                    (e as any).info.reason !== "user rejected transaction" ? (toast('Please try again. Confirm the transaction and make sure you are paying enough gas!', {
-                      icon: "❌",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    })) : ''
+                    (e as any).info.reason !== "user rejected transaction"
+                      ? toast(
+                          "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                          {
+                            icon: "❌",
+                            style: toastStyle,
+                            position: "bottom-center",
+                          }
+                        )
+                      : "";
                   }}
                 >
                   Buy at asking price
@@ -376,16 +390,23 @@ export default function TokenPage({ nft }: Props) {
 // }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const tokenId = context.params?.tokenId as string;
+  const listid = context.params?.tokenId as String;
 
   const sdk = new ThirdwebSDK(NETWORK);
+  const contract = await sdk.getContract(MARKETPLACE_ADDRESS);
 
-  const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, minigameABI);
-  const nft = await contract.erc721.get(tokenId);
+  const listid_nft = await contract.directListings.getListing(String(listid));
+
+  const contractToken = await sdk.getContractFromAbi(
+    context.params?.contractAddress as string,
+    minigameABI
+  );
+
+  const nft = await contractToken.erc721.get(listid_nft.tokenId);
 
   return {
     props: {
-      nft
+      nft,
     },
     revalidate: 1,
   };
@@ -396,6 +417,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS);
 
   const nfts = await contract.erc721.getAll();
+  console.log("haha", nfts);
 
   const paths = nfts.map((nft) => {
     return {
@@ -405,6 +427,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       },
     };
   });
+  console.log("path", paths);
 
   return {
     paths,
