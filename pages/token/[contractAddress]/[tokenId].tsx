@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import Container from "../../../components/Container/Container";
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
-import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { NFT, NFTMetadata, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import {
   ETHERSCAN_URL,
   MARKETPLACE_ADDRESS,
@@ -31,16 +31,16 @@ import { id } from "ethers/lib/utils";
 
 type Props = {
   nft: NFT;
-  id: string;
+  price_nft: String;
+  tokenContract: string;
 };
 
 const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
-export default function TokenPage({ nft, id }: Props) {
-  console.log("nft", nft);
-  console.log("id", id);
+export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   const [bidValue, setBidValue] = useState<string>();
-  console.log("bidValue", bidValue);
+  console.log("bidValue", nft);
+  console.log("price_nft", price_nft);
 
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
@@ -55,10 +55,11 @@ export default function TokenPage({ nft, id }: Props) {
 
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
-      tokenContract: `${nft.metadata.address}`,
+      tokenContract: tokenContract,
       tokenId: nft.metadata.id,
     });
-
+  console.log("nft.metadata.address", nft.metadata.address);
+  console.log("nft.metadata.id", nft.metadata.id);
   console.log("derect", directListing);
 
   // 2. Load if the NFT is for auction
@@ -403,10 +404,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
   );
 
   const nft = await contractToken.erc721.get(listid_nft.tokenId);
+  const price_nft = listid_nft.currencyValuePerToken.displayValue;
+  // console.log("listid_nft", listid_nft);
+  const tokenContract = listid_nft.assetContractAddress;
 
   return {
     props: {
       nft,
+      price_nft,
+      tokenContract,
     },
     revalidate: 1,
   };
