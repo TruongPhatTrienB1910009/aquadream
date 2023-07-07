@@ -84,7 +84,6 @@ export const getABI = async (contractAddress: string) => {
         const BASEURL = `https://api-goerli.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${process.env.NEXT_PUBLIC_API_KEY}`
         const response = await fetch(BASEURL);
         const result = await response.json();
-        // console.log("test", JSON.stringify(result?.result).replaceAll("\\", "").substring(1, JSON.stringify(result?.result).replaceAll("\\", "").length - 1))
         return JSON.stringify(result?.result).replaceAll("\\", "").substring(1, JSON.stringify(result?.result).replaceAll("\\", "").length - 1);
     } catch (error) {
         console.log(error)
