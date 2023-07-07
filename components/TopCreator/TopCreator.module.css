@@ -1,0 +1,23 @@
+.topCreatorContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+
+}
+.topCreatorTittle {
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: 600;
+  float: left;
+  left: 16px;
+}
+.topCreatorRight {
+  float: right !important;
+  right: 0;
+}
+.topCreatorCard{
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 20px;
+}

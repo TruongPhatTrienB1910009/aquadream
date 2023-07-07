@@ -1,0 +1,48 @@
+.headerBigContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0 10px;
+}
+.headerBig {
+  width: 50%;
+}
+.headerMin {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+.headerBigText {
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 50px;
+  line-height: 125%;
+}
+.headerMinText {
+  margin-top: 2rem;
+  margin-left: 20px;
+  font-size: 20px;
+}
+.headerParrotImage {
+  width: 500px;
+  height: 500px;
+}
+.headerParameter {
+  margin-top: 4rem;
+  display: flex;
+}
+.headerParameterText {
+  display: flex;
+  margin: auto 3rem;
+}
+.headerParameterText h1 {
+  margin-right: 2rem;
+}
+.headerParameterMinText {
+  display: contents;
+  margin: auto;
+}
+.headerBigButton {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}

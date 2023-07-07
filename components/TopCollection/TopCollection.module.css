@@ -1,0 +1,13 @@
+.topCollectionContainer {
+  padding: 0 10px;
+  margin-top: 20px;
+}
+.topCollectionName {
+  justify-content: center;
+  text-align: center;
+}
+.topCollectionTittle{
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: 600;
+}

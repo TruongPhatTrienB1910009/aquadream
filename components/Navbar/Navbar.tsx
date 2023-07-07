@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 /**
  * Navigation bar that shows up on all pages.
  * Rendered in _app.tsx file above the page content.
@@ -20,25 +21,49 @@ export function Navbar() {
     <div className={styles.navContainer}>
       <nav className={styles.nav}>
         <div className={styles.navLeft}>
-          <Link href="/" className={`${styles.homeLink} ${styles.navLeft}`}>
-            <Image
-              src="/images/logo.png"
-              width={65}
-              height={65}
-              alt="NFT marketplace logo"
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faEthereum}
+              style={{
+                padding: "10px 15px 10px 15px",
+                backgroundColor: "#c0ff3e",
+                borderRadius: "10px",
+                fontSize: "25px",
+              }}
             />
-          </Link>
-
-          <div className={styles.navMiddle}>
-            <Link href="/buy" className={styles.link}>
-              Buy 
-            </Link>
-            <Link href="/sell" className={styles.link}>
-              Sell
-            </Link>
-            <Link href="/minigame" style={{}} className={styles.link}>
-              Mini Game
-            </Link>
+            <span className={styles.navbarTittleNfts}>AquaDream</span>
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              style={{
+                padding: "10px 15px 10px 15px",
+                backgroundColor: "#e3e5e8",
+                borderRadius: "50%",
+                WebkitBorderRadius: "50%",
+                MozBorderRadius:'50%',
+                fontSize: "20px",
+                fontWeight: '100'
+              }}
+            />
+            
+            <div className={styles.navMiddle}>
+              <Link href="/buy" className={styles.link}>
+                Buy
+              </Link>
+              <Link href="/sell" className={styles.link}>
+                Sell
+              </Link>
+              <Link href="/minigame" style={{}} className={styles.link}>
+                Mini Game
+              </Link>
+              <Link href="/" style={{}} className={styles.link}>
+                Community
+              </Link>
+            </div>
           </div>
 
           <div className={styles.dropDownMenu}>
@@ -66,7 +91,7 @@ export function Navbar() {
 
         <div className={styles.navRight}>
           <div className={styles.navConnect}>
-            <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
+            <ConnectWallet style={{backgroundColor: 'black', color: 'white'}} theme="dark" btnTitle="Connect Wallet" />
           </div>
           {address ? (
             <Link className={styles.link} href={`/profile/${address}`}>
@@ -79,7 +104,7 @@ export function Navbar() {
               />
             </Link>
           ) : (
-            ''
+            ""
           )}
         </div>
       </nav>
