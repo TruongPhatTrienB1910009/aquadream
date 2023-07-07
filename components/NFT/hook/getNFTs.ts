@@ -34,6 +34,8 @@ export const GetNFTs = (account: any) => {
               nfts[index].rawMetadata.image = nfts[
                 index
               ].rawMetadata.image.replace("ipfs:/", "ipfs");
+            } else {
+              nfts[index].rawMetadata.image = nfts[index].rawMetadata.uri;
             }
             nfts[index].owner = `${account}`;
             nfts[index].rawMetadata.address = nfts[index].contract.address;
@@ -70,12 +72,27 @@ export const GetAllDataNFTsMarketplace = () => {
         setIsloading(true);
         const contract = await sdk.getContract(MARKETPLACE_ADDRESS);
         const allListings = await contract.directListings.getAllValid();
+        console.log("allListings", allListings);
         const arr: any = [...allListings];
         console.log("arr", arr);
+        // if (arr.length > 0) {
+        //   arr.forEach((NFT: any, index: string | number) => {
+        //     arr[index].asset.address = arr[index].assetContractAddress;
+        //     arr[index].metadata = arr[index].asset;
+        //   });
+        //   setListingNFTs(arr);
+        // } else {
+        //   setListingNFTs([]);
+        // }
         if (arr.length > 0) {
           arr.forEach((NFT: any, index: string | number) => {
             arr[index].asset.address = arr[index].assetContractAddress;
             arr[index].metadata = arr[index].asset;
+            console.log("arr[index].asset.image", arr[index].asset.image);
+            console.log("arr[index].metadata.image", arr[index].metadata.image);
+            if (arr[index].asset.image === undefined) {
+              arr[index].metadata.image = arr[index].metadata.uri;
+            }
           });
           setListingNFTs(arr);
         } else {

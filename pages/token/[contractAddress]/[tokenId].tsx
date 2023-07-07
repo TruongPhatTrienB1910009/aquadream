@@ -41,7 +41,6 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   const [bidValue, setBidValue] = useState<string>();
   console.log("bidValue", nft);
   console.log("price_nft", price_nft);
-
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
     MARKETPLACE_ADDRESS,
@@ -420,7 +419,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const sdk = new ThirdwebSDK(NETWORK);
-  const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS);
+  const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS, minigameABI);
 
   const nfts = await contract.erc721.getAll();
   console.log("haha", nfts);
