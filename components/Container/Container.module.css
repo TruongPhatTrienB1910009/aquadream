@@ -27,3 +27,8 @@
 .xl {
   max-width: 1536px;
 }
+@media (max-width: 500px){
+  .container{
+    padding-right: 0;
+  }
+}

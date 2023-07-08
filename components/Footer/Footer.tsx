@@ -8,19 +8,17 @@ import {
   faEthereum,
   faInstagram,
   faLinkedin,
-  faGoogle
+  faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
 
 function Footer() {
   return (
     <>
       <footer className={styles.footerContainer}>
-        <hr/>
+        <hr />
         <div className={styles.footerWidget}>
           <div className={styles.footerRow}>
-            <div
-              className={styles.footerItemsIcon}
-            >
+            <div className={styles.footerItemsIcon}>
               <div className={styles.footerWidget}>
                 <div
                   style={{
@@ -48,8 +46,8 @@ function Footer() {
                       backgroundColor: "#E8E8E8",
                       borderRadius: "10px",
                       fontSize: "20px",
-                      marginRight: '0.5rem',
-                      cursor: "pointer"
+                      marginRight: "0.5rem",
+                      cursor: "pointer",
                     }}
                   />
                   <FontAwesomeIcon
@@ -59,8 +57,8 @@ function Footer() {
                       backgroundColor: "#E8E8E8",
                       borderRadius: "10px",
                       fontSize: "20px",
-                      marginRight: '0.5rem',
-                      cursor: "pointer"
+                      marginRight: "0.5rem",
+                      cursor: "pointer",
                     }}
                   />
                   <FontAwesomeIcon
@@ -70,8 +68,8 @@ function Footer() {
                       backgroundColor: "#E8E8E8",
                       borderRadius: "10px",
                       fontSize: "20px",
-                      marginRight: '0.5rem',
-                      cursor: "pointer"
+                      marginRight: "0.5rem",
+                      cursor: "pointer",
                     }}
                   />
                   <FontAwesomeIcon
@@ -81,18 +79,18 @@ function Footer() {
                       backgroundColor: "#E8E8E8",
                       borderRadius: "10px",
                       fontSize: "20px",
-                      marginRight: '0.5rem',
-                      cursor: "pointer"
+                      marginRight: "0.5rem",
+                      cursor: "pointer",
                     }}
                   />
-                   <FontAwesomeIcon
+                  <FontAwesomeIcon
                     icon={faGoogle}
                     style={{
                       padding: "5px 15px 5px 15px",
                       backgroundColor: "#E8E8E8",
                       borderRadius: "10px",
                       fontSize: "20px",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   />
                 </div>
@@ -138,8 +136,8 @@ function Footer() {
             </div>
           </div>
           <div className={styles.copyright}>
-          <span>&copy; 2022 NFTs @All Rights Reserved</span>
-        </div>
+            <span>&copy; 2022 NFTs @All Rights Reserved</span>
+          </div>
         </div>
       </footer>
     </>
