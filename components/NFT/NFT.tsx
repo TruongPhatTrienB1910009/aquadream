@@ -12,6 +12,7 @@ import {
 } from "../../const/contractAddresses";
 import Skeleton from "../Skeleton/Skeleton";
 import styles from "./NFT.module.css";
+import Card from 'react-bootstrap/Card';
 
 type Props = {
   nft: NFT;
@@ -33,32 +34,34 @@ const NFTComponent = React.memo(({ nft }: Props) => {
 
   return (
     <>
-      <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
+      <div className={styles.cardNFT}>
+        <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
 
-      <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p>
-      <p className={styles.nftName}>{nft.metadata.name}</p>
+        <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p>
+        <p className={styles.nftName}>{nft.metadata.name}</p>
 
-      <div className={styles.priceContainer}>
-        {loadingContract || loadingDirect ? (
-          <Skeleton width="100%" height="100%" />
-        ) : directListing && directListing[0] ? (
-          <div className={styles.nftPriceContainer}>
-            <div>
-              <p className={styles.nftPriceLabel}>Price</p>
-              <p className={styles.nftPriceValue}>
-                {`${directListing[0]?.currencyValuePerToken.displayValue}
-          ${directListing[0]?.currencyValuePerToken.symbol}`}
-              </p>
+        <div className={styles.priceContainer}>
+          {loadingContract || loadingDirect ? (
+            <Skeleton width="100%" height="100%" />
+          ) : directListing && directListing[0] ? (
+            <div className={styles.nftPriceContainer}>
+              <div>
+                <p className={styles.nftPriceLabel}>Price</p>
+                <p className={styles.nftPriceValue}>
+                  {`${directListing[0]?.currencyValuePerToken.displayValue}
+                  ${directListing[0]?.currencyValuePerToken.symbol}`}
+                </p>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className={styles.nftPriceContainer}>
-            <div>
-              <p className={styles.nftPriceLabel}>Price</p>
-              <p className={styles.nftPriceValue}>Not for sale</p>
+          ) : (
+            <div className={styles.nftPriceContainer}>
+              <div>
+                <p className={styles.nftPriceLabel}>Price</p>
+                <p className={styles.nftPriceValue}>Not for sale</p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );
