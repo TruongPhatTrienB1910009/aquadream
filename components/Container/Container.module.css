@@ -5,7 +5,7 @@
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-  margin-top: 96px;
+  margin-top: 36px;
 }
 
 .xs {
@@ -27,8 +27,9 @@
 .xl {
   max-width: 1536px;
 }
-@media (max-width: 500px){
-  .container{
+
+@media (max-width: 500px) {
+  .container {
     padding-right: 0;
   }
 }

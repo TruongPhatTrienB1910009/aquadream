@@ -13,7 +13,7 @@
   overflow: hidden;
   border-radius: 8px;
   backface-visibility: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid #ececec !important;
   transform: translate3d(0px, 0px, 0px);
   display: flex;
   flex-direction: column;
