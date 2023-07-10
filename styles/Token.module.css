@@ -28,9 +28,10 @@
 
 .image {
   border-radius: 16px;
-  width: 100% !important;
+  width: 50% !important;
   height: auto !important;
   background-color: rgba(255, 255, 255, 0.04);
+  margin: 0 auto;
 }
 
 .input {

@@ -10,6 +10,7 @@ import React, { memo, useEffect } from "react";
 import { MARKETPLACE_ADDRESS } from "../../const/contractAddresses";
 import Skeleton from "../Skeleton/Skeleton";
 import styles from "./NFT.module.css";
+import Card from 'react-bootstrap/Card';
 
 type Props = {
   nft: NFT;
@@ -30,8 +31,6 @@ const NFTComponent = React.memo(
         tokenId: nft.metadata.id,
       });
 
-    console.log("directListing", directListing);
-
     // 2. Load if the NFT is for auction
     const { data: auctionListing, isLoading: loadingAuction } =
       useValidEnglishAuctions(marketplace, {
@@ -39,6 +38,9 @@ const NFTComponent = React.memo(
         tokenId: nft.metadata.id,
       });
 
+    if (directListing) {
+      console.log("directListing", directListing[0])
+    }
     return (
       <>
         <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
@@ -70,13 +72,11 @@ const NFTComponent = React.memo(
         </div>
       </>
     );
-  },
-  (prevProps, nextProps) => {
+  }, (prevProps, nextProps) => {
     if (prevProps === nextProps) {
       return true;
     }
     return false;
-  }
-);
+  });
 
 export default NFTComponent;

@@ -26,8 +26,7 @@ import randomColor from "../../../util/randomColor";
 import Skeleton from "../../../components/Skeleton/Skeleton";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
-import minigameABI from "../../../const/abi/minigame.json";
-import { id } from "ethers/lib/utils";
+import minigameABI from "../../../const/abi/minigame.json"
 
 type Props = {
   nft: NFT;
@@ -39,8 +38,7 @@ const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
 export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   const [bidValue, setBidValue] = useState<string>();
-  console.log("bidValue", nft);
-  console.log("price_nft", price_nft);
+
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
     MARKETPLACE_ADDRESS,
@@ -50,11 +48,9 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   // Connect to NFT Collection smart contract
   const { contract: nftCollection } = useContract(NFT_COLLECTION_ADDRESS);
 
-  console.log("nftCollect", nftCollection);
-
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
-      tokenContract: tokenContract,
+      tokenContract: NFT_COLLECTION_ADDRESS,
       tokenId: nft.metadata.id,
     });
   console.log("nft.metadata.address", nft.metadata.address);
@@ -64,7 +60,7 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   // 2. Load if the NFT is for auction
   const { data: auctionListing, isLoading: loadingAuction } =
     useValidEnglishAuctions(marketplace, {
-      tokenContract: NFT_COLLECTION_ADDRESS,
+      tokenContract: router.query.contractAddress as string,
       tokenId: nft.metadata.id,
     });
 
@@ -97,7 +93,7 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
       );
     } else if (directListing?.[0]) {
       txResult = await marketplace?.offers.makeOffer({
-        assetContractAddress: NFT_COLLECTION_ADDRESS,
+        assetContractAddress: router.query.contractAddress as string,
         tokenId: nft.metadata.id,
         totalPrice: bidValue,
       });
@@ -258,31 +254,6 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
                     </>
                   )}
                 </div>
-
-                {/* <div>
-                  {loadingAuction ? (
-                    <Skeleton width="120" height="24" />
-                  ) : (
-                    <>
-                      {auctionListing && auctionListing[0] && (
-                        <>
-                          <p className={styles.label} style={{ marginTop: 12 }}>
-                            Bids starting from
-                          </p>
-
-                          <div className={styles.pricingValue}>
-                            {
-                              auctionListing[0]?.minimumBidCurrencyValue
-                                .displayValue
-                            }
-                            {" " +
-                              auctionListing[0]?.minimumBidCurrencyValue.symbol}
-                          </div>
-                        </>
-                      )}
-                    </>
-                  )}
-                </div> */}
               </div>
             </div>
 
@@ -304,59 +275,18 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
                   onError={(e) => {
                     (e as any).info.reason !== "user rejected transaction"
                       ? toast(
-                          "Please try again. Confirm the transaction and make sure you are paying enough gas!",
-                          {
-                            icon: "❌",
-                            style: toastStyle,
-                            position: "bottom-center",
-                          }
-                        )
+                        "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                        {
+                          icon: "❌",
+                          style: toastStyle,
+                          position: "bottom-center",
+                        }
+                      )
                       : "";
                   }}
                 >
                   Buy at asking price
                 </Web3Button>
-
-                {/* <div className={`${styles.listingTimeContainer} ${styles.or}`}>
-                  <p className={styles.listingTime}>or</p>
-                </div>
-
-                <input
-                  className={styles.input}
-                  defaultValue={
-                    auctionListing?.[0]?.minimumBidCurrencyValue
-                      ?.displayValue || 0
-                  }
-                  min={0}
-                  type="number"
-                  step={0.000001}
-                  onChange={(e) => {
-                    setBidValue(e.target.value);
-                  }}
-                /> */}
-
-                {/* <Web3Button
-                  contractAddress={MARKETPLACE_ADDRESS}
-                  action={async () => await createBidOrOffer()}
-                  className={styles.btn}
-                  onSuccess={() => {
-                    toast(`Bid success!`, {
-                      icon: "✅",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    });
-                  }}
-                  onError={(e) => {
-                    console.log(e);
-                    toast(`Bid failed! Reason: ${e.message}`, {
-                      icon: "❌",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    });
-                  }}
-                >
-                  Place bid
-                </Web3Button> */}
               </>
             )}
           </div>
@@ -366,52 +296,56 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   );
 }
 
-// export async function getServerSideProps(context: { params: { tokenId: string; contractAddress: string; }; }) {
+export async function getServerSideProps(context: { params: { tokenId: string; contractAddress: string; }; }) {
 
-//   const tokenId = context.params?.tokenId as string;
-//   const sdk = new ThirdwebSDK(NETWORK);
-
-//   const contract = await sdk.getContract(context.params?.contractAddress as string);
-
-//   const nft = await contract.erc721.get(tokenId);
-
-//   let contractMetadata;
-
-//   try {
-//     contractMetadata = await contract.metadata.get();
-//   } catch (e) { }
-
-//   return {
-//     props: {
-//       nft,
-//       contractMetadata: contractMetadata || null,
-//     },
-//   };
-// }
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const listid = context.params?.tokenId as String;
-
+  const tokenId = context.params?.tokenId as string;
   const sdk = new ThirdwebSDK(NETWORK);
-  const contract = await sdk.getContract(MARKETPLACE_ADDRESS);
+  const abi: any = await getABI(context.params?.contractAddress);
+  const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, abi);
 
-  const listid_nft = await contract.directListings.getListing(String(listid));
+  const nft = await contract.erc721.get(tokenId);
 
-  const contractToken = await sdk.getContractFromAbi(
-    context.params?.contractAddress as string,
-    minigameABI
-  );
+  let contractMetadata;
 
-  const nft = await contractToken.erc721.get(listid_nft.tokenId);
-  const price_nft = listid_nft.currencyValuePerToken.displayValue;
-  // console.log("listid_nft", listid_nft);
-  const tokenContract = listid_nft.assetContractAddress;
+  try {
+    contractMetadata = await contract.metadata.get();
+  } catch (e) { }
 
   return {
     props: {
       nft,
-      price_nft,
-      tokenContract,
+      contractMetadata: JSON.parse(JSON.stringify(contractMetadata)) || null,
+    },
+  };
+}
+
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const tokenId = context.params?.tokenId as string;
+
+//   const sdk = new ThirdwebSDK(NETWORK);
+
+//   const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, minigameABI);
+//   const nft = await contract.erc721.get(tokenId);
+
+//   return {
+//     props: {
+//       nft
+//     },
+//     revalidate: 1,
+//   };
+// };
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const tokenId = context.params?.tokenId as string;
+
+  const sdk = new ThirdwebSDK(NETWORK);
+
+  const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, minigameABI);
+  const nft = await contract.erc721.get(tokenId);
+
+  return {
+    props: {
+      nft
     },
     revalidate: 1,
   };
@@ -419,10 +353,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const sdk = new ThirdwebSDK(NETWORK);
-  const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS, minigameABI);
+  const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS);
 
   const nfts = await contract.erc721.getAll();
-  console.log("haha", nfts);
 
   const paths = nfts.map((nft) => {
     return {
@@ -432,7 +365,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
       },
     };
   });
-  console.log("path", paths);
 
   return {
     paths,
