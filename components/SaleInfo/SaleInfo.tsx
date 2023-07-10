@@ -47,6 +47,8 @@ export default function SaleInfo({ nft }: Props) {
     "marketplace-v3"
   );
 
+  console.log("nft", nft)
+
   // useContract is a React hook that returns an object with the contract key.
   // The value of the contract key is an instance of an NFT_COLLECTION on the blockchain.
   // This instance is created from the contract address (NFT_COLLECTION_ADDRESS)
@@ -107,7 +109,7 @@ export default function SaleInfo({ nft }: Props) {
   const { register: registerDirect, handleSubmit: handleSubmitDirect } =
     useForm<DirectFormData>({
       defaultValues: {
-        nftContractAddress: `${nft.metadata.address}`, // change thanh address game.
+        nftContractAddress: nft.metadata.address as string,
         tokenId: nft.metadata.id,
         startDate: new Date(),
         endDate: new Date(),

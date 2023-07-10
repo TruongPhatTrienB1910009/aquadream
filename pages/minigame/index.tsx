@@ -29,6 +29,7 @@ const Index = () => {
     minigameABI
   );
   const address = useAddress();
+  console.log(address);
   const startDate = new Date("July 30, 2023 14:43:00");
   const dateTimeAfterThreeDays = startDate;
   const [{ data, error, loading }, switchNetwork] = useNetwork();
@@ -150,7 +151,7 @@ const Index = () => {
       console.log("hello2", index);
       setTotalMinted(index);
     } else {
-      setTotalMinted(-2);
+      setTotalMinted(0);
     }
   };
   const tokenOfOwner = async () => {
@@ -204,23 +205,18 @@ const Index = () => {
     }
   };
   useEffect(() => {
-    checkBalanceOf();
-    checkMinted();
-    tokenOfOwner();
-    getDataNFT();
-    GetTotalMinted();
-    if (status.message !== "") {
-      setOpenToast(true);
+    if (address !== null) {
+      checkBalanceOf();
+      checkMinted();
+      tokenOfOwner();
+      getDataNFT();
+      if (status.message !== "") {
+        setOpenToast(true);
+      }
     }
+    GetTotalMinted();
     if (tokenOfOwnerByIndex !== -1) GetClaim();
-  }, [
-    address,
-    balanceOf,
-    minted,
-    status.message,
-    tokenOfOwnerByIndex,
-    totalMinted,
-  ]);
+  }, [address, balanceOf, minted, status.message, tokenOfOwnerByIndex, totalMinted]);
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />

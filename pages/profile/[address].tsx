@@ -18,7 +18,7 @@ import {
 import styles from "../../styles/Profile.module.css";
 import randomColor from "../../util/randomColor";
 import { useAddress } from "@thirdweb-dev/react";
-import { GetNFTs } from "../../components/NFT/hook/getNFTs";
+import { GetNFTs, getABI } from "../../components/NFT/hook/getNFTs";
 
 const [randomColor1, randomColor2, randomColor3, randomColor4] = [
   randomColor(),
@@ -30,9 +30,8 @@ const [randomColor1, randomColor2, randomColor3, randomColor4] = [
 export default function ProfilePage() {
   const router = useRouter();
   const account = useAddress();
+  const [abiList, setAbiList] = useState<any>([]);
   const [tab, setTab] = useState<"nfts" | "listings" | "auctions">("nfts");
-
-  const { contract: nftCollection } = useContract(NFT_COLLECTION_ADDRESS);
 
   const { contract: marketplace } = useContract(
     MARKETPLACE_ADDRESS,
@@ -48,16 +47,25 @@ export default function ProfilePage() {
       seller: router.query.address as string,
     });
 
-  const { data: auctionListings, isLoading: loadingAuctions } =
-    useValidEnglishAuctions(marketplace, {
-      seller: router.query.address as string,
-    });
+  const getABIFromAddress = async () => {
+    if (directListings) {
+      let arr: any = [];
+      directListings.map(async (NFT, index) => {
+        arr[index] = await getABI(NFT.assetContractAddress);
+        setAbiList((oldValue: any) => {
+          return [...oldValue, arr[index]]
+        })
+      })
+    }
+  }
+
 
   useEffect(() => {
     if (account !== router.query.address) {
       router.push(`/profile/${account}`);
     }
-  }, [account]);
+    getABIFromAddress();
+  }, [account, directListings?.length]);
 
   return (
     <Container maxWidth="lg">
@@ -100,13 +108,6 @@ export default function ProfilePage() {
         >
           Listings
         </h3>
-        {/* <h3
-          className={`${styles.tab}
-        ${tab === "auctions" ? styles.activeTab : ""}`}
-          onClick={() => setTab("auctions")}
-        >
-          Auctions
-        </h3> */}
       </div>
 
       <div
@@ -129,23 +130,8 @@ export default function ProfilePage() {
         ) : directListings && directListings.length === 0 ? (
           <p>Nothing for sale yet! Head to the sell tab to list an NFT.</p>
         ) : (
-          directListings?.map((listing) => (
-            <ListingWrapper listing={listing} key={listing.id} />
-          ))
-        )}
-      </div>
-
-      <div
-        className={`${tab === "auctions" ? styles.activeTabContent : styles.tabContent
-          }`}
-      >
-        {loadingAuctions ? (
-          <p>Loading...</p>
-        ) : auctionListings && auctionListings.length === 0 ? (
-          <p>Nothing for sale yet! Head to the sell tab to list an NFT.</p>
-        ) : (
-          auctionListings?.map((listing) => (
-            <ListingWrapper listing={listing} key={listing.id} />
+          directListings?.map((listing, index) => (
+            <ListingWrapper listing={listing} abi={abiList[index]} key={listing.id} />
           ))
         )}
       </div>

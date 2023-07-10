@@ -26,8 +26,13 @@ import randomColor from "../../../util/randomColor";
 import Skeleton from "../../../components/Skeleton/Skeleton";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
+<<<<<<< HEAD
 import minigameABI from "../../../const/abi/minigame.json";
 import { id } from "ethers/lib/utils";
+=======
+import { useRouter } from "next/router";
+import { getABI } from "../../../components/NFT/hook/getNFTs";
+>>>>>>> master
 
 type Props = {
   nft: NFT;
@@ -39,8 +44,9 @@ const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
 export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   const [bidValue, setBidValue] = useState<string>();
-  console.log("bidValue", nft);
-  console.log("price_nft", price_nft);
+
+  const router = useRouter();
+
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
     MARKETPLACE_ADDRESS,
@@ -48,13 +54,13 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   );
 
   // Connect to NFT Collection smart contract
-  const { contract: nftCollection } = useContract(NFT_COLLECTION_ADDRESS);
+  const { contract: nftCollection } = useContract(router.query.contractAddress as string);
 
   console.log("nftCollect", nftCollection);
 
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
-      tokenContract: tokenContract,
+      tokenContract: router.query.contractAddress as string,
       tokenId: nft.metadata.id,
     });
   console.log("nft.metadata.address", nft.metadata.address);
@@ -64,7 +70,7 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   // 2. Load if the NFT is for auction
   const { data: auctionListing, isLoading: loadingAuction } =
     useValidEnglishAuctions(marketplace, {
-      tokenContract: NFT_COLLECTION_ADDRESS,
+      tokenContract: router.query.contractAddress as string,
       tokenId: nft.metadata.id,
     });
 
@@ -97,7 +103,7 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
       );
     } else if (directListing?.[0]) {
       txResult = await marketplace?.offers.makeOffer({
-        assetContractAddress: NFT_COLLECTION_ADDRESS,
+        assetContractAddress: router.query.contractAddress as string,
         tokenId: nft.metadata.id,
         totalPrice: bidValue,
       });
@@ -258,31 +264,6 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
                     </>
                   )}
                 </div>
-
-                {/* <div>
-                  {loadingAuction ? (
-                    <Skeleton width="120" height="24" />
-                  ) : (
-                    <>
-                      {auctionListing && auctionListing[0] && (
-                        <>
-                          <p className={styles.label} style={{ marginTop: 12 }}>
-                            Bids starting from
-                          </p>
-
-                          <div className={styles.pricingValue}>
-                            {
-                              auctionListing[0]?.minimumBidCurrencyValue
-                                .displayValue
-                            }
-                            {" " +
-                              auctionListing[0]?.minimumBidCurrencyValue.symbol}
-                          </div>
-                        </>
-                      )}
-                    </>
-                  )}
-                </div> */}
               </div>
             </div>
 
@@ -316,47 +297,6 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
                 >
                   Buy at asking price
                 </Web3Button>
-
-                {/* <div className={`${styles.listingTimeContainer} ${styles.or}`}>
-                  <p className={styles.listingTime}>or</p>
-                </div>
-
-                <input
-                  className={styles.input}
-                  defaultValue={
-                    auctionListing?.[0]?.minimumBidCurrencyValue
-                      ?.displayValue || 0
-                  }
-                  min={0}
-                  type="number"
-                  step={0.000001}
-                  onChange={(e) => {
-                    setBidValue(e.target.value);
-                  }}
-                /> */}
-
-                {/* <Web3Button
-                  contractAddress={MARKETPLACE_ADDRESS}
-                  action={async () => await createBidOrOffer()}
-                  className={styles.btn}
-                  onSuccess={() => {
-                    toast(`Bid success!`, {
-                      icon: "✅",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    });
-                  }}
-                  onError={(e) => {
-                    console.log(e);
-                    toast(`Bid failed! Reason: ${e.message}`, {
-                      icon: "❌",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    });
-                  }}
-                >
-                  Place bid
-                </Web3Button> */}
               </>
             )}
           </div>
@@ -366,13 +306,9 @@ export default function TokenPage({ nft, price_nft, tokenContract }: Props) {
   );
 }
 
-// export async function getServerSideProps(context: { params: { tokenId: string; contractAddress: string; }; }) {
+export async function getServerSideProps(context: { params: { tokenId: string; contractAddress: string; }; }) {
 
-//   const tokenId = context.params?.tokenId as string;
-//   const sdk = new ThirdwebSDK(NETWORK);
-
-//   const contract = await sdk.getContract(context.params?.contractAddress as string);
-
+<<<<<<< HEAD
 //   const nft = await contract.erc721.get(tokenId);
 
 //   let contractMetadata;
@@ -406,17 +342,35 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const price_nft = listid_nft.currencyValuePerToken.displayValue;
   // console.log("listid_nft", listid_nft);
   const tokenContract = listid_nft.assetContractAddress;
+=======
+  const tokenId = context.params?.tokenId as string;
+  const sdk = new ThirdwebSDK(NETWORK);
+  const abi: any = await getABI(context.params?.contractAddress);
+  const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, abi);
+
+  const nft = await contract.erc721.get(tokenId);
+>>>>>>> master
+
+  let contractMetadata;
+
+  try {
+    contractMetadata = await contract.metadata.get();
+  } catch (e) { }
 
   return {
     props: {
       nft,
+<<<<<<< HEAD
       price_nft,
       tokenContract,
+=======
+      contractMetadata: JSON.parse(JSON.stringify(contractMetadata)) || null,
+>>>>>>> master
     },
-    revalidate: 1,
   };
-};
+}
 
+<<<<<<< HEAD
 export const getStaticPaths: GetStaticPaths = async () => {
   const sdk = new ThirdwebSDK(NETWORK);
   const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS, minigameABI);
@@ -433,9 +387,41 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
   });
   console.log("path", paths);
+=======
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const tokenId = context.params?.tokenId as string;
 
-  return {
-    paths,
-    fallback: "blocking", // can also be true or 'blocking'
-  };
-};
+//   const sdk = new ThirdwebSDK(NETWORK);
+
+//   const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, minigameABI);
+//   const nft = await contract.erc721.get(tokenId);
+
+//   return {
+//     props: {
+//       nft
+//     },
+//     revalidate: 1,
+//   };
+// };
+>>>>>>> master
+
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const sdk = new ThirdwebSDK(NETWORK);
+//   const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS);
+
+//   const nfts = await contract.erc721.getAll();
+
+//   const paths = nfts.map((nft) => {
+//     return {
+//       params: {
+//         contractAddress: NFT_COLLECTION_ADDRESS,
+//         tokenId: nft.metadata.id,
+//       },
+//     };
+//   });
+
+//   return {
+//     paths,
+//     fallback: "blocking", // can also be true or 'blocking'
+//   };
+// };

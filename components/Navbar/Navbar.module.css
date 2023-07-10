@@ -1,54 +1,56 @@
 .navContainer {
   width: 100%;
-  position: fixed;
   top: 0px;
   left: 0px;
   z-index: 3;
-  background-color: transparent !important;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  background-color: #ececec;
 }
 
 .nav {
-  padding-left: 2em;
-  padding-right: 2em;
   display: flex;
   padding-top: 20px;
+  padding-bottom: 20px;
   align-items: center;
   justify-content: space-between;
-  width: 98%;
+  width: 100%;
   background-color: transparent !important;
 }
 
 .navLeft {
+  margin-left: 12%;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 12px;
   transition: all 0.15s ease-in-out;
 }
-
+.navbarTittleNfts {
+  margin-left: 1rem;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 22px;
+  color: #000;
+  margin-right: 2rem;
+}
 .navMiddle {
   display: flex;
-  margin-left: 20px;
+  margin-left: 5rem;
   flex-direction: row;
   align-items: center;
   gap: 24px;
 }
 
 .link {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 20px;
-  font-weight: 500;
+  text-decoration: none;
+  color: black;
+  font-size: 25px;
+  font-weight: 550;
   letter-spacing: 0.2px;
-  line-height: 16px;
   transition: 0.2s ease-in-out;
-  
 }
 
 .link:hover {
-  color: rgba(255, 255, 255, 255);
+  color: blue;
 }
 
 .homeLink:hover {
@@ -61,6 +63,7 @@
   flex-direction: row;
   gap: 16px;
   float: right;
+  margin-right: 15%;
 }
 
 .profileImage {
@@ -78,7 +81,6 @@
   font-weight: 500;
 }
 
-
 /* mobile  */
 
 .menuText:hover {
@@ -94,7 +96,6 @@
   margin-left: 6px;
 }
 
-
 .dropdown {
   position: relative;
   display: inline-block;
@@ -103,9 +104,9 @@
 .dropdown_content {
   opacity: 0;
   position: absolute;
-  min-width: 160px;
+  min-width: 20px;
   z-index: 3;
-  background-color: #000;
+  background-color: #ffffff;
   margin-top: 0.5px !important;
   transition: opacity 0.3s ease-out;
 }
@@ -113,16 +114,29 @@
 .showDropdowMenu {
   opacity: 1;
 }
-
 .svgRotate {
   transform: rotate(90deg) !important;
   transition: 0.1s;
 }
+@media (max-width: 920px){
+  .navLeft{
+    margin-left: 0;
+  }
+  .navMiddle{
+    margin-left: 1rem;
+  }
+  .link{
+    font-size: 20px;
+  }
+  .navRight{
+    margin-right: 0;
+  }
 
+}
 /* Sreens less than 720px */
 @media (max-width: 500px) {
   .navConnect {
-    margin-left: 10px;
+    display: none;
   }
 
   .navMiddle {
@@ -141,5 +155,4 @@
   .link:hover {
     background-color: #146ea2;
   }
-
 }
