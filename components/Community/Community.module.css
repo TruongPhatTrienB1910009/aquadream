@@ -1,0 +1,33 @@
+.Container {
+  background-image: url("../../public/images/community_cleanup.png");
+  width: 700px;
+  height: 590px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+.Text {
+  margin-left: 5%;
+  text-align: center;
+  
+}
+.Tittle {
+  font-size: 30px;
+  font-weight: 500;
+}
+.Content {
+  width: 300px;
+}
+.button{
+    margin-top: 1rem;
+}
+@media (max-width: 500px){
+  .Container{
+    width: 200px;
+    height: 400px;
+  }
+}

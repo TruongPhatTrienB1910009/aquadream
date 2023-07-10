@@ -3,9 +3,9 @@ import Image from "next/image";
 import ParrotImage from "../../public/images/Navbar/vetAndFire.png";
 import "react-slideshow-image/dist/styles.css";
 import { Slide } from "react-slideshow-image";
-import { green } from "@mui/material/colors";
-import Button, { ButtonProps } from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
+// import { green } from "@mui/material/colors";
+// import Button, { ButtonProps } from "@mui/material/Button";
+// import { styled } from "@mui/material/styles";
 
 const slideImages = [
   {
@@ -37,12 +37,12 @@ export const HeaderBig = () => {
                   Buy and sell NETs from the world&rsquo;s artists. More than
                   1000 premium digital artworks are aviable to be your&rsquo;s
                 </span>
-                <ColorButton variant="contained">See Details</ColorButton>
-                <ColorButton variant="contained">See Collection</ColorButton>
+                <div>
+                  {/* <ColorButton variant="contained">See Details</ColorButton>
+                  <ColorButton variant="contained">See Collection</ColorButton> */}
+                </div>
               </div>
-              <div className={styles.headerBigButton}>
-                
-              </div>
+              <div className={styles.headerBigButton}></div>
             </div>
             <div className={styles.headerMin}>
               <Image
@@ -57,8 +57,6 @@ export const HeaderBig = () => {
         ))}
       </Slide>
     </div>
-
-
   );
 };
 const buttonStyle = {
@@ -68,13 +66,13 @@ const buttonStyle = {
 };
 const properties = {
   prevArrow: (
-    <button style={{ ...buttonStyle, marginRight: '20px'}}>
+    <button style={{ ...buttonStyle, marginRight: "20px" }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="1.5em"
         viewBox="0 0 448 512"
       >
-        <path  d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+        <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
       </svg>
     </button>
   ),
@@ -90,12 +88,11 @@ const properties = {
     </button>
   ),
 };
-const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  color: theme.palette.getContrastText(green[200]),
-  backgroundColor: green[100],
-  "&:hover": {
-    backgroundColor: green[300],
-  },
-  justifyContent: 'center',
-  alignItems: 'center',
-}));
+// const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
+//   backgroundColor: green[100],
+//   "&:hover": {
+//     backgroundColor: green[300],
+//   },
+//   justifyContent: "center",
+//   alignItems: "center",
+// }));

@@ -6,7 +6,7 @@ import NextNProgress from "nextjs-progressbar";
 import { NETWORK } from "../const/contractAddresses";
 import "../styles/globals.css";
 import Container from "../components/Container/Container";
-import { HeaderBig } from "../components/HeaderBig/HeaderBig";
+import 'bootstrap/dist/css/bootstrap.min.css';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -24,7 +24,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Navbar />
         {/* Render the actual component (page) */}
         <Container maxWidth="lg">
-          {/* <HeaderBig /> */}
           <Component {...pageProps} />
         </Container>
         <Footer />

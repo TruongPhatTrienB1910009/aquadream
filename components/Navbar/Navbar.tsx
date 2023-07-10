@@ -60,9 +60,6 @@ export function Navbar() {
               <Link href="/minigame" style={{}} className={styles.link}>
                 Mini Game
               </Link>
-              <Link href="/" style={{}} className={styles.link}>
-                Community
-              </Link>
             </div>
           </div>
 
