@@ -8,7 +8,28 @@ import iconMusk from "../../public/images/TopCollection/iconMusk.png";
 import "react-slideshow-image/dist/styles.css";
 import { Slide } from "react-slideshow-image";
 import { Card } from "react-bootstrap";
+import { useEffect, useState } from "react";
 export const TopCollection = () => {
+  const [maxSize, setMaxSize] = useState({ width: 0, height: 0 });
+  const [slidesCount, setslidesCount] = useState(6);
+  useEffect(() => {
+    const handleResize = () => {
+      setMaxSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Call the handler initially to set the initial size
+    handleResize();
+    if (maxSize.width < 500) setslidesCount(3);
+    else
+      setslidesCount(6)
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [maxSize.width, slidesCount]);
   const topCollections = [
     {
       url: imageIcon.src,
@@ -46,10 +67,11 @@ export const TopCollection = () => {
       color: "blue",
     },
   ];
+
   return (
-    <div className={styles.topCollectionContainer}>
+    <div className={styles.topCollectionContainer} style={{ position: "sticky" }}>
       <div className={styles.topCollectionTittle}>Top Collection</div>
-      <Slide slidesToScroll={6} slidesToShow={6} indicators={true}>
+      <Slide slidesToScroll={slidesCount} slidesToShow={slidesCount} indicators={true}>
         {topCollections?.map((topCollection, index) => (
           <div key={index} className={styles.card}>
             <Card style={{ backgroundColor: "#f7f7f7", borderRadius: "5%" }}>

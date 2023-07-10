@@ -43,12 +43,7 @@ export const NFT101 = () => {
         {nfts101.map((nft101, index) => (
           <div
             key={index}
-            style={{
-              marginBottom: "15px",
-              display: "flex",
-              flexWrap: "wrap",
-              width: "18%",
-            }}
+            className={styles.nftCardItems}
           >
             <Card
               style={{
