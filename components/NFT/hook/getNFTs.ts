@@ -1,20 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ThirdwebSDK } from '@thirdweb-dev/sdk';
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { useEffect, useState } from "react";
-import { Network, Alchemy } from 'alchemy-sdk';
-import { MARKETPLACE_ADDRESS, NETWORK } from "../../../const/contractAddresses";
+import { Network, Alchemy } from "alchemy-sdk";
+import {
+  MARKETPLACE_ADDRESS,
+  NETWORK,
+  MarketNETWORK,
+} from "../../../const/contractAddresses";
 import { useContract, useNFTs } from "@thirdweb-dev/react";
 
+import Moralis from "moralis";
+import { EvmChain } from "@moralisweb3/common-evm-utils";
 
-const settings = {
-    apiKey: process.env.ALCHEMY_API_KEY,
-    network: Network.ETH_GOERLI,
-};
-const alchemy = new Alchemy(settings);
+if (!Moralis.Core.isStarted) {
+  Moralis.start({
+    apiKey: process.env.NEXT_PUBLIC_API_KEY_MORALIS,
+  });
+}
 
 export const GetNFTs = (account: any) => {
-    const [nftList, setNftList] = useState<any[]>([]);
-    const [isLoadingNFTs, setIsLoadingNFTs] = useState(false);
+  const [nftList, setNftList] = useState<any[]>([]);
+  const [isLoadingNFTs, setIsLoadingNFTs] = useState(false);
+  useEffect(() => {
+    const getNFTs = async () => {
+      try {
+        const nfts_tmp = await Moralis.EvmApi.nft.getWalletNFTs({
+          chain: "0x13881",
+          format: "decimal",
+          mediaItems: false,
+          address: account,
+        });
+        const nfts: any[] = nfts_tmp.toJSON().result!;
+        console.log("buy1", nfts);
+        console.log("buy1", nfts.length);
 
     useEffect(() => {
         const getNFTs = async () => {
@@ -40,13 +58,30 @@ export const GetNFTs = (account: any) => {
             } finally {
                 setIsLoadingNFTs(false);
             }
+            nfts[index].owner = `${account}`;
+            nfts[index].metadata.id = nfts[index].token_id;
+            nfts[index].metadata.address = nfts[index].token_address;
+            console.log("nfts[index]", nfts[index].metadata.image);
+            setNftList([...nfts]);
+          });
+        } else {
+          setNftList([]);
         }
-        getNFTs();
-    }, [account])
-
-    return { nftList, isLoadingNFTs }
-}
-
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoadingNFTs(false);
+      }
+    };
+    if (account) {
+      getNFTs();
+    } else {
+      setNftList([]);
+    }
+  }, [account]);
+  console.log("nftList", nftList);
+  return { nftList, isLoadingNFTs };
+};
 
 export const GetAllDataNFTsMarketplace = () => {
     const [listingNFTs, setListingNFTs] = useState<any>([]);
@@ -71,7 +106,10 @@ export const GetAllDataNFTsMarketplace = () => {
             } finally {
                 setIsloading(false);
             }
-
+          });
+          setListingNFTs(arr);
+        } else {
+          setListingNFTs([]);
         }
         getData();
     }, [])

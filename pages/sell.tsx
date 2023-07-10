@@ -4,14 +4,13 @@ import {
   useContract,
   useOwnedNFTs,
 } from "@thirdweb-dev/react";
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Container from "../components/Container/Container";
 import NFTGrid from "../components/NFT/NFTGrid";
 import tokenPageStyles from "../styles/Token.module.css";
 import { NFT as NFTType } from "@thirdweb-dev/sdk";
 import SaleInfo from "../components/SaleInfo/SaleInfo";
-import { GetNFTs } from "../components/NFT/hook/getNFTs"
-
+import { GetNFTs } from "../components/NFT/hook/getNFTs";
 
 const Sell = () => {
   // Load all of the NFTs from the NFT Collection
@@ -20,9 +19,10 @@ const Sell = () => {
   // const { data, isLoading } = useOwnedNFTs(contract, address);
 
   const { nftList: data, isLoadingNFTs: isLoading } = GetNFTs(address);
-  console.log("data", data)
+  console.log("data1", data);
 
   const [selectedNft, setSelectedNft] = useState<NFTType>();
+  console.log("selectedNft", selectedNft);
 
   return (
     <Container maxWidth="lg">
@@ -77,6 +77,6 @@ const Sell = () => {
       )}
     </Container>
   );
-}
+};
 
 export default memo(Sell);

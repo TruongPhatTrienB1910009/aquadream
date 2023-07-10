@@ -123,13 +123,15 @@ const Index = () => {
     }
   };
   const checkBalanceOf = async () => {
-    const data = await miniGameContract?.call("balanceOf", [address]);
-    if (data) {
-      const index = new BigNumber(data.toString()).toNumber();
-      if (index === 1) {
-        setBalanceOf(1);
-      } else {
-        setBalanceOf(0);
+    if (address) {
+      const data = await miniGameContract?.call("balanceOf", [address]);
+      if (data) {
+        const index = new BigNumber(data.toString()).toNumber();
+        if (index === 1) {
+          setBalanceOf(1);
+        } else {
+          setBalanceOf(0);
+        }
       }
     }
   };
@@ -144,26 +146,29 @@ const Index = () => {
   const GetTotalMinted = async () => {
     const data = await miniGameContract?.call("totalSupply", []);
     if (data) {
+      console.log("hello", data);
       const index = new BigNumber(data.toString()).toNumber();
+      console.log("hello2", index);
       setTotalMinted(index);
     } else {
       setTotalMinted(0);
     }
   };
   const tokenOfOwner = async () => {
-    try {
-      const data = await miniGameContract?.call("tokenOfOwnerByIndex", [
-        address,
-        0,
-      ]);
-      const index = new BigNumber(data.toString()).toNumber();
-      console.log(index);
-      if (index !== -1) {
-        setTokenOfOwnerByIndex(index);
+    if (address) {
+      try {
+        const data = await miniGameContract?.call("tokenOfOwnerByIndex", [
+          address,
+          0,
+        ]);
+        const index = new BigNumber(data.toString()).toNumber();
+        if (index !== -1) {
+          setTokenOfOwnerByIndex(index);
+        }
+      } catch (e) {
+        console.log(e);
+        setTokenOfOwnerByIndex(-1);
       }
-    } catch (e) {
-      console.log(e);
-      setTokenOfOwnerByIndex(-1);
     }
   };
 
@@ -261,7 +266,7 @@ const Index = () => {
                 ""
               ) : (
                 <button disabled={true} style={{ cursor: "not-allowed" }}>
-                  You are Claim NFT
+                  You claimed reward!
                 </button>
               )}
             </div>

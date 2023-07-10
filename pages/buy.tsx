@@ -6,8 +6,9 @@ import { GetNFTs, GetAllDataNFTsMarketplace } from "../components/NFT/hook/getNF
 
 
 const Buy = () => {
-  const { listingNFTs: data, isLoading: isLoading } = GetAllDataNFTsMarketplace();
-
+  const { listingNFTs: data, isLoading: isLoading } =
+    GetAllDataNFTsMarketplace();
+  console.log("buy", data);
   return (
     <div>
       <h1>Buy NFTs</h1>
@@ -21,7 +22,6 @@ const Buy = () => {
       />
     </div>
   );
-}
-
+};
 
 export default Buy;

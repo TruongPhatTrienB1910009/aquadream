@@ -18,28 +18,27 @@ const NFTGrid = ({
   overrideOnclickBehavior,
   emptyText = "No NFTs found for this collection.",
 }: Props) => {
-
   return (
     <div className={styles.nftGridContainer}>
       {isLoading ? (
         [...Array(20)].map((_, index) => (
           <div key={index} className={styles.nftContainer}>
-            <Skeleton key={index} width={"100%"} height="312px" />
+            <Skeleton key={index} width={"100%"} height="412px" />
           </div>
         ))
       ) : data && data.length > 0 ? (
         data.map((nft) =>
           !overrideOnclickBehavior ? (
             <Link
-              href={`/token/${nft.metadata.address}/${nft.metadata.id}`}
-              key={nft.metadata.id}
+              href={`/token/${nft.metadata.address}/${nft.id}`}
+              key={nft.id}
               className={styles.nftContainer}
             >
               <NFTComponent nft={nft} />
             </Link>
           ) : (
             <div
-              key={nft.metadata.id}
+              key={nft.id}
               className={styles.nftContainer}
               onClick={() => overrideOnclickBehavior(nft)}
             >
@@ -52,6 +51,6 @@ const NFTGrid = ({
       )}
     </div>
   );
-}
+};
 
 export default NFTGrid;
