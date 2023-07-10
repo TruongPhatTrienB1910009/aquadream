@@ -13,23 +13,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 export const TopCreator = () => {
-  const [maxSize, setMaxSize] = useState({ width: 0, height: 0 });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setMaxSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-
-    // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Call the handler initially to set the initial size
-    handleResize();
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
   const topCreators = [
     {
       url: imageIcon.src,
@@ -67,9 +50,6 @@ export const TopCreator = () => {
   ];
   return (
     <div>
-      <div>
-        Max Size: {maxSize.width}px (width) x {maxSize.height}px (height)
-      </div>
       <div className={styles.topCreatorContainer}>
         <div className={styles.topCreatorTittle}>Top Creator</div>
         <div className={styles.topCreatorRight}>
