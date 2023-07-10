@@ -26,10 +26,17 @@
   text-align: center;
   flex-wrap: nowrap;
 }
-.exploreIconNameTop {
+.topCardItems {
+  margin-bottom: 15px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  width: 24%;
+}
+.exploreIconNameTop {
+  margin-left: 5%;
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
   font-size: 20px;
   width: 100%;
 }
@@ -54,14 +61,14 @@
   padding: 0 3% 0 3%;
   justify-content: space-between;
 }
-.priceSeeAll{
+.priceSeeAll {
   font-weight: 500;
   padding: 1% 5% 1% 5%;
 }
 .topCollectionName {
-  margin: 6% 0 0 10%;
+  text-align: center;
 }
-.price{
+.price {
   font-size: 1.25rem;
   font-weight: 500;
 }
@@ -122,34 +129,75 @@
   font-size: 0.75rem;
   line-height: 1rem;
 }
-@media (max-width: 830px){
-  .priceSeeAll{
+@media (max-width: 800px) {
+  .priceSeeAll {
     font-size: 10px;
     padding: 5px;
   }
-}
-@media (max-width: 500px){
-  .show_counter .countdown{
-    padding: 0;
+  .exploreTextBotton {
+    display: flex;
+    justify-content: center;
   }
-  .exploreIconName{
+  .price {
+    text-align: center;
+    font-size: 80%;
+  }
+  .explorePrice {
     display: block;
   }
-  .exploreTextBotton{
+  .priceSeeAll {
+    width: 100%;
+  }
+  .exploreDescription {
+    font-size: 80%;
+  }
+  .priceSeeAll {
+    width: 100%;
+  }
+  .exploreDescription {
+    font-size: 80%;
+  }
+  .topCardItems {
+    width: 49%;
+    text-align: center;
+  }
+  .exploreCouter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (max-width: 500px) {
+  .show_counter .countdown {
+    padding: 0;
+  }
+  .exploreIconName {
+    display: block;
+  }
+  .exploreTextBotton {
     padding: 0;
     font-size: 1rem;
     justify-content: center;
   }
-  .explorePrice{
+  .explorePrice {
     display: block;
   }
-  .price{
-    font-size: 0.7rem;
+  .price {
+    font-size: 70%;
   }
-  .priceSeeAll{
+  .priceSeeAll {
     width: 100%;
   }
-  .exploreDescription{
-    font-size: 0.8rem;
+  .exploreDescription {
+    font-size: 80%;
+  }
+  .topCardItems {
+    width: 49%;
+    text-align: center;
+  }
+  .exploreCouter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

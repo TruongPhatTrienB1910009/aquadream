@@ -14,6 +14,7 @@ import Image from "next/image";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 export const TopCreator = () => {
+
   const topCreators = [
     {
       url: imageIcon.src,

@@ -18,12 +18,21 @@
   margin-top: 20px;
   cursor: pointer;
 }
-.nftQuestion{
+.nftQuestion {
   font-size: 1.25rem;
   font-weight: 500;
 }
-@media (max-width: 500px){
-  .nftQuestion{
+.nftCardItems {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 18%;
+}
+@media (max-width: 500px) {
+  .nftQuestion {
     font-size: 0.5rem;
+  }
+  .nftCardItems{
+    width: 49%;
   }
 }

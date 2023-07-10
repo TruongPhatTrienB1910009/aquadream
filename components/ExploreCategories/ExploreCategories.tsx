@@ -47,6 +47,17 @@ export const ExploreCategories = () => {
       price: "2.079",
       icon: iconLinh.src,
     },
+    {
+      url: iconCat.src,
+      name: "Biden",
+      time: "July 11, 2023 14:43:00",
+      maxTotal: "200",
+      totalSupply: "2",
+      description: "Highest bid",
+      nameNft: "Metaverse Game",
+      price: "2.079",
+      icon: iconLinh.src,
+    },
   ];
   return (
     <div>
@@ -58,15 +69,7 @@ export const ExploreCategories = () => {
       </div>
       <div className={styles.topCreatorCard}>
         {exploreCategories.map((explorecategory, index) => (
-          <div
-            key={index}
-            style={{
-              marginBottom: "15px",
-              display: "flex",
-              flexWrap: "wrap",
-              width: "30%",
-            }}
-          >
+          <div key={index} className={styles.topCardItems}>
             <Card
               style={{
                 backgroundColor: "#ffffff",
@@ -74,23 +77,19 @@ export const ExploreCategories = () => {
                 width: "100%",
               }}
             >
-              <div className={styles.exploreIconName}>
-                <div>
-                  <Image
-                    src={explorecategory?.url!}
-                    width={70}
-                    height={70}
-                    alt={explorecategory?.name!}
-                    style={{
-                      borderRadius: "50%",
-                      padding: "10px",
-                    }}
-                  />
-                </div>
-                <div className={styles.exploreIconNameTop}>
-                  <Card.Text className={styles.topCollectionName}>
-                    {explorecategory?.name}
-                  </Card.Text>
+              <div className={styles.exploreIconNameTop}>
+                <Image
+                  src={explorecategory?.url!}
+                  width={70}
+                  height={70}
+                  alt={explorecategory?.name!}
+                  style={{
+                    borderRadius: "50%",
+                    padding: "10px",
+                  }}
+                />
+                <div className={styles.topCollectionName}>
+                  {explorecategory?.name}
                 </div>
               </div>
               <div style={{ display: "flex" }}>
@@ -103,9 +102,10 @@ export const ExploreCategories = () => {
                   }}
                 />
               </div>
-
               <Card.Body>
-                <CountdownTimer targetDate={new Date(explorecategory.time)} />
+                <div className={styles.exploreCouter}>
+                  <CountdownTimer targetDate={new Date(explorecategory.time)} />
+                </div>
                 <div className={styles.exploreTextBotton}>
                   <div>{explorecategory.nameNft}</div>
                   <div>
@@ -116,7 +116,9 @@ export const ExploreCategories = () => {
                   <Card.Text>{explorecategory.description}</Card.Text>
                 </div>
                 <div className={styles.explorePrice}>
-                  <div className={styles.price}>Bid {explorecategory.price} ETH</div>
+                  <div className={styles.price}>
+                    Bid {explorecategory.price} ETH
+                  </div>
                   <Button variant="success" className={styles.priceSeeAll}>
                     See All
                   </Button>

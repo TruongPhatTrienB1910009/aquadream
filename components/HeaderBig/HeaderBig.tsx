@@ -3,9 +3,6 @@ import Image from "next/image";
 import ParrotImage from "../../public/images/Navbar/vetAndFire.png";
 import "react-slideshow-image/dist/styles.css";
 import { Slide } from "react-slideshow-image";
-// import { green } from "@mui/material/colors";
-// import Button, { ButtonProps } from "@mui/material/Button";
-// import { styled } from "@mui/material/styles";
 
 const slideImages = [
   {
@@ -24,7 +21,7 @@ const slideImages = [
 
 export const HeaderBig = () => {
   return (
-    <div className="slide-container">
+    <div style={{ position: "sticky" }}>
       <Slide {...properties}>
         {slideImages.map((slideImage, index) => (
           <div key={index} className={styles.headerBigContainer}>
@@ -37,10 +34,6 @@ export const HeaderBig = () => {
                   Buy and sell NETs from the world&rsquo;s artists. More than
                   1000 premium digital artworks are aviable to be your&rsquo;s
                 </span>
-                <div>
-                  {/* <ColorButton variant="contained">See Details</ColorButton>
-                  <ColorButton variant="contained">See Collection</ColorButton> */}
-                </div>
               </div>
               <div className={styles.headerBigButton}></div>
             </div>
@@ -88,11 +81,3 @@ const properties = {
     </button>
   ),
 };
-// const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-//   backgroundColor: green[100],
-//   "&:hover": {
-//     backgroundColor: green[300],
-//   },
-//   justifyContent: "center",
-//   alignItems: "center",
-// }));
