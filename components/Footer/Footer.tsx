@@ -10,6 +10,7 @@ import {
   faLinkedin,
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
+import Link from "next/link";
 
 function Footer() {
   return (
@@ -26,16 +27,20 @@ function Footer() {
                     alignItems: "center",
                   }}
                 >
-                  <FontAwesomeIcon
-                    icon={faEthereum}
-                    style={{
-                      padding: "15px 25px 15px 25px",
-                      backgroundColor: "#c0ff3e",
-                      borderRadius: "10px",
-                      fontSize: "40px",
-                    }}
-                  />
-                  <span className={styles.footerTittleNfts}>AquaDream</span>
+                  <Link href="/" style={{ color: "black" }}>
+                    <FontAwesomeIcon
+                      icon={faEthereum}
+                      style={{
+                        padding: "15px 25px 15px 25px",
+                        backgroundColor: "#c0ff3e",
+                        borderRadius: "10px",
+                        fontSize: "40px",
+                      }}
+                    />
+                  </Link>
+                  <Link href="/" style={{ textDecoration: "none" }}>
+                    <span className={styles.footerTittleNfts}>AquaDream</span>
+                  </Link>
                 </div>
                 <div className={styles.footerJoinNfts}>Join NFTs Community</div>
                 <div className={styles.footerIconCenter}>

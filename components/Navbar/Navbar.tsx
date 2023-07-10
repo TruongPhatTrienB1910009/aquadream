@@ -27,16 +27,20 @@ export function Navbar() {
               alignItems: "center",
             }}
           >
-            <FontAwesomeIcon
-              icon={faEthereum}
-              style={{
-                padding: "10px 15px 10px 15px",
-                backgroundColor: "#c0ff3e",
-                borderRadius: "10px",
-                fontSize: "25px",
-              }}
-            />
-            <span className={styles.navbarTittleNfts}>AquaDream</span>
+            <Link href="/" style={{ color: "black" }}>
+              <FontAwesomeIcon
+                icon={faEthereum}
+                style={{
+                  padding: "10px 15px 10px 15px",
+                  backgroundColor: "#c0ff3e",
+                  borderRadius: "10px",
+                  fontSize: "25px",
+                }}
+              />
+            </Link>
+            <Link href="/" style={{ textDecoration: "none" }}>
+              <span className={styles.navbarTittleNfts}>AquaDream</span>
+            </Link>
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
               style={{
@@ -44,12 +48,12 @@ export function Navbar() {
                 backgroundColor: "#e3e5e8",
                 borderRadius: "50%",
                 WebkitBorderRadius: "50%",
-                MozBorderRadius:'50%',
+                MozBorderRadius: "50%",
                 fontSize: "20px",
-                fontWeight: '100'
+                fontWeight: "100",
               }}
             />
-            
+
             <div className={styles.navMiddle}>
               <Link href="/buy" className={styles.link}>
                 Buy
@@ -88,7 +92,11 @@ export function Navbar() {
 
         <div className={styles.navRight}>
           <div className={styles.navConnect}>
-            <ConnectWallet style={{backgroundColor: 'black', color: 'white'}} theme="dark" btnTitle="Connect Wallet" />
+            <ConnectWallet
+              style={{ backgroundColor: "black", color: "white" }}
+              theme="dark"
+              btnTitle="Connect Wallet"
+            />
           </div>
           {address ? (
             <Link className={styles.link} href={`/profile/${address}`}>
