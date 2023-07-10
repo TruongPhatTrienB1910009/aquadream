@@ -1,7 +1,6 @@
 import type { NFT as NFTType } from "@thirdweb-dev/sdk";
 import Link from "next/link";
 import React from "react";
-import { NFT_COLLECTION_ADDRESS } from "../../const/contractAddresses";
 import Skeleton from "../Skeleton/Skeleton";
 import NFTComponent from "./NFT";
 import styles from "../../styles/Buy.module.css";

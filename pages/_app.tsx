@@ -6,8 +6,7 @@ import NextNProgress from "nextjs-progressbar";
 import { NETWORK } from "../const/contractAddresses";
 import "../styles/globals.css";
 import Container from "../components/Container/Container";
-
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
