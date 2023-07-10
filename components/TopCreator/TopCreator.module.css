@@ -5,6 +5,7 @@
   margin-top: 20px;
   justify-content: space-between;
 }
+
 .topCreatorTittle {
   margin-bottom: 20px;
   font-size: 25px;
@@ -17,28 +18,35 @@
   float: right !important;
   right: 0;
 }
-.topCreatorCard {
+
+/* .topCreatorCard {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 20px;
-}
+} */
+
 .topCollectionIconName {
   margin-top: 1rem;
   display: flex;
 }
+
 .topCollectionName {
   margin-left: 5%;
 }
+
+
 @media (max-width: 500px) {
   .topCollectionIconName {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
   }
+
   .topCollectionText {
     font-size: 0.7rem;
   }
+
   .topCollectionStar {
     font-size: 0.5rem;
   }

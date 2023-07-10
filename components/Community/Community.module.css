@@ -1,33 +1,57 @@
 .Container {
   background-image: url("../../public/images/community_cleanup.png");
-  width: 700px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   height: 590px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: auto;
-  margin-right: auto;
   flex-wrap: wrap;
   margin-bottom: 4rem;
 }
+
 .Text {
-  margin-left: 5%;
+  margin-left: 8px;
   text-align: center;
-  
 }
+
 .Tittle {
   font-size: 30px;
   font-weight: 500;
 }
+
 .Content {
   width: 300px;
 }
-.button{
-    margin-top: 1rem;
+
+.button {
+  margin-top: 1rem;
 }
-@media (max-width: 500px){
-  .Container{
+
+@media (max-width: 500px) {
+  .Container {
+    height: 360px;
+    margin-bottom: 2rem;
+  }
+
+  .Tittle {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .Text {
+    margin-left: 8px;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .Content {
     width: 200px;
-    height: 400px;
+  }
+
+  .button {
+    width: 180px;
+    margin-left: 5px;
   }
 }

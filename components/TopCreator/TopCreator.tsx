@@ -11,7 +11,8 @@ import iconMusk from "../../public/images/TopCollection/iconMusk.png";
 import { faStar, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 export const TopCreator = () => {
   const topCreators = [
     {
@@ -56,22 +57,18 @@ export const TopCreator = () => {
           <Button variant="success">See All</Button>
         </div>
       </div>
-      <div className={styles.topCreatorCard}>
+      <Row>
         {topCreators.map((topCreator, index) => (
-          <div
+          <Col
             key={index}
-            style={{
-              marginBottom: "15px",
-              display: "flex",
-              flexWrap: "wrap",
-              width: "25%",
-            }}
+            sm={4}
+            lg={3}
           >
             <Card
               style={{
                 backgroundColor: "#f7f7f7",
                 borderRadius: "5%",
-                width: "90%",
+                marginBottom: "15px"
               }}
             >
               <div style={{ display: "flex" }}>
@@ -118,9 +115,9 @@ export const TopCreator = () => {
                 <FontAwesomeIcon icon={faStar} style={{ color: "#f7d447" }} />
               </div>
             </Card>
-          </div>
+          </Col>
         ))}
-      </div>
+      </Row>
     </div>
   );
 };
