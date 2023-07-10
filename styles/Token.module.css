@@ -24,6 +24,7 @@
   max-width: 450px;
   margin-top: 16px;
   margin-right: 16px;
+  color: black !important;
 }
 
 .image {
@@ -46,7 +47,7 @@
   border-radius: 8px;
   margin-bottom: 16px;
   margin-left: 2px;
-  color: white;
+  color: black;
 }
 
 .contractMetadataContainer {
@@ -89,6 +90,7 @@
   margin: 0px;
   margin-left: 16px;
   margin-right: 16px;
+  color: black;
 }
 
 .title {
@@ -111,6 +113,7 @@
   transition: opacity 0.2s ease-in-out;
   margin-left: 16px;
   margin-right: 16px;
+  color: black;
 }
 
 .nftOwnerContainer:hover {
@@ -138,15 +141,19 @@
 }
 
 .label {
-  color: rgba(255, 255, 255, 0.6);
+  /* color: rgba(255, 255, 255, 0.6); */
   margin: 0px;
   margin-bottom: 4px;
+  color: black;
+
 }
 
 .nftOwnerAddress {
   font-weight: 600;
   margin: 0px;
-  color: rgba(255, 255, 255, 0.9);
+  /* color: rgba(255, 255, 255, 0.9); */
+  color: black;
+
 }
 
 .descriptionContainer {
@@ -185,7 +192,7 @@
   align-items: center;
   flex-grow: 1;
   gap: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid #ccc;
   padding: 8px 12px;
   min-width: 128px;
   border-radius: 16px;
@@ -195,13 +202,16 @@
 .traitValue {
   font-weight: 600;
   margin: 0px;
-  color: rgba(255, 255, 255, 0.9);
+  /* color: rgba(255, 255, 255, 0.9); */
+  color: black;
+
 }
 
 .traitName {
   font-weight: 400;
   margin: 0px;
-  color: rgba(255, 255, 255, 0.6);
+  /* color: rgba(255, 255, 255, 0.6); */
+  color: black;
 }
 
 .eventContainer {
@@ -228,6 +238,7 @@
   overflow: hidden;
   margin-top: 32px;
   margin-bottom: 24px;
+  color: black;
 }
 
 .pricingInfo {
@@ -237,13 +248,15 @@
   width: 100%;
   margin: 0px;
   margin-bottom: 12px;
+  color: black;
 }
 
 .pricingValue {
   font-size: 18px;
   line-height: 24px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  /* color: rgba(255, 255, 255, 0.9); */
+  color: black;
   margin: 0px;
   border-radius: 8px;
 }
@@ -265,7 +278,8 @@
   font-size: 14px;
   line-height: 24px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.6);
+  /* color: rgba(255, 255, 255, 0.6); */
+  color: black;
   margin: 0px;
 }
 
