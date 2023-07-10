@@ -17,6 +17,7 @@ const Sell = () => {
   // const { contract } = useContract(NFT_COLLECTION_ADDRESS);
   const address = useAddress();
   // const { data, isLoading } = useOwnedNFTs(contract, address);
+
   const { nftList: data, isLoadingNFTs: isLoading } = GetNFTs(address);
   console.log("data1", data);
 

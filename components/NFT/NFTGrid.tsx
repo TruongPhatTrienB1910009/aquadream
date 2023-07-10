@@ -31,14 +31,14 @@ const NFTGrid = ({
           !overrideOnclickBehavior ? (
             <Link
               href={`/token/${nft.metadata.address}/${nft.id}`}
-              key={nft.metadata.id}
+              key={nft.id}
               className={styles.nftContainer}
             >
               <NFTComponent nft={nft} />
             </Link>
           ) : (
             <div
-              key={nft.metadata.id}
+              key={nft.id}
               className={styles.nftContainer}
               onClick={() => overrideOnclickBehavior(nft)}
             >
