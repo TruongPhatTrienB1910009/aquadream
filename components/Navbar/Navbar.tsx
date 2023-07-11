@@ -66,7 +66,9 @@ export function Navbar() {
               </Link>
             </div>
           </div>
+        </div>
 
+        <div className={styles.navRight}>
           <div className={styles.dropDownMenu}>
             <div className={styles.dropdown}>
               <span onClick={() => showMenu()} className={styles.menuText}>
@@ -88,9 +90,6 @@ export function Navbar() {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className={styles.navRight}>
           <div className={styles.navConnect}>
             <ConnectWallet
               style={{ backgroundColor: "black", color: "white" }}
