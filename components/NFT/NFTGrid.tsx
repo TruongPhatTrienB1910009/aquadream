@@ -30,8 +30,8 @@ const NFTGrid = ({
         data.map((nft) =>
           !overrideOnclickBehavior ? (
             <Link
-              href={`/token/${nft.metadata.address}/${nft.tokenId}`}
-              key={nft.tokenId}
+              href={`/token/${nft.metadata.address}/${nft?.tokenId}`}
+              key={nft?.tokenId}
               className={styles.nftContainer}
             >
               <NFTComponent nft={nft} />
