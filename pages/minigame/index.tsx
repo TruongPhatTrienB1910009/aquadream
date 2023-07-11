@@ -31,7 +31,7 @@ const Index = () => {
   );
   const address = useAddress();
   console.log(address);
-  const startDate = new Date("July 30, 2023 14:43:00");
+  const startDate = new Date("July 15, 2023 14:43:00");
   const dateTimeAfterThreeDays = startDate;
   const [{ data, error, loading }, switchNetwork] = useNetwork();
   const chainId = useChainId();
