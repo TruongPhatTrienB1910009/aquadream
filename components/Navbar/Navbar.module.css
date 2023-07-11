@@ -11,6 +11,7 @@
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
+  padding: 20px;
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
@@ -161,7 +162,7 @@
   }
 
   .link {
-    padding: 12px;
+    /* padding: 12px; */
     display: block;
   }
 
