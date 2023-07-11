@@ -14,7 +14,7 @@ const Home: NextPage = () => {
     <>
       <HeaderBig />
       <TopCollection />
-      <TopSeller/>
+      {/* <TopSeller/> */}
       <TopCreator/>
       <ExploreCategories/>
       <NFT101/>

@@ -75,6 +75,7 @@ export const ExploreCategories = () => {
                 backgroundColor: "#ffffff",
                 borderRadius: "5%",
                 width: "100%",
+                cursor: 'pointer'
               }}
             >
               <div className={styles.exploreIconNameTop}>

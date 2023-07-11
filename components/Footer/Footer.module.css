@@ -20,6 +20,8 @@
   font-size: 16px;
   line-height: 22px;
   color: #000;
+  list-style-type: none;
+  padding-top: 12px;
 }
 .footerTittleNfts {
   margin-left: 0.5rem;
@@ -72,17 +74,14 @@
   margin-bottom: 3rem !important;
   margin-left: 5rem;
 }
-.footerLink {
-  list-style-type: none;
-  padding-top: 12px;
-}
-.footerWidget .footerLink li {
+.footerWidget .footerTittle li {
   padding: 4px 0;
 }
-.footerWidget .footerLink li a {
+.footerWidget .footerTittle li a {
   font-weight: 500;
-  font-size: 16px;
-  line-height: 22px;
+  text-transform: none;
+  font-size: 14px;
+  line-height: 18px;
   color: #000;
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
@@ -159,7 +158,7 @@
   }
 }
 @media (max-width: 920px) {
-  .footerRow{
+  .footerRow {
     margin-left: 0;
   }
   .footerItemsIcon {

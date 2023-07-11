@@ -103,38 +103,43 @@ function Footer() {
             </div>
             <div className={styles.footerItems}>
               <div className={styles.footerWidget}>
-                <span className={styles.footerTittle}>Comminucate</span>
-                <ul className={styles.footerLink}>
+                <ul className={styles.footerTittle}>
+                  Marketplace
                   <li>
-                    <a>Abount</a>
+                    <a>All NFTs</a>
                   </li>
                   <li>
-                    <a>Abount</a>
+                    <a>Gaming</a>
                   </li>
                   <li>
-                    <a>Abount</a>
+                    <a>Art</a>
                   </li>
                   <li>
-                    <a>Abount</a>
+                    <a>Memberships</a>
                   </li>
                 </ul>
               </div>
             </div>
             <div className={styles.footerItems}>
               <div className={styles.footerWidget}>
-                <span className={styles.footerTittle}>Comminucate</span>
-                <ul className={styles.footerLink}>
+                <ul className={styles.footerTittle}>Resources
                   <li>
-                    <a>Abount</a>
+                    <a>Blog</a>
                   </li>
                   <li>
-                    <a>Abount</a>
+                    <a>Blog</a>
                   </li>
                   <li>
-                    <a>Abount</a>
+                    <a>Blog</a>
                   </li>
                   <li>
-                    <a>Abount</a>
+                    <a>Learn</a>
+                  </li>
+                  <li>
+                    <a>Partners</a>
+                  </li>
+                  <li>
+                    <a>Community standards</a>
                   </li>
                 </ul>
               </div>

@@ -114,10 +114,12 @@
   background-color: #ffffff;
   margin-top: 0.5px !important;
   transition: opacity 0.3s ease-out;
+  display: none;
 }
 
 .showDropdowMenu {
   opacity: 1;
+  display: block;
 }
 
 .svgRotate {

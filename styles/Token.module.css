@@ -15,6 +15,15 @@
   margin-top: 128px;
 }
 
+.Breadcrumb {
+  margin-top: 7rem;
+}
+
+.BreadcrumbSellItem a {
+  text-decoration: none;
+  color: black !important;
+}
+
 .metadataContainer {
   display: flex;
   flex-direction: column;

@@ -23,13 +23,13 @@
 
 .tabs {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
   margin-top: 16px;
   margin-bottom: 16px;
   color: black;
+}
+
+.nav-link .active {
+  color: blue;
 }
 
 .tab {
@@ -43,11 +43,11 @@
 }
 
 .tab:hover {
-  color: rgba(255, 255, 255, 255);
+  color: blue;
 }
 
 .activeTab {
-  color: rgba(255, 255, 255, 255);
+  color: blue;
   border-bottom: 2px solid #0294fe;
 }
 

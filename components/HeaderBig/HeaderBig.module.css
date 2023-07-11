@@ -46,3 +46,16 @@
   align-items: center;
   margin: auto;
 }
+@media (max-width: 500px) {
+  .headerMin {
+    display: none;
+  }.headerBig {
+    width: 100%;
+    padding-top: 40px;
+  }
+  .headerBigText {
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 125%;
+  }
+}

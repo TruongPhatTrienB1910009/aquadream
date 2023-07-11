@@ -19,6 +19,7 @@ import styles from "../../styles/Profile.module.css";
 import randomColor from "../../util/randomColor";
 import { useAddress } from "@thirdweb-dev/react";
 import { GetNFTs, getABI } from "../../components/NFT/hook/getNFTs";
+import { Tab, Tabs } from "react-bootstrap";
 
 const [randomColor1, randomColor2, randomColor3, randomColor4] = [
   randomColor(),
@@ -53,12 +54,11 @@ export default function ProfilePage() {
       directListings.map(async (NFT, index) => {
         arr[index] = await getABI(NFT.assetContractAddress);
         setAbiList((oldValue: any) => {
-          return [...oldValue, arr[index]]
-        })
-      })
+          return [...oldValue, arr[index]];
+        });
+      });
     }
-  }
-
+  };
 
   useEffect(() => {
     if (account !== router.query.address) {
@@ -92,8 +92,38 @@ export default function ProfilePage() {
           )}
         </h1>
       </div>
-
-      <div className={styles.tabs}>
+      <div>
+        <Tabs
+          defaultActiveKey="home"
+          transition={false}
+          id="noanim-tab-example"
+          className="mb-3 mt-3"
+        >
+          <Tab eventKey="home" title="NFTs">
+            <NFTGrid
+              data={ownedNfts}
+              isLoading={loadingOwnedNfts}
+              emptyText="Looks like you don't have any NFTs from this collection. Head to the buy page to buy some!"
+            />
+          </Tab>
+          <Tab eventKey="Listings" title="Listings">
+            {loadingDirects ? (
+              <p>Loading...</p>
+            ) : directListings && directListings.length === 0 ? (
+              <p>Nothing for sale yet! Head to the sell tab to list an NFT.</p>
+            ) : (
+              directListings?.map((listing, index) => (
+                <ListingWrapper
+                  listing={listing}
+                  abi={abiList[index]}
+                  key={listing.id}
+                />
+              ))
+            )}
+          </Tab>
+        </Tabs>
+      </div>
+      {/* <div className={styles.tabs}>
         <h3
           className={`${styles.tab} 
         ${tab === "nfts" ? styles.activeTab : ""}`}
@@ -134,7 +164,7 @@ export default function ProfilePage() {
             <ListingWrapper listing={listing} abi={abiList[index]} key={listing.id} />
           ))
         )}
-      </div>
+      </div> */}
     </Container>
   );
 }

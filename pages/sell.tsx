@@ -11,7 +11,9 @@ import tokenPageStyles from "../styles/Token.module.css";
 import { NFT as NFTType } from "@thirdweb-dev/sdk";
 import SaleInfo from "../components/SaleInfo/SaleInfo";
 import { GetNFTs } from "../components/NFT/hook/getNFTs";
-
+import { Breadcrumb } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 const Sell = () => {
   // Load all of the NFTs from the NFT Collection
@@ -20,16 +22,21 @@ const Sell = () => {
   // const { data, isLoading } = useOwnedNFTs(contract, address);
 
   const { nftList: data, isLoadingNFTs: isLoading } = GetNFTs(address);
-  console.log("data", data)
+  console.log("data", data);
 
   const [selectedNft, setSelectedNft] = useState<NFTType>();
 
   return (
     <Container maxWidth="lg">
-      <h1>Sell NFTs</h1>
+      <Breadcrumb className={tokenPageStyles.Breadcrumb}>
+        <Breadcrumb.Item className={tokenPageStyles.BreadcrumbSellItem} href="/">
+          <FontAwesomeIcon icon={faHome} /> Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Sell</Breadcrumb.Item>
+      </Breadcrumb>
+
       {!selectedNft ? (
         <>
-          <p>Select which NFT you&rsquo;d like to sell below.</p>
           <NFTGrid
             data={data}
             isLoading={isLoading}
@@ -77,6 +84,6 @@ const Sell = () => {
       )}
     </Container>
   );
-}
+};
 
 export default memo(Sell);

@@ -14,7 +14,6 @@ import Image from "next/image";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 export const TopCreator = () => {
-
   const topCreators = [
     {
       url: imageIcon.src,
@@ -69,7 +68,8 @@ export const TopCreator = () => {
               style={{
                 backgroundColor: "#f7f7f7",
                 borderRadius: "5%",
-                marginBottom: "15px"
+                marginBottom: "15px",
+                cursor: 'pointer'
               }}
             >
               <div style={{ display: "flex" }}>
