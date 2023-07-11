@@ -201,87 +201,91 @@ export default function TokenPage({ nft }: Props) {
           </div>
 
           <div className={styles.listingContainer}>
-
-            <div className={styles.contractMetadataContainer}>
-              <MediaRenderer
-                src={nft.metadata.image}
-                className={styles.collectionImage}
-              />
-              <p className={styles.collectionName}>{nft.metadata.name}</p>
-            </div>
-
-            <h1 className={styles.title}>{nft.metadata.name}</h1>
-            <p className={styles.collectionName}>Token ID #{nft.metadata.id}</p>
-
-            <Link
-              href={`/profile/${nft.owner}`}
-              className={styles.nftOwnerContainer}
-            >
-              {/* Random linear gradient circle shape */}
-              <div
-                className={styles.nftOwnerImage}
-                style={{
-                  background: `linear-gradient(90deg, ${randomColor1}, ${randomColor2})`,
-                }}
-              />
-              <div className={styles.nftOwnerInfo}>
-                <p className={styles.label}>Current Owner</p>
-                <p className={styles.nftOwnerAddress}>
-                  {nft.owner.slice(0, 8)}...{nft.owner.slice(-4)}
-                </p>
+            <div className={styles.infoMetadaContainer}>
+              <div className={styles.contractMetadataContainer}>
+                <MediaRenderer
+                  src={nft.metadata.image}
+                  className={styles.collectionImage}
+                />
+                <p className={styles.collectionName}>{nft.metadata.name}</p>
               </div>
-            </Link>
 
-            <div className={styles.pricingContainer}>
-              {/* Pricing information */}
-              <div className={styles.pricingInfo}>
-                <p className={styles.label}>Price</p>
-                <div className={styles.pricingValue}>
-                  {loadingContract || loadingDirect ? (
-                    <Skeleton width="120" height="24" />
-                  ) : (
-                    <>
-                      {directListing && directListing[0] ? (
-                        <>
-                          {directListing[0]?.currencyValuePerToken.displayValue}
-                          {" " + directListing[0]?.currencyValuePerToken.symbol}
-                        </>
-                      ) : (
-                        "Not for sale"
-                      )}
-                    </>
-                  )}
+              <h1 className={styles.title}>{nft.metadata.name}</h1>
+              <p className={styles.collectionName}>Token ID #{nft.metadata.id}</p>
+
+              <Link
+                href={`/profile/${nft.owner}`}
+                className={styles.nftOwnerContainer}
+              >
+                {/* Random linear gradient circle shape */}
+                <div
+                  className={styles.nftOwnerImage}
+                  style={{
+                    background: `linear-gradient(90deg, ${randomColor1}, ${randomColor2})`,
+                  }}
+                />
+                <div className={styles.nftOwnerInfo}>
+                  <p className={styles.label}>Current Owner</p>
+                  <p className={styles.nftOwnerAddress}>
+                    {nft.owner.slice(0, 8)}...{nft.owner.slice(-4)}
+                  </p>
+                </div>
+              </Link>
+
+              <div className={styles.pricingContainer}>
+                {/* Pricing information */}
+                <div className={styles.pricingInfo}>
+                  <p className={styles.label}>Price</p>
+                  <div className={styles.pricingValue}>
+                    {loadingContract || loadingDirect ? (
+                      <Skeleton width="120" height="24" />
+                    ) : (
+                      <>
+                        {directListing && directListing[0] ? (
+                          <>
+                            {directListing[0]?.currencyValuePerToken.displayValue}
+                            {" " + directListing[0]?.currencyValuePerToken.symbol}
+                          </>
+                        ) : (
+                          "Not for sale"
+                        )}
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
+
+              {loadingContract || loadingDirect ? (
+                <Skeleton width="100%" height="164" />
+              ) : (
+                <>
+                  <Web3Button
+                    contractAddress={MARKETPLACE_ADDRESS}
+                    action={async () => await buyListing()}
+                    className={styles.btn}
+                    onSuccess={() => {
+                      toast(`Purchase success!`, {
+                        icon: "✅",
+                        style: toastStyle,
+                        position: "bottom-center",
+                      });
+                    }}
+                    onError={(e) => {
+                      (e as any).info.reason !== "user rejected transaction" ? (toast('Please try again. Confirm the transaction and make sure you are paying enough gas!', {
+                        icon: "❌",
+                        style: toastStyle,
+                        position: "bottom-center",
+                      })) : ''
+                    }}
+                  >
+                    Buy at asking price
+                  </Web3Button>
+                </>
+              )}
             </div>
 
-            {loadingContract || loadingDirect ? (
-              <Skeleton width="100%" height="164" />
-            ) : (
-              <>
-                <Web3Button
-                  contractAddress={MARKETPLACE_ADDRESS}
-                  action={async () => await buyListing()}
-                  className={styles.btn}
-                  onSuccess={() => {
-                    toast(`Purchase success!`, {
-                      icon: "✅",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    });
-                  }}
-                  onError={(e) => {
-                    (e as any).info.reason !== "user rejected transaction" ? (toast('Please try again. Confirm the transaction and make sure you are paying enough gas!', {
-                      icon: "❌",
-                      style: toastStyle,
-                      position: "bottom-center",
-                    })) : ''
-                  }}
-                >
-                  Buy at asking price
-                </Web3Button>
-              </>
-            )}
+
+
           </div>
         </div>
       </Container>

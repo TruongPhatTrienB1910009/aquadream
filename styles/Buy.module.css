@@ -4,7 +4,7 @@
   flex-wrap: wrap;
   gap: 1%;
   width: 100%;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .nftContainer {
@@ -20,6 +20,7 @@
   flex-direction: column;
   padding: 8px;
   transition: all 0.25s ease-in-out;
+  text-decoration: none !important;
 }
 
 .nftContainer:hover {
