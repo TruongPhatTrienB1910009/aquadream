@@ -68,7 +68,8 @@ export const TopCreator = () => {
               style={{
                 backgroundColor: "#f7f7f7",
                 borderRadius: "5%",
-                marginBottom: "15px"
+                marginBottom: "15px",
+                cursor: 'pointer'
               }}
             >
               <div style={{ display: "flex" }}>

@@ -5,7 +5,17 @@
   gap: 32px;
   margin-top: 128px;
 }
-
+.containerSell {
+  margin-top: 7rem;
+}
+.containerBuy {
+  margin-top: 7rem;
+  padding-left: 10px;
+}
+.containerSellItem a {
+  text-decoration: none;
+  color: black;
+}
 .metadataContainer {
   display: flex;
   flex-direction: column;

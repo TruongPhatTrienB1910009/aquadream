@@ -24,29 +24,27 @@
 
 .tabs {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
   margin-top: 16px;
   margin-bottom: 16px;
 }
-
+.nav-link .active {
+  color: blue;
+}
 .tab {
   padding: 16px;
   font-size: 16px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
+  color: red;
   cursor: pointer;
   transition: color 0.1s ease-in-out;
 }
 
 .tab:hover {
-  color: rgba(255, 255, 255, 255);
+  color: blue;
 }
 
 .activeTab {
-  color: rgba(255, 255, 255, 255);
+  color: blue;
   border-bottom: 2px solid #0294fe;
 }
 

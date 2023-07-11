@@ -18,10 +18,11 @@ const CountdownTimer = dynamic(
 import { MINI_GAME_ADDRESS } from "../../const/contractAddresses";
 import minigameABI from "../../const/abi/minigame.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../util/toastConfig";
 import { ethers } from "ethers";
+import { Breadcrumb } from "react-bootstrap";
 
 const Index = () => {
   const { contract: miniGameContract } = useContract(
@@ -211,10 +212,24 @@ const Index = () => {
     }
     GetTotalMinted();
     if (tokenOfOwnerByIndex !== -1) GetClaim();
-  }, [address, balanceOf, minted, status.message, tokenOfOwnerByIndex, totalMinted]);
+  }, [
+    address,
+    balanceOf,
+    minted,
+    status.message,
+    tokenOfOwnerByIndex,
+    totalMinted,
+  ]);
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
+      <Breadcrumb className={styles.containerMini}>
+        <Breadcrumb.Item className={styles.containerMiniItem} href="/">
+          {" "}
+          <FontAwesomeIcon icon={faHome} /> Home
+        </Breadcrumb.Item>
+        <Breadcrumb.Item active>Buy</Breadcrumb.Item>
+      </Breadcrumb>
       {minted === 1 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>

@@ -17,7 +17,7 @@ export const ExploreCategories = () => {
     {
       url: imageIcon.src,
       name: "Elon Musk",
-      time: "July 12, 2023 14:43:00",
+      time: "July 10, 2023 14:43:00",
       maxTotal: "10",
       totalSupply: "3",
       description: "Highest bid",
@@ -75,6 +75,7 @@ export const ExploreCategories = () => {
                 backgroundColor: "#ffffff",
                 borderRadius: "5%",
                 width: "100%",
+                cursor: 'pointer'
               }}
             >
               <div className={styles.exploreIconNameTop}>

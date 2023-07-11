@@ -74,7 +74,7 @@ export const TopCollection = () => {
       <Slide slidesToScroll={slidesCount} slidesToShow={slidesCount} indicators={true}>
         {topCollections?.map((topCollection, index) => (
           <div key={index} className={styles.card}>
-            <Card style={{ backgroundColor: "#f7f7f7", borderRadius: "5%" }}>
+            <Card style={{cursor: 'pointer', backgroundColor: "#f7f7f7", borderRadius: "5%" }}>
               <Card.Img
                 src={topCollection.url}
                 alt="green iguana"
