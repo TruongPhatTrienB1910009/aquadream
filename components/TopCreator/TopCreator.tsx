@@ -11,8 +11,8 @@ import iconMusk from "../../public/images/TopCollection/iconMusk.png";
 import { faStar, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 export const TopCreator = () => {
   const topCreators = [
     {
@@ -59,17 +59,13 @@ export const TopCreator = () => {
       </div>
       <Row>
         {topCreators.map((topCreator, index) => (
-          <Col
-            key={index}
-            sm={4}
-            lg={3}
-          >
+          <Col key={index} sm={4} lg={3}>
             <Card
               style={{
                 backgroundColor: "#f7f7f7",
                 borderRadius: "5%",
                 marginBottom: "15px",
-                cursor: 'pointer'
+                cursor: "pointer",
               }}
             >
               <div style={{ display: "flex" }}>
@@ -96,7 +92,7 @@ export const TopCreator = () => {
                 </div>
               </div>
 
-              <div className={styles.topCollectionIconName}>
+              <div className={styles.topCreatorIconName}>
                 <Image
                   src={topCreator?.url!}
                   width={30}
@@ -106,14 +102,29 @@ export const TopCreator = () => {
                 />
                 <div className={styles.topCollectionText}>
                   {topCreator?.caption} (24)
+                  <div className={styles.topCreatorStar}>
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      style={{ color: "#f7d447" }}
+                    />
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      style={{ color: "#f7d447" }}
+                    />
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      style={{ color: "#f7d447" }}
+                    />
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      style={{ color: "#f7d447" }}
+                    />
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      style={{ color: "#f7d447" }}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className={styles.topCollectionStar}>
-                <FontAwesomeIcon icon={faStar} style={{ color: "#f7d447" }} />
-                <FontAwesomeIcon icon={faStar} style={{ color: "#f7d447" }} />
-                <FontAwesomeIcon icon={faStar} style={{ color: "#f7d447" }} />
-                <FontAwesomeIcon icon={faStar} style={{ color: "#f7d447" }} />
-                <FontAwesomeIcon icon={faStar} style={{ color: "#f7d447" }} />
               </div>
             </Card>
           </Col>

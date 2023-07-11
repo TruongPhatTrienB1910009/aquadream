@@ -84,7 +84,12 @@
   font-size: 24px;
   font-weight: 500;
 }
-
+.headerLink{
+  display: flex;
+}
+.headerIcon{
+  display: none;
+}
 /* mobile  */
 
 .menuText:hover {
@@ -125,6 +130,9 @@
   transform: rotate(90deg) !important;
   transition: 0.1s;
 }
+.headerCenter{
+  align-items: center;
+}
 
 @media (max-width: 920px) {
   .navLeft {
@@ -140,18 +148,24 @@
   }
 
   .navRight {
+    margin-top: 1rem;
+    width: 100%;
     margin-right: 0;
+    display: flex;
+    justify-content: center;
   }
 
 }
 
 /* Sreens less than 720px */
-@media (max-width: 500px) {
+@media (max-width: 570px) {
+
+  .headerIcon{
+    display: block;
+    margin-right: 0.5rem;
+  }
   .offcanvas{
     width: 75%;
-  }
-  .navConnect {
-    display: none;
   }
   .navbarSearch{
     display: none;
