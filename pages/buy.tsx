@@ -14,10 +14,14 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 const Buy = () => {
   const { listingNFTs: data, isLoading: isLoading } =
     GetAllDataNFTsMarketplace();
+  console.log("buy", data);
   return (
     <>
       <Breadcrumb className={tokenPageStyles.Breadcrumb}>
-        <Breadcrumb.Item className={tokenPageStyles.BreadcrumbSellItem} href="/">
+        <Breadcrumb.Item
+          className={tokenPageStyles.BreadcrumbSellItem}
+          href="/"
+        >
           {" "}
           <FontAwesomeIcon icon={faHome} /> Home
         </Breadcrumb.Item>
