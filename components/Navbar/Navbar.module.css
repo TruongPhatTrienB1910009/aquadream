@@ -35,7 +35,6 @@
 }
 .navMiddle {
   display: flex;
-  margin-left: 5rem;
   flex-direction: row;
   align-items: center;
   gap: 24px;

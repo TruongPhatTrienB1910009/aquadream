@@ -51,6 +51,7 @@ export function Navbar() {
                 MozBorderRadius: "50%",
                 fontSize: "20px",
                 fontWeight: "100",
+                marginRight: '1rem'
               }}
             />
 
