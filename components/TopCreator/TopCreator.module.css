@@ -19,14 +19,15 @@
   right: 0;
 }
 
-/* .topCreatorCard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 20px;
-} */
+.topCollectionText{
+  margin-left: 1rem;
+  font-weight: 500;
+}
+.topCreatorStar{
+  font-size: 65%;
+}
 
-.topCollectionIconName {
+.topCreatorIconName {
   margin-top: 1rem;
   display: flex;
 }
@@ -34,7 +35,6 @@
 .topCollectionName {
   margin-left: 5%;
 }
-
 
 @media (max-width: 500px) {
   .topCollectionIconName {

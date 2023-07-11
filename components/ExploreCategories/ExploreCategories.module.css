@@ -35,7 +35,7 @@
 .exploreIconNameTop {
   margin-left: 5%;
   display: flex;
-  text-align: center;
+  align-items: center;
   flex-wrap: wrap;
   font-size: 20px;
   width: 100%;
@@ -68,7 +68,8 @@
   font-size: 85%;
 }
 .topCollectionName {
-  text-align: center;
+  font-weight: 500;
+  margin-left: 2%;
 }
 .price {
   font-size: 85%;

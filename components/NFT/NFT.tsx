@@ -22,8 +22,6 @@ const NFTComponent = React.memo(
       MARKETPLACE_ADDRESS,
       "marketplace-v3" // contract-type.
     );
-    console.log("marketplace", nft);
-
     // 1. Load if the NFT is for direct listing
     const { data: directListing, isLoading: loadingDirect } =
       useValidDirectListings(marketplace, {

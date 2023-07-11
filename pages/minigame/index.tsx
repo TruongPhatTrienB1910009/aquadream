@@ -281,11 +281,11 @@ const Index = () => {
               ) : claim[0] === 0 ? (
                 ""
               ) : (
-                <div className={styles.AnimationButton}>
-                  <button disabled={true} style={{ cursor: "not-allowed" }}>
-                    You claimed reward!
-                  </button>
-                </div>
+
+                <button disabled={true} style={{ cursor: "not-allowed" }}>
+                  You claimed reward!
+                </button>
+
               )}
             </div>
           </div>
@@ -308,14 +308,14 @@ const Index = () => {
                 Exploring the Deep Sea of BASE NFTs
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-              <div className={styles.AnimationButton}>
-                <button
-                  disabled={true}
-                  style={{ cursor: "not-allowed", fontSize: "20px" }}
-                >
-                  Minted
-                </button>
-              </div>
+
+              <button
+                disabled={true}
+                style={{ cursor: "not-allowed", fontSize: "20px" }}
+              >
+                Minted
+              </button>
+
             </div>
           </div>
         </div>
