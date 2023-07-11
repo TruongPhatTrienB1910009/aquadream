@@ -15,6 +15,7 @@ const CountdownTimer = dynamic(
   () => import("../../components/MiniGame/Timer/CountdownTimer"),
   { ssr: false }
 );
+import { ConnectWallet } from "@thirdweb-dev/react";
 import { MINI_GAME_ADDRESS } from "../../const/contractAddresses";
 import minigameABI from "../../const/abi/minigame.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -359,7 +360,7 @@ const Index = () => {
                     ``
                   )}
                 </button>
-              ) : (
+              ) : address ? (
                 <button
                   onClick={() => changeNetwork()}
                   disabled={loadingChange}
@@ -376,6 +377,8 @@ const Index = () => {
                     ``
                   )}
                 </button>
+              ) : (
+                <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
               )}
             </div>
           </div>
