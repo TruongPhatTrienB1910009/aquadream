@@ -5,7 +5,8 @@ import styles from "./Navbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
-  faMagnifyingGlass,
+  faGamepad,
+  faShop,
 } from "@fortawesome/free-solid-svg-icons";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -39,7 +40,7 @@ export function Navbart() {
             className="bg-body-tertiary"
           >
             <Container fluid>
-              <Navbar.Brand href="#">
+              <Navbar.Brand href="/">
                 <div
                   style={{
                     display: "flex",
@@ -58,9 +59,7 @@ export function Navbart() {
                   <span className={styles.navbarTittleNfts}>AquaDream</span>
                 </div>
               </Navbar.Brand>
-              <div className={styles.navLeft}>
-
-              </div>
+              <div className={styles.navLeft}></div>
               <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-sm`}
@@ -72,8 +71,10 @@ export function Navbart() {
                   closeButton
                   className="justify-content-end"
                 ></Offcanvas.Header>
-                <Offcanvas.Body>
-                  <Nav className="justify-content-start flex-grow-1 pe-3" style={{ alignItems: "center" }}>
+                <Offcanvas.Body className={styles.headerCenter}>
+                  <Nav
+                    className="justify-content-start flex-grow-1 pe-3"
+                  >
                     <Nav.Link
                       style={{
                         color: "black",
@@ -82,7 +83,12 @@ export function Navbart() {
                       }}
                       href="/buy"
                     >
-                      Buy
+                      <div className={styles.headerLink}>
+                        <div className={styles.headerIcon}>
+                          <FontAwesomeIcon icon={faCartShopping} />
+                        </div>
+                        <span>Buy</span>
+                      </div>
                     </Nav.Link>
                     <Nav.Link
                       style={{
@@ -92,7 +98,12 @@ export function Navbart() {
                       }}
                       href="/sell"
                     >
-                      Sell
+                      <div className={styles.headerLink}>
+                        <div className={styles.headerIcon}>
+                          <FontAwesomeIcon icon={faShop} />
+                        </div>
+                        <span>Sell</span>
+                      </div>
                     </Nav.Link>
                     <Nav.Link
                       style={{
@@ -102,7 +113,12 @@ export function Navbart() {
                       }}
                       href="/minigame"
                     >
-                      Mini Game
+                      <div className={styles.headerLink}>
+                        <div className={styles.headerIcon}>
+                          <FontAwesomeIcon icon={faGamepad} />
+                        </div>
+                        <span>Mini Game</span>
+                      </div>
                     </Nav.Link>
                   </Nav>
                   <div className={styles.navRight}>
