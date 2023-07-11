@@ -216,7 +216,14 @@ const Index = () => {
     }
     GetTotalMinted();
     if (tokenOfOwnerByIndex !== -1) GetClaim();
-  }, [address, balanceOf, minted, status.message, tokenOfOwnerByIndex, totalMinted]);
+  }, [
+    address,
+    balanceOf,
+    minted,
+    status.message,
+    tokenOfOwnerByIndex,
+    totalMinted,
+  ]);
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
@@ -265,22 +272,41 @@ const Index = () => {
               ) : claim[0] === 0 ? (
                 ""
               ) : (
-                <button disabled={true} style={{ cursor: "not-allowed" }}>
-                  You claimed reward!
-                </button>
+                <div className={styles.AnimationButton}>
+                  <button disabled={true} style={{ cursor: "not-allowed" }}>
+                    You claimed reward!
+                  </button>
+                </div>
               )}
             </div>
           </div>
           <div className={styles.rightSide}>
             <div className={styles.content}>
+              <div id="social_icons">
+                <img
+                  src="/images/base-groerli.png"
+                  alt=""
+                  className={styles.icon}
+                />
+                <img
+                  src="/images/cloudbase.jpeg"
+                  alt=""
+                  className={styles.icon}
+                />
+              </div>
               <h1>Total minted: {totalMinted}</h1>
               <p className={styles.heading}>
                 Exploring the Deep Sea of BASE NFTs
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-              <button disabled={true} style={{ cursor: "not-allowed" }}>
-                Minted
-              </button>
+              <div className={styles.AnimationButton}>
+                <button
+                  disabled={true}
+                  style={{ cursor: "not-allowed", fontSize: "20px" }}
+                >
+                  Minted
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -298,11 +324,24 @@ const Index = () => {
           </div>
           <div className={styles.rightSide}>
             <div className={styles.content}>
+              <div id="social_icons">
+                <img
+                  src="/images/base-groerli.png"
+                  alt=""
+                  className={styles.icon}
+                />
+                <img
+                  src="/images/cloudbase.jpeg"
+                  alt=""
+                  className={styles.icon}
+                />
+              </div>
               <h1>Total minted: {totalMinted}</h1>
               <p className={styles.heading}>
                 Exploring the Deep Sea of BASE NFTs
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+              <p className={styles.contenta}>Prepare 0.0069 ETH to mint</p>
               {chainId === 5 ? (
                 <button
                   onClick={() => useMintNFT()}

@@ -168,11 +168,10 @@ export default function SaleInfo({ nft }: Props) {
 
         {/* Direct listing fields */}
         <div
-          className={`${
-            tab === "direct"
+          className={`${tab === "direct"
               ? styles.activeTabContent
               : profileStyles.tabContent
-          }`}
+            }`}
           style={{ flexDirection: "column" }}
         >
           <h4 className={styles.formSectionTitle}>When </h4>
@@ -234,11 +233,10 @@ export default function SaleInfo({ nft }: Props) {
 
         {/* Auction listing fields */}
         <div
-          className={`${
-            tab === "auction"
+          className={`${tab === "auction"
               ? styles.activeTabContent
               : profileStyles.tabContent
-          }`}
+            }`}
           style={{ flexDirection: "column" }}
         >
           <h4 className={styles.formSectionTitle}>When </h4>
