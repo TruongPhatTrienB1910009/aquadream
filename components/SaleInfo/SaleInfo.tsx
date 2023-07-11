@@ -149,23 +149,6 @@ export default function SaleInfo({ nft }: Props) {
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
       <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
-        <div className={profileStyles.tabs}>
-          <h3
-            className={`${profileStyles.tab} 
-        ${tab === "direct" ? profileStyles.activeTab : ""}`}
-            onClick={() => setTab("direct")}
-          >
-            Direct
-          </h3>
-          {/* <h3
-            className={`${profileStyles.tab} 
-        ${tab === "auction" ? profileStyles.activeTab : ""}`}
-            onClick={() => setTab("auction")}
-          >
-            Auction
-          </h3> */}
-        </div>
-
         {/* Direct listing fields */}
         <div
           className={`${tab === "direct"
@@ -174,7 +157,7 @@ export default function SaleInfo({ nft }: Props) {
             }`}
           style={{ flexDirection: "column" }}
         >
-          <h4 className={styles.formSectionTitle}>When </h4>
+          {/* <h4 className={styles.formSectionTitle}>When </h4> */}
 
           {/* Input field for auction start date */}
           <legend className={styles.legend}> Listing Starts on </legend>
@@ -196,7 +179,7 @@ export default function SaleInfo({ nft }: Props) {
           <h4 className={styles.formSectionTitle}>Price </h4>
 
           {/* Input field for buyout price */}
-          <legend className={styles.legend}> Price per token</legend>
+          {/* <legend className={styles.legend}> Price per token</legend> */}
           <input
             className={styles.input}
             type="number"
@@ -204,31 +187,34 @@ export default function SaleInfo({ nft }: Props) {
             {...registerDirect("price")}
           />
 
-          <Web3Button
-            contractAddress={MARKETPLACE_ADDRESS}
-            action={async () => {
-              await handleSubmitDirect(handleSubmissionDirect)();
-            }}
-            onError={(error) => {
-              toast(`Listed Failed! Reason: ${error.message}`, {
-                icon: "❌",
-                style: toastStyle,
-                position: "bottom-center",
-              });
-            }}
-            onSuccess={(txResult) => {
-              toast("Listed Successfully!", {
-                icon: "🥳",
-                style: toastStyle,
-                position: "bottom-center",
-              });
-              router.push(
-                `/token/${NFT_COLLECTION_ADDRESS}/${nft.metadata.id}`
-              );
-            }}
-          >
-            Create Direct Listing
-          </Web3Button>
+          <div className={styles.btnContainer}>
+            <Web3Button
+              contractAddress={MARKETPLACE_ADDRESS}
+              action={async () => {
+                await handleSubmitDirect(handleSubmissionDirect)();
+              }}
+              onError={(error) => {
+                toast(`Listed Failed! Reason: ${error.message}`, {
+                  icon: "❌",
+                  style: toastStyle,
+                  position: "bottom-center",
+                });
+              }}
+              onSuccess={(txResult) => {
+                toast("Listed Successfully!", {
+                  icon: "🥳",
+                  style: toastStyle,
+                  position: "bottom-center",
+                });
+                router.push(
+                  `/token/${NFT_COLLECTION_ADDRESS}/${nft.metadata.id}`
+                );
+              }}
+              className={styles.btn}
+            >
+              Create Direct Listing
+            </Web3Button>
+          </div>
         </div>
 
         {/* Auction listing fields */}
@@ -300,6 +286,8 @@ export default function SaleInfo({ nft }: Props) {
                 `/token/${NFT_COLLECTION_ADDRESS}/${nft.metadata.id}`
               );
             }}
+            className={styles.btn}
+            style={{ maxWidth: "200px" }}
           >
             Create Auction Listing
           </Web3Button>

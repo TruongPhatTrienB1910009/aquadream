@@ -17,8 +17,8 @@ const Buy = () => {
 
   return (
     <>
-      <Breadcrumb className={tokenPageStyles.containerBuy}>
-        <Breadcrumb.Item className={tokenPageStyles.containerSellItem} href="/">
+      <Breadcrumb className={tokenPageStyles.Breadcrumb}>
+        <Breadcrumb.Item className={tokenPageStyles.BreadcrumbSellItem} href="/">
           {" "}
           <FontAwesomeIcon icon={faHome} /> Home
         </Breadcrumb.Item>

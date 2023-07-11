@@ -28,8 +28,8 @@ const Sell = () => {
 
   return (
     <Container maxWidth="lg">
-      <Breadcrumb className={tokenPageStyles.containerSell}>
-        <Breadcrumb.Item className={tokenPageStyles.containerSellItem} href="/">
+      <Breadcrumb className={tokenPageStyles.Breadcrumb}>
+        <Breadcrumb.Item className={tokenPageStyles.BreadcrumbSellItem} href="/">
           <FontAwesomeIcon icon={faHome} /> Home
         </Breadcrumb.Item>
         <Breadcrumb.Item active>Sell</Breadcrumb.Item>
@@ -49,9 +49,9 @@ const Sell = () => {
           />
         </>
       ) : (
-        <div className={tokenPageStyles.container} style={{ marginTop: 0 }}>
-          <div className={tokenPageStyles.metadataContainer}>
-            <div className={tokenPageStyles.imageContainer}>
+        <div className={tokenPageStyles.containerSell} style={{ marginTop: 0 }}>
+          <div className={tokenPageStyles.metadataContainerSell}>
+            <div className={tokenPageStyles.imageContainerSell}>
               <ThirdwebNftMedia
                 metadata={selectedNft.metadata}
                 className={tokenPageStyles.image}
@@ -67,8 +67,8 @@ const Sell = () => {
             </div>
           </div>
 
-          <div className={tokenPageStyles.listingContainer}>
-            <p>You&rsquo;re about to list the following item for sale.</p>
+          <div className={tokenPageStyles.listingContainerSell}>
+            {/* <p>You&rsquo;re about to list the following item for sale.</p> */}
             <h1 className={tokenPageStyles.title}>
               {selectedNft.metadata.name}
             </h1>

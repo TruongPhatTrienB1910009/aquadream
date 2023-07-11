@@ -228,7 +228,7 @@ const Index = () => {
           {" "}
           <FontAwesomeIcon icon={faHome} /> Home
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>Buy</Breadcrumb.Item>
+        <Breadcrumb.Item active>Mini Game</Breadcrumb.Item>
       </Breadcrumb>
       {minted === 1 ? (
         <div className={styles.minigameContainer}>
