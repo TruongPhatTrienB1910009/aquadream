@@ -1,12 +1,12 @@
 import type { AppProps } from "next/app";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
-import { Navbar } from "../components/Navbar/Navbar";
+import { Navbart } from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import NextNProgress from "nextjs-progressbar";
 import { NETWORK } from "../const/contractAddresses";
 import "../styles/globals.css";
 import Container from "../components/Container/Container";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
 
         {/* Render the navigation menu above each component */}
-        <Navbar />
+        <Navbart />
         {/* Render the actual component (page) */}
         <Container maxWidth="lg">
           <Component {...pageProps} />

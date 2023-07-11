@@ -9,9 +9,8 @@
 
 .nav {
   display: flex;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
@@ -38,7 +37,6 @@
 
 .navMiddle {
   display: flex;
-  margin-left: 5rem;
   flex-direction: row;
   align-items: center;
   gap: 24px;
@@ -149,9 +147,16 @@
 
 /* Sreens less than 720px */
 @media (max-width: 500px) {
+  .offcanvas{
+    width: 75%;
+  }
   .navConnect {
     display: none;
   }
+  .navbarSearch{
+    display: none;
+  }
+ 
 
   .navMiddle {
     display: none;
