@@ -7,9 +7,7 @@ import {
 } from "@thirdweb-dev/react";
 import { NFT } from "@thirdweb-dev/sdk";
 import React, { memo, useEffect } from "react";
-import {
-  MARKETPLACE_ADDRESS,
-} from "../../const/contractAddresses";
+import { MARKETPLACE_ADDRESS } from "../../const/contractAddresses";
 import Skeleton from "../Skeleton/Skeleton";
 import styles from "./NFT.module.css";
 import Card from 'react-bootstrap/Card';
@@ -18,23 +16,33 @@ type Props = {
   nft: NFT;
 };
 
-const NFTComponent = React.memo(({ nft }: Props) => {
-  const { contract: marketplace, isLoading: loadingContract } = useContract(
-    MARKETPLACE_ADDRESS,
-    "marketplace-v3"
-  );
+const NFTComponent = React.memo(
+  ({ nft }: Props) => {
+    const { contract: marketplace, isLoading: loadingContract } = useContract(
+      MARKETPLACE_ADDRESS,
+      "marketplace-v3" // contract-type.
+    );
+    console.log("marketplace", nft);
 
-  // 1. Load if the NFT is for direct listing
-  const { data: directListing, isLoading: loadingDirect } =
-    useValidDirectListings(marketplace, {
-      tokenContract: `${nft.metadata.address}`,
-      tokenId: nft.metadata.id,
-    });
+    // 1. Load if the NFT is for direct listing
+    const { data: directListing, isLoading: loadingDirect } =
+      useValidDirectListings(marketplace, {
+        tokenContract: `${nft.metadata.address}`,
+        tokenId: nft.metadata.id,
+      });
 
+    // 2. Load if the NFT is for auction
+    const { data: auctionListing, isLoading: loadingAuction } =
+      useValidEnglishAuctions(marketplace, {
+        tokenContract: `${nft.metadata.address}`,
+        tokenId: nft.metadata.id,
+      });
 
-  return (
-    <>
-      <div className={styles.cardNFT}>
+    if (directListing) {
+      console.log("directListing", directListing[0])
+    }
+    return (
+      <>
         <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
 
         {/* <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p> */}
@@ -48,7 +56,7 @@ const NFTComponent = React.memo(({ nft }: Props) => {
               <div>
                 <p className={styles.nftPriceValue}>
                   {`${directListing[0]?.currencyValuePerToken.displayValue}
-                  ${directListing[0]?.currencyValuePerToken.symbol}`}
+          ${directListing[0]?.currencyValuePerToken.symbol}`}
                 </p>
               </div>
             </div>
@@ -60,14 +68,13 @@ const NFTComponent = React.memo(({ nft }: Props) => {
             </div>
           )}
         </div>
-      </div>
-    </>
-  );
-}, (prevProps, nextProps) => {
-  if (prevProps === nextProps) {
-    return true;
-  }
-  return false;
-});
+      </>
+    );
+  }, (prevProps, nextProps) => {
+    if (prevProps === nextProps) {
+      return true;
+    }
+    return false;
+  });
 
 export default NFTComponent;

@@ -4,7 +4,7 @@ import {
   useContract,
   useOwnedNFTs,
 } from "@thirdweb-dev/react";
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Container from "../components/Container/Container";
 import NFTGrid from "../components/NFT/NFTGrid";
 import tokenPageStyles from "../styles/Token.module.css";
@@ -25,6 +25,7 @@ const Sell = () => {
   console.log("data", data);
 
   const [selectedNft, setSelectedNft] = useState<NFTType>();
+  console.log("selectedNft", selectedNft);
 
   return (
     <Container maxWidth="lg">

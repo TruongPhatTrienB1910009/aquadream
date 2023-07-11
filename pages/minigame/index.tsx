@@ -124,13 +124,15 @@ const Index = () => {
     }
   };
   const checkBalanceOf = async () => {
-    const data = await miniGameContract?.call("balanceOf", [address]);
-    if (data) {
-      const index = new BigNumber(data.toString()).toNumber();
-      if (index === 1) {
-        setBalanceOf(1);
-      } else {
-        setBalanceOf(0);
+    if (address) {
+      const data = await miniGameContract?.call("balanceOf", [address]);
+      if (data) {
+        const index = new BigNumber(data.toString()).toNumber();
+        if (index === 1) {
+          setBalanceOf(1);
+        } else {
+          setBalanceOf(0);
+        }
       }
     }
   };
@@ -145,26 +147,29 @@ const Index = () => {
   const GetTotalMinted = async () => {
     const data = await miniGameContract?.call("totalSupply", []);
     if (data) {
+      console.log("hello", data);
       const index = new BigNumber(data.toString()).toNumber();
+      console.log("hello2", index);
       setTotalMinted(index);
     } else {
       setTotalMinted(0);
     }
   };
   const tokenOfOwner = async () => {
-    try {
-      const data = await miniGameContract?.call("tokenOfOwnerByIndex", [
-        address,
-        0,
-      ]);
-      const index = new BigNumber(data.toString()).toNumber();
-      console.log(index);
-      if (index !== -1) {
-        setTokenOfOwnerByIndex(index);
+    if (address) {
+      try {
+        const data = await miniGameContract?.call("tokenOfOwnerByIndex", [
+          address,
+          0,
+        ]);
+        const index = new BigNumber(data.toString()).toNumber();
+        if (index !== -1) {
+          setTokenOfOwnerByIndex(index);
+        }
+      } catch (e) {
+        console.log(e);
+        setTokenOfOwnerByIndex(-1);
       }
-    } catch (e) {
-      console.log(e);
-      setTokenOfOwnerByIndex(-1);
     }
   };
 
@@ -275,22 +280,41 @@ const Index = () => {
               ) : claim[0] === 0 ? (
                 ""
               ) : (
-                <button disabled={true} style={{ cursor: "not-allowed" }}>
-                  You are Claim NFT
-                </button>
+                <div className={styles.AnimationButton}>
+                  <button disabled={true} style={{ cursor: "not-allowed" }}>
+                    You claimed reward!
+                  </button>
+                </div>
               )}
             </div>
           </div>
           <div className={styles.rightSide}>
             <div className={styles.content}>
+              <div id="social_icons">
+                <img
+                  src="/images/base-groerli.png"
+                  alt=""
+                  className={styles.icon}
+                />
+                <img
+                  src="/images/cloudbase.jpeg"
+                  alt=""
+                  className={styles.icon}
+                />
+              </div>
               <h1>Total minted: {totalMinted}</h1>
               <p className={styles.heading}>
                 Exploring the Deep Sea of BASE NFTs
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-              <button disabled={true} style={{ cursor: "not-allowed" }}>
-                Minted
-              </button>
+              <div className={styles.AnimationButton}>
+                <button
+                  disabled={true}
+                  style={{ cursor: "not-allowed", fontSize: "20px" }}
+                >
+                  Minted
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -308,11 +332,24 @@ const Index = () => {
           </div>
           <div className={styles.rightSide}>
             <div className={styles.content}>
+              <div id="social_icons">
+                <img
+                  src="/images/base-groerli.png"
+                  alt=""
+                  className={styles.icon}
+                />
+                <img
+                  src="/images/cloudbase.jpeg"
+                  alt=""
+                  className={styles.icon}
+                />
+              </div>
               <h1>Total minted: {totalMinted}</h1>
               <p className={styles.heading}>
                 Exploring the Deep Sea of BASE NFTs
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+              <p className={styles.contenta}>Prepare 0.0069 ETH to mint</p>
               {chainId === 5 ? (
                 <button
                   onClick={() => useMintNFT()}

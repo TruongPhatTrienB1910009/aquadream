@@ -34,7 +34,6 @@ type Props = {
 const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
 export default function TokenPage({ nft }: Props) {
-
   const [bidValue, setBidValue] = useState<string>();
 
   const router = useRouter();
@@ -46,7 +45,9 @@ export default function TokenPage({ nft }: Props) {
   );
 
   // Connect to NFT Collection smart contract
-  const { contract: nftCollection } = useContract(router.query.contractAddress as string);
+  const { contract: nftCollection } = useContract(
+    router.query.contractAddress as string
+  );
 
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
@@ -293,12 +294,16 @@ export default function TokenPage({ nft }: Props) {
   );
 }
 
-export async function getServerSideProps(context: { params: { tokenId: string; contractAddress: string; }; }) {
-
+export async function getServerSideProps(context: {
+  params: { tokenId: string; contractAddress: string };
+}) {
   const tokenId = context.params?.tokenId as string;
   const sdk = new ThirdwebSDK(NETWORK);
   const abi: any = await getABI(context.params?.contractAddress);
-  const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, abi);
+  const contract = await sdk.getContractFromAbi(
+    context.params?.contractAddress as string,
+    abi
+  );
 
   const nft = await contract.erc721.get(tokenId);
 

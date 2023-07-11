@@ -14,7 +14,6 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 const Buy = () => {
   const { listingNFTs: data, isLoading: isLoading } =
     GetAllDataNFTsMarketplace();
-
   return (
     <>
       <Breadcrumb className={tokenPageStyles.Breadcrumb}>

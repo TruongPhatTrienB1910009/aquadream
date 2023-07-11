@@ -13,7 +13,7 @@
 }
 
 .nftContainer {
-  width: 45%;
+  width: 50%;
   margin: 8px;
   position: relative;
   overflow: hidden;
@@ -26,6 +26,8 @@
   align-items: center;
   padding: 8px;
   transition: all 0.25s ease-in-out;
+  box-shadow: 0px 9px 9px rgba(0, 0, 0, 5.25);
+  border-radius: 15px;
 }
 
 .nftContainer:hover {
@@ -62,7 +64,7 @@
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
-  color: #fff;
+  color: black;
   font-family: inherit;
   vertical-align: inherit;
   font-size: 15px;
@@ -129,6 +131,43 @@
   transform: scale(1.02);
 }
 
+.icon {
+  border-radius: 8px;
+  width: 24px !important;
+  height: 24px !important;
+  margin-right: 4px;
+}
+
+#social_icons {
+  padding: 0.5em;
+  line-height: 1.22;
+  float: left;
+  vertical-align: bottom;
+}
+
+.AnimationButton button:hover {
+  padding: 15px 5px;
+  cursor: pointer;
+  transition: all 0.5s;
+  bottom: 10px;
+  position: relative;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: white;
+  color: black;
+  line-height: 32px;
+  align-items: center;
+  text-align: center;
+  text-transform: capitalize;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 4.25);
+  border-radius: 15px;
+  border-radius: 21.5692px;
+  border: none;
+  margin-top: 15px;
+}
+
 @media (max-width: 600px) {
   .minigameContainer {
     flex-direction: column;
@@ -144,6 +183,10 @@
 
   .content {
     position: relative;
+  }
+
+  .contenta {
+    font-size: 54px;
   }
 
   .rightSide .content button {
