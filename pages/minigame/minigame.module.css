@@ -126,8 +126,8 @@
 
 .rightSide button:hover {
   cursor: pointer;
-  background-color: #1e71ad;
-  color: rgb(241, 202, 202);
+  background-color: white;
+  color: black;
   transform: scale(1.02);
 }
 

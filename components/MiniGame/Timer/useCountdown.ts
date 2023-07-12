@@ -19,21 +19,13 @@ const useCountdown = (targetDate: any) => {
 };
 
 const getReturnValues = (countDown: any) => {
-<<<<<<< HEAD
   // calculate time left
   const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(countDown / (1000 * 60 * 60));
+  const hours = Math.floor(
+    countDown / (1000 * 60 * 60 * 24) / (1000 * 60 * 60)
+  );
   const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
-=======
-    // calculate time left
-    const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-        (countDown / (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor((countDown % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((countDown % (1000 * 60)) / 1000);
->>>>>>> 06550cde6483361051784cc82ffc29c1e5a408ee
 
   return [days, hours, minutes, seconds];
 };

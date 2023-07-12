@@ -4,6 +4,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./minigame.module.css";
 import dynamic from "next/dynamic";
+
+import Skeleton from "../../components/Skeleton/Skeleton";
+
 import {
   useAddress,
   useContract,
@@ -24,6 +27,7 @@ import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../util/toastConfig";
 import { ethers } from "ethers";
 import { Breadcrumb } from "react-bootstrap";
+import { fontSize, width } from "@mui/system";
 
 const Index = () => {
   const { contract: miniGameContract } = useContract(
@@ -50,6 +54,7 @@ const Index = () => {
   const [loadingChange, setLoadingChange] = useState(false);
   //loading when claim ETH
   const [loadingClaim, setLoadingClaim] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   // handle status
   const [status, setStatus] = useState({
     statusMessage: "",
@@ -175,17 +180,21 @@ const Index = () => {
   };
 
   const getDataNFT = async () => {
-    if (tokenOfOwnerByIndex !== -1) {
-      const data = await miniGameContract?.call("tokenURI", [
-        tokenOfOwnerByIndex,
-      ]);
-      if (data !== undefined) {
-        fetch(data)
-          .then((res) => res.json())
-          .then((data) => {
-            setDataNft(data);
-          });
+    try {
+      if (tokenOfOwnerByIndex !== -1) {
+        const data = await miniGameContract?.call("tokenURI", [
+          tokenOfOwnerByIndex,
+        ]);
+        if (data !== undefined) {
+          fetch(data)
+            .then((res) => res.json())
+            .then((data) => {
+              setDataNft(data);
+            });
+        }
       }
+    } catch (e) {
+      console.log(error);
     }
   };
 
@@ -196,11 +205,14 @@ const Index = () => {
         const index = new BigNumber(data.toString()).toNumber();
         if (index === 1) {
           setMinted(1);
+          setIsLoading(true);
         } else {
           setMinted(0);
+          setIsLoading(true);
         }
       } else {
         setMinted(0);
+        setIsLoading(false);
       }
     } catch (e) {
       console.log(e);
@@ -236,58 +248,74 @@ const Index = () => {
         </Breadcrumb.Item>
         <Breadcrumb.Item active>Mini Game</Breadcrumb.Item>
       </Breadcrumb>
+
       {minted === 1 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            <div className={styles.nftContainer}>
-              <img className={styles.nftImage} src={dataNft.image} alt="" />
-              <p className={styles.nftName}>{dataNft.name}</p>
-              {claim[0] > 0 && !claim[1] ? (
-                chainId === 5 ? (
-                  <button
-                    disabled={loadingClaim}
-                    style={{ cursor: (loadingClaim && "not-allowed") || "" }}
-                    onClick={() => claimETH()}
-                  >
-                    Claim{" "}
-                    {loadingClaim ? (
-                      <FontAwesomeIcon
-                        icon={faSpinner}
-                        spin
-                        style={{ color: "#d0d8e7", marginLeft: "10px" }}
-                      />
-                    ) : (
-                      ``
-                    )}
-                  </button>
+            {!dataNft.image ? (
+              [...Array(1)].map((_, index) => (
+                <div key={index} className={styles.nftContainer}>
+                  <Skeleton key={index} width={"100%"} height="512px" />
+                </div>
+              ))
+            ) : (
+              <div className={styles.nftContainer}>
+                <img className={styles.nftImage} src={dataNft.image} alt="" />
+
+                <p className={styles.nftName}>{dataNft.name}</p>
+                {claim[0] > 0 && !claim[1] ? (
+                  chainId === 5 ? (
+                    <button
+                      disabled={loadingClaim}
+                      style={{ cursor: (loadingClaim && "not-allowed") || "" }}
+                      onClick={() => claimETH()}
+                    >
+                      Claim{" "}
+                      {loadingClaim ? (
+                        <FontAwesomeIcon
+                          icon={faSpinner}
+                          spin
+                          style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                        />
+                      ) : (
+                        ``
+                      )}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => changeNetwork()}
+                      disabled={loadingChange}
+                      style={{ cursor: (loadingChange && "not-allowed") || "" }}
+                    >
+                      Switch Network{""}
+                      {loadingClaim ? (
+                        <FontAwesomeIcon
+                          icon={faSpinner}
+                          spin
+                          style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                        />
+                      ) : (
+                        ``
+                      )}
+                    </button>
+                  )
+                ) : claim[0] === 0 ? (
+                  ""
                 ) : (
-                  <button
-                    onClick={() => changeNetwork()}
-                    disabled={loadingChange}
-                    style={{ cursor: (loadingChange && "not-allowed") || "" }}
-                  >
-                    Switch Network{""}
-                    {loadingClaim ? (
-                      <FontAwesomeIcon
-                        icon={faSpinner}
-                        spin
-                        style={{ color: "#d0d8e7", marginLeft: "10px" }}
-                      />
-                    ) : (
-                      ``
-                    )}
-                  </button>
-                )
-              ) : claim[0] === 0 ? (
-                ""
-              ) : (
-
-                <button disabled={true} style={{ cursor: "not-allowed" }}>
-                  You claimed reward!
-                </button>
-
-              )}
-            </div>
+                  <div className={styles.rightSide}>
+                    <button
+                      disabled={true}
+                      style={{
+                        cursor: "not-allowed",
+                        fontSize: "20px",
+                      }}
+                    >
+                      You claimed reward!
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className={styles.rightSide}>
             <div className={styles.content}>
@@ -315,21 +343,28 @@ const Index = () => {
               >
                 Minted
               </button>
-
             </div>
           </div>
         </div>
       ) : (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            <div className={styles.nftContainer}>
-              <img
-                className={styles.nftImage}
-                src="/images/cardSecret.jpg"
-                alt=""
-              />
-              <p className={styles.nftName}>SecretCard</p>
-            </div>
+            {!isLoading ? (
+              [...Array(1)].map((_, index) => (
+                <div key={index} className={styles.nftContainer}>
+                  <Skeleton key={index} width={"100%"} height="512px" />
+                </div>
+              ))
+            ) : (
+              <div className={styles.nftContainer}>
+                <img
+                  className={styles.nftImage}
+                  src="/images/cardSecret.jpg"
+                  alt=""
+                />
+                <p className={styles.nftName}>SecretCard</p>
+              </div>
+            )}
           </div>
           <div className={styles.rightSide}>
             <div className={styles.content}>
@@ -350,7 +385,7 @@ const Index = () => {
                 Exploring the Deep Sea of BASE NFTs
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-              <p className={styles.contenta}>Prepare 0.0069 ETH to mint</p>
+              <p className={styles.contenta}>Prepare 0.002 ETH to mint</p>
               {chainId === 5 ? (
                 <button
                   onClick={() => useMintNFT()}
