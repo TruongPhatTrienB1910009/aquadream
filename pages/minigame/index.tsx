@@ -27,7 +27,7 @@ import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../util/toastConfig";
 import { ethers } from "ethers";
 import { Breadcrumb } from "react-bootstrap";
-import { fontSize, width } from "@mui/system";
+
 
 const Index = () => {
   const { contract: miniGameContract } = useContract(
