@@ -47,7 +47,7 @@ export default function SaleInfo({ nft }: Props) {
     "marketplace-v3"
   );
 
-  console.log("nft", nft)
+  console.log("nft", nft);
 
   // useContract is a React hook that returns an object with the contract key.
   // The value of the contract key is an instance of an NFT_COLLECTION on the blockchain.
@@ -151,10 +151,11 @@ export default function SaleInfo({ nft }: Props) {
       <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
         {/* Direct listing fields */}
         <div
-          className={`${tab === "direct"
+          className={`${
+            tab === "direct"
               ? styles.activeTabContent
               : profileStyles.tabContent
-            }`}
+          }`}
           style={{ flexDirection: "column" }}
         >
           {/* <h4 className={styles.formSectionTitle}>When </h4> */}
@@ -194,7 +195,7 @@ export default function SaleInfo({ nft }: Props) {
                 await handleSubmitDirect(handleSubmissionDirect)();
               }}
               onError={(error) => {
-                toast(`Listed Failed! Reason: ${error.message}`, {
+                toast((error as any).info.reason, {
                   icon: "❌",
                   style: toastStyle,
                   position: "bottom-center",
@@ -219,10 +220,11 @@ export default function SaleInfo({ nft }: Props) {
 
         {/* Auction listing fields */}
         <div
-          className={`${tab === "auction"
+          className={`${
+            tab === "auction"
               ? styles.activeTabContent
               : profileStyles.tabContent
-            }`}
+          }`}
           style={{ flexDirection: "column" }}
         >
           <h4 className={styles.formSectionTitle}>When </h4>
