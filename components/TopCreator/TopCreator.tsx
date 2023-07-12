@@ -2,12 +2,19 @@
 import styles from "./TopCreator.module.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import imageIcon from "../../public/images/TopCollection/iconName.png";
-import iconFish from "../../public/images/TopCollection/iconFish.png";
 import iconCat from "../../public/images/TopCollection/iconCat.png";
 import iconLinh from "../../public/images/TopCollection/iconLinh.png";
 import iconMask from "../../public/images/TopCollection/iconMask.png";
 import iconMusk from "../../public/images/TopCollection/iconMusk.png";
+import big5 from "../../public/images/TopCreator/soi-big-5.png";
+import big6 from "../../public/images/TopCreator/big-6.png";
+import big2 from "../../public/images/TopCreator/big-2.png";
+import big3 from "../../public/images/TopCreator/big-3.png";
+import big4 from "../../public/images/TopCreator/big-4.png";
+import mini5 from "../../public/images/TopCreator/mini-5.1.png";
+import mini from "../../public/images/TopCreator/mini-5.2.png";
+import mini6 from "../../public/images/TopCreator/mini-6.1.png";
+
 import { faStar, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -16,37 +23,53 @@ import Col from "react-bootstrap/Col";
 export const TopCreator = () => {
   const topCreators = [
     {
-      url: imageIcon.src,
+      url: big2.src,
       caption: "Elon Musk",
+      mini_1: mini5.src,
+      mini_2: mini.src,
     },
     {
-      url: iconFish.src,
+      url: big2.src,
       caption: "Putin",
+      mini_1: mini6.src,
+      mini_2: mini.src,
     },
     {
-      url: iconCat.src,
+      url: big3.src,
       caption: "Biden",
+      mini_1: mini5.src,
+      mini_2: mini.src,
     },
     {
-      url: iconLinh.src,
+      url: big4.src,
       caption: "John",
+      mini_1: mini5.src,
+      mini_2: mini.src,
     },
     {
-      url: iconMask.src,
+      url: big3.src,
       caption: "The Rock",
+      mini_1: mini5.src,
+      mini_2: mini6.src,
     },
     {
-      url: iconMusk.src,
+      url: big2.src,
       caption: "Tomato",
+      mini_1: mini5.src,
+      mini_2: mini5.src,
     },
     {
-      url: imageIcon.src,
+      url: big5.src,
       caption: "david",
+      mini_1: mini6.src,
+      mini_2: mini.src,
     },
     ,
     {
-      url: imageIcon.src,
+      url: big6.src,
       caption: "david",
+      mini_1: mini6.src,
+      mini_2: mini.src,
     },
   ];
   return (
@@ -59,7 +82,7 @@ export const TopCreator = () => {
       </div>
       <Row>
         {topCreators.map((topCreator, index) => (
-          <Col key={index} sm={4} lg={3}>
+          <Col key={index} sm={4} lg={3} style={{ display: "flex" }}>
             <Card
               style={{
                 backgroundColor: "#f7f7f7",
@@ -70,7 +93,7 @@ export const TopCreator = () => {
             >
               <div style={{ display: "flex" }}>
                 <Card.Img
-                  src={imageIcon.src}
+                  src={topCreator?.url}
                   alt="green iguana"
                   style={{
                     width: "60%",
@@ -78,16 +101,22 @@ export const TopCreator = () => {
                 />
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                   <Card.Img
-                    src={topCreator?.url}
+                    src={topCreator?.mini_1}
                     alt="green iguana"
-                    style={{ padding: "0 0 0 15%", width: "100%" }}
+                    style={{
+                      padding: "0 0 0 15%",
+                      width: "100%",
+                      borderRadius: "10%",
+                    }}
                   />
                   <Card.Img
-                    height="80"
-                    width="30"
-                    src={imageIcon.src}
+                    src={topCreator?.mini_2}
                     alt="green iguana"
-                    style={{ padding: "15% 0 0 15%", width: "100%" }}
+                    style={{
+                      padding: "15% 0 0 15%",
+                      width: "100%",
+                      borderRadius: "10%",
+                    }}
                   />
                 </div>
               </div>

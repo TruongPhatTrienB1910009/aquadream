@@ -141,6 +141,7 @@ function Footer() {
                   <li>
                     <a>Community standards</a>
                   </li>
+                  
                 </ul>
               </div>
             </div>

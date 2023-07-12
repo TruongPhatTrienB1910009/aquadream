@@ -28,9 +28,12 @@ const Sell = () => {
   console.log("selectedNft", selectedNft);
 
   return (
-    <Container maxWidth="lg">
+    <>
       <Breadcrumb className={tokenPageStyles.Breadcrumb}>
-        <Breadcrumb.Item className={tokenPageStyles.BreadcrumbSellItem} href="/">
+        <Breadcrumb.Item
+          className={tokenPageStyles.BreadcrumbSellItem}
+          href="/"
+        >
           <FontAwesomeIcon icon={faHome} /> Home
         </Breadcrumb.Item>
         <Breadcrumb.Item active>Sell</Breadcrumb.Item>
@@ -83,7 +86,7 @@ const Sell = () => {
           </div>
         </div>
       )}
-    </Container>
+    </>
   );
 };
 
