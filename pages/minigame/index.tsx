@@ -45,7 +45,7 @@ const Index = () => {
   const [minted, setMinted] = useState(0);
   const [dataNft, setDataNft] = useState<any>([]);
   const [tokenOfOwnerByIndex, setTokenOfOwnerByIndex] = useState(-1);
-  const [totalMinted, setTotalMinted] = useState(-1);
+  const [totalMinted, setTotalMinted] = useState(0);
   //get nftType claim
   const [claim, setClaim] = useState([]);
   // loading
@@ -205,24 +205,24 @@ const Index = () => {
         const index = new BigNumber(data.toString()).toNumber();
         if (index === 1) {
           setMinted(1);
-          setIsLoading(true);
         } else {
           setMinted(0);
-          setIsLoading(true);
         }
+        setIsLoading(true);
       } else {
         setMinted(0);
-        setIsLoading(false);
       }
     } catch (e) {
       console.log(e);
     }
   };
   useEffect(() => {
+    setIsLoading(false);
     if (address !== null) {
+      setIsLoading(false);
       checkBalanceOf();
-      checkMinted();
       tokenOfOwner();
+      checkMinted();
       getDataNFT();
       if (status.message !== "") {
         setOpenToast(true);
@@ -252,7 +252,7 @@ const Index = () => {
       {minted === 1 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            {!dataNft.image ? (
+            {!isLoading || !dataNft.image ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
                   <Skeleton key={index} width={"100%"} height="512px" />
@@ -349,7 +349,7 @@ const Index = () => {
       ) : (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            {!isLoading ? (
+            {!isLoading && address ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
                   <Skeleton key={index} width={"100%"} height="512px" />
