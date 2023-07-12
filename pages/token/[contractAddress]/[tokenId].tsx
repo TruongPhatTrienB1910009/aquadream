@@ -28,7 +28,7 @@ import { useRouter } from "next/router";
 import { getABI } from "../../../components/NFT/hook/getNFTs";
 
 type Props = {
-  nft: NFT;
+  nft: any;
 };
 
 const [randomColor1, randomColor2] = [randomColor(), randomColor()];
