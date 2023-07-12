@@ -205,28 +205,30 @@ const Index = () => {
         const index = new BigNumber(data.toString()).toNumber();
         if (index === 1) {
           setMinted(1);
+          setIsLoading(true);
         } else {
           setMinted(0);
+          setIsLoading(true);
         }
-        setIsLoading(true);
       } else {
         setMinted(0);
+        setIsLoading(false);
       }
     } catch (e) {
       console.log(e);
     }
   };
+  GetTotalMinted();
   useEffect(() => {
-    setIsLoading(false);
     if (address !== null) {
-      setIsLoading(false);
       checkBalanceOf();
-      tokenOfOwner();
       checkMinted();
+      tokenOfOwner();
       getDataNFT();
       if (status.message !== "") {
         setOpenToast(true);
       }
+      GetTotalMinted();
     }
     GetTotalMinted();
     if (tokenOfOwnerByIndex !== -1) GetClaim();
@@ -238,6 +240,7 @@ const Index = () => {
     tokenOfOwnerByIndex,
     totalMinted,
   ]);
+  console.log("isLoading", isLoading);
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
@@ -252,7 +255,7 @@ const Index = () => {
       {minted === 1 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            {!isLoading || !dataNft.image ? (
+            {!dataNft.image || !isLoading ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
                   <Skeleton key={index} width={"100%"} height="512px" />
@@ -325,11 +328,6 @@ const Index = () => {
                   alt=""
                   className={styles.icon}
                 />
-                <img
-                  src="/images/cloudbase.jpeg"
-                  alt=""
-                  className={styles.icon}
-                />
               </div>
               <h1>Total minted: {totalMinted}</h1>
               <p className={styles.heading}>
@@ -362,7 +360,6 @@ const Index = () => {
                   src="/images/cardSecret.jpg"
                   alt=""
                 />
-                <p className={styles.nftName}>SecretCard</p>
               </div>
             )}
           </div>
@@ -371,11 +368,6 @@ const Index = () => {
               <div id="social_icons">
                 <img
                   src="/images/base-groerli.png"
-                  alt=""
-                  className={styles.icon}
-                />
-                <img
-                  src="/images/cloudbase.jpeg"
                   alt=""
                   className={styles.icon}
                 />
