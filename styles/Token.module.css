@@ -349,10 +349,30 @@
 @media (max-width: 960px) {
   .container {
     flex-direction: column;
-    padding-bottom: 128px;
+    padding-bottom: 28px;
+  }
+
+  .containerSell {
+    flex-direction: column;
+    padding-bottom: 28px;
+  }
+
+  .metadataContainerSell {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .listingContainer {
+    position: relative;
+    width: 100%;
+    min-width: 0px;
+    max-width: 100%;
+    top: 0px;
+  }
+
+  .listingContainerSell {
     position: relative;
     width: 100%;
     min-width: 0px;
