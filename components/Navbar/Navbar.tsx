@@ -24,6 +24,8 @@ import {
  */
 export function Navbart() {
   const address = useAddress();
+
+
   return (
     <>
       <div className={styles.navContainer}>
