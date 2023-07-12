@@ -7,7 +7,7 @@ import styles from "../../styles/Buy.module.css";
 
 type Props = {
   isLoading: boolean;
-  data: NFTType[] | undefined;
+  data: any[] | undefined;
   overrideOnclickBehavior?: (nft: NFTType) => void;
   emptyText?: string;
 };
@@ -18,6 +18,7 @@ const NFTGrid = ({
   overrideOnclickBehavior,
   emptyText = "No NFTs found for this collection.",
 }: Props) => {
+  console.log("data", data);
   return (
     <div className={styles.nftGridContainer}>
       {isLoading ? (
@@ -30,8 +31,8 @@ const NFTGrid = ({
         data.map((nft) =>
           !overrideOnclickBehavior ? (
             <Link
-              href={`/token/${nft.metadata.address}/${nft.tokenId}`}
-              key={nft.tokenId}
+              href={`/token/${nft.metadata.address}/${nft?.tokenId}`}
+              key={nft?.tokenId}
               className={styles.nftContainer}
             >
               <NFTComponent nft={nft} />
