@@ -28,7 +28,6 @@ import toastStyle from "../../util/toastConfig";
 import { ethers } from "ethers";
 import { Breadcrumb } from "react-bootstrap";
 
-
 const Index = () => {
   const { contract: miniGameContract } = useContract(
     MINI_GAME_ADDRESS,
@@ -252,7 +251,7 @@ const Index = () => {
         <Breadcrumb.Item active>Mini Game</Breadcrumb.Item>
       </Breadcrumb>
 
-      {minted === 1 ? (
+      {minted === 1 && chainId === 5 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
             {!dataNft.image || !isLoading ? (
@@ -305,12 +304,12 @@ const Index = () => {
                 ) : claim[0] === 0 ? (
                   ""
                 ) : (
-                  <div className={styles.rightSide}>
+                  <div className={styles.rightSide} style={{ width: "200px" }}>
                     <button
                       disabled={true}
                       style={{
                         cursor: "not-allowed",
-                        fontSize: "20px",
+                        fontSize: "15px",
                       }}
                     >
                       You claimed reward!
