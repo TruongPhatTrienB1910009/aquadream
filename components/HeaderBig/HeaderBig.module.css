@@ -56,6 +56,7 @@
   .headerBigText {
     font-weight: bold;
     font-size: 25px;
+    text-align: justify;
     line-height: 125%;
   }
 }

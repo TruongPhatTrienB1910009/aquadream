@@ -24,12 +24,6 @@ import {
  */
 export function Navbart() {
   const address = useAddress();
-  const showMenu = () => {
-    document
-      .querySelector("#dropdown")
-      ?.classList.toggle(`${styles.showDropdowMenu}`);
-    document.querySelector("#svgIcon")?.classList.toggle(`${styles.svgRotate}`);
-  };
   return (
     <>
       <div className={styles.navContainer}>
@@ -72,9 +66,7 @@ export function Navbart() {
                   className="justify-content-end"
                 ></Offcanvas.Header>
                 <Offcanvas.Body className={styles.headerCenter}>
-                  <Nav
-                    className="justify-content-start flex-grow-1 pe-3"
-                  >
+                  <Nav className="justify-content-start flex-grow-1 pe-3">
                     <Nav.Link
                       style={{
                         color: "black",

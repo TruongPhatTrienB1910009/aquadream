@@ -20,7 +20,7 @@
 }
 
 .topCollectionText{
-  margin-left: 1rem;
+  margin-left: 3%;
   font-weight: 500;
 }
 .topCreatorStar{
@@ -28,8 +28,8 @@
 }
 
 .topCreatorIconName {
-  margin-top: 1rem;
   display: flex;
+  padding: 3%;
 }
 
 .topCollectionName {
