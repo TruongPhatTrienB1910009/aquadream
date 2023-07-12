@@ -30,7 +30,7 @@ export function Navbart() {
         <nav className={styles.nav}>
           <Navbar
             style={{ width: "100%", backgroundColor: "#ececec !important" }}
-            expand="sm"
+            expand="md"
             className="bg-body-tertiary"
           >
             <Container fluid>

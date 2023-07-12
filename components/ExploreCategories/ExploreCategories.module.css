@@ -37,7 +37,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  font-size: 20px;
+  font-size: 120%;
   width: 100%;
 }
 .exploreTextBotton {
@@ -107,7 +107,6 @@
   text-decoration: none;
   padding: 2%;
   border-radius: 100px;
-  width: 60%;
 }
 .show_counter .countdown_link p {
   color: black;
@@ -129,7 +128,7 @@
 
 .show_counter .countdown > span {
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: 65%;
   line-height: 1rem;
 }
 @media (max-width: 800px) {
@@ -174,6 +173,9 @@
   .show_counter .countdown {
     padding: 0;
   }
+  .show_counter .countdown_link{
+    align-items: normal;
+  }
   .exploreIconName {
     display: block;
   }
@@ -202,5 +204,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .exploreIconNameTop{
+    font-size: 90%;
   }
 }

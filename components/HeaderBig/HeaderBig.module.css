@@ -53,6 +53,9 @@
     width: 100%;
     padding-top: 40px;
   }
+  .headerMinText{
+    margin-left: 0;
+  }
   .headerBigText {
     font-weight: bold;
     font-size: 25px;
