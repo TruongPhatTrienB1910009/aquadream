@@ -321,13 +321,13 @@ const Index = () => {
           </div>
           <div className={styles.rightSide}>
             <div className={styles.content}>
-              <div id="social_icons">
+              {/* <div id="social_icons">
                 <img
                   src="/images/base-groerli.png"
                   alt=""
                   className={styles.icon}
                 />
-              </div>
+              </div> */}
               <h1>Total minted: {totalMinted}</h1>
               <p className={styles.heading}>
                 Exploring the Deep Sea of BASE NFTs

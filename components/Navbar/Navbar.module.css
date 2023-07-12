@@ -84,12 +84,16 @@
   font-size: 24px;
   font-weight: 500;
 }
-.headerLink{
+
+.headerLink {
   display: flex;
+  margin-right: 12px;
 }
-.headerIcon{
+
+.headerIcon {
   display: none;
 }
+
 /* mobile  */
 
 .menuText:hover {
@@ -130,7 +134,8 @@
   transform: rotate(90deg) !important;
   transition: 0.1s;
 }
-.headerCenter{
+
+.headerCenter {
   align-items: center;
 }
 
@@ -160,17 +165,19 @@
 /* Sreens less than 720px */
 @media (max-width: 570px) {
 
-  .headerIcon{
+  .headerIcon {
     display: block;
     margin-right: 0.5rem;
   }
-  .offcanvas{
+
+  .offcanvas {
     width: 75%;
   }
-  .navbarSearch{
+
+  .navbarSearch {
     display: none;
   }
- 
+
 
   .navMiddle {
     display: none;

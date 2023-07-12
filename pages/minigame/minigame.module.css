@@ -6,14 +6,14 @@
 /* left side */
 
 .leftSide {
-  width: 60%;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .nftContainer {
-  width: 50%;
+  width: 300px;
   margin: 8px;
   position: relative;
   overflow: hidden;
@@ -38,6 +38,7 @@
 
 .nftImage {
   width: 100% !important;
+  height: auto;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   object-fit: cover;
@@ -151,6 +152,7 @@
 
   .leftSide {
     width: 100%;
+    margin-bottom: 20px;
   }
 
   .rightSide {
@@ -158,19 +160,21 @@
   }
 
   .content {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .heading {
+    text-align: justify;
   }
 
   .contenta {
     font-size: 18px;
   }
 
-  .rightSide .content button {
-    margin: 0;
-    position: inherit;
-    margin-top: 50px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .content button {
+    margin-top: 30px;
   }
 }
