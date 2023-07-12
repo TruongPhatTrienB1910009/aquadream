@@ -20,7 +20,7 @@ function Footer() {
         <div className={styles.footerWidget}>
           <div className={styles.footerRow}>
             <div className={styles.footerItemsIcon}>
-              <div className={styles.footerWidget}>
+              <div className={styles.footer}>
                 <div
                   style={{
                     display: "flex",
@@ -119,8 +119,6 @@ function Footer() {
                   </li>
                 </ul>
               </div>
-            </div>
-            <div className={styles.footerItems}>
               <div className={styles.footerWidget}>
                 <ul className={styles.footerTittle}>Resources
                   <li>
@@ -141,10 +139,10 @@ function Footer() {
                   <li>
                     <a>Community standards</a>
                   </li>
-                  
                 </ul>
               </div>
             </div>
+
           </div>
           <div className={styles.copyright}>
             <span>&copy; 2022 NFTs @All Rights Reserved</span>
