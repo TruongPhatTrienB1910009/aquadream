@@ -122,10 +122,10 @@ function Footer() {
               <div className={styles.footerWidget}>
                 <ul className={styles.footerTittle}>Resources
                   <li>
-                    <a>Blog</a>
+                    <a>Help center</a>
                   </li>
                   <li>
-                    <a>Blog</a>
+                    <a>Taxes</a>
                   </li>
                   <li>
                     <a>Blog</a>
