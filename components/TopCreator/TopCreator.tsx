@@ -48,7 +48,7 @@ export const TopCreator = () => {
     },
     {
       url: big3.src,
-      caption: "The Rock",
+      caption: "The Rock adsa",
       mini_1: mini5.src,
       mini_2: mini6.src,
     },
@@ -153,6 +153,12 @@ export const TopCreator = () => {
                       style={{ color: "#f7d447" }}
                     />
                   </div>
+                </div>
+                <div className={styles.totalVolume}>
+                   0.000213 ETH
+                   <div className={styles.nameTotal}>
+                    total volume
+                   </div>
                 </div>
               </div>
             </Card>

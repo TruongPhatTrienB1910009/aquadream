@@ -13,7 +13,7 @@ import SaleInfo from "../components/SaleInfo/SaleInfo";
 import { GetNFTs } from "../components/NFT/hook/getNFTs";
 import { Breadcrumb } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Sell = () => {
   // Load all of the NFTs from the NFT Collection
@@ -25,19 +25,43 @@ const Sell = () => {
   console.log("data", data);
 
   const [selectedNft, setSelectedNft] = useState<NFTType>();
-  console.log("selectedNft", selectedNft);
-
+  const [nftSellDetail, setnftSellDetail] = useState(false);
   return (
     <>
-      <Breadcrumb className={tokenPageStyles.Breadcrumb}>
-        <Breadcrumb.Item
-          className={tokenPageStyles.BreadcrumbSellItem}
-          href="/"
-        >
-          <FontAwesomeIcon icon={faHome} /> Home
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>Sell</Breadcrumb.Item>
-      </Breadcrumb>
+      {nftSellDetail ? (
+        <Breadcrumb className={tokenPageStyles.Breadcrumb}>
+          <Breadcrumb.Item
+            className={tokenPageStyles.BreadcrumbSellItem}
+            onClick={() => {
+              setSelectedNft(undefined);
+              setnftSellDetail(false);
+            }}
+          >
+            <FontAwesomeIcon style={{ fontSize: "85%" }} icon={faChevronLeft} />{" "}
+            Back to sell
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      ) : (
+        <Breadcrumb className={tokenPageStyles.Breadcrumb}>
+          <Breadcrumb.Item
+            className={tokenPageStyles.BreadcrumbSellItem}
+            href="/"
+          >
+            <FontAwesomeIcon icon={faHome} /> Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item
+            href="/sell"
+            className={tokenPageStyles.BreadcrumbSellItem}
+          >
+            Sell
+          </Breadcrumb.Item>
+          {nftSellDetail ? (
+            <Breadcrumb.Item active>Sell Details</Breadcrumb.Item>
+          ) : (
+            ""
+          )}
+        </Breadcrumb>
+      )}
 
       {!selectedNft ? (
         <>
@@ -46,6 +70,7 @@ const Sell = () => {
             isLoading={isLoading}
             overrideOnclickBehavior={(nft) => {
               setSelectedNft(nft);
+              setnftSellDetail(true);
             }}
             emptyText={
               "Looks like you don't own any NFTs in this collection. Head to the buy page to buy some!"
@@ -60,14 +85,6 @@ const Sell = () => {
                 metadata={selectedNft.metadata}
                 className={tokenPageStyles.image}
               />
-              <button
-                onClick={() => {
-                  setSelectedNft(undefined);
-                }}
-                className={tokenPageStyles.crossButton}
-              >
-                X
-              </button>
             </div>
           </div>
 

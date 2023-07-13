@@ -3,6 +3,7 @@ import Image from "next/image";
 import ParrotImage from "../../public/images/Navbar/vetAndFire.png";
 import "react-slideshow-image/dist/styles.css";
 import { Slide } from "react-slideshow-image";
+import { Button } from "react-bootstrap";
 
 const slideImages = [
   {
@@ -35,7 +36,10 @@ export const HeaderBig = () => {
                   1000 premium digital artworks are aviable to be your&rsquo;s
                 </span>
               </div>
-              <div className={styles.headerBigButton}></div>
+              <div className={styles.headerBigButton}>
+                <Button variant="outline-success">Buy Now</Button>
+                <Button variant="outline-success">See Categories</Button>
+              </div>
             </div>
             <div className={styles.headerMin}>
               <Image

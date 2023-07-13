@@ -23,8 +23,7 @@ export const TopCollection = () => {
     // Call the handler initially to set the initial size
     handleResize();
     if (maxSize.width < 500) setslidesCount(3);
-    else
-      setslidesCount(6)
+    else setslidesCount(6);
     // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -69,12 +68,25 @@ export const TopCollection = () => {
   ];
 
   return (
-    <div className={styles.topCollectionContainer} style={{ position: "sticky" }}>
-      <div className={styles.topCollectionTittle}>Top Collection</div>
-      <Slide slidesToScroll={slidesCount} slidesToShow={slidesCount} indicators={true}>
+    <div
+      className={styles.topCollectionContainer}
+      style={{ position: "sticky" }}
+    >
+      <div className={styles.topCollectionTittle}>Categories</div>
+      <Slide
+        slidesToScroll={slidesCount}
+        slidesToShow={slidesCount}
+        indicators={true}
+      >
         {topCollections?.map((topCollection, index) => (
           <div key={index} className={styles.card}>
-            <Card style={{cursor: 'pointer', backgroundColor: "#f7f7f7", borderRadius: "5%" }}>
+            <Card
+              style={{
+                cursor: "pointer",
+                backgroundColor: "#f7f7f7",
+                borderRadius: "5%",
+              }}
+            >
               <Card.Img
                 src={topCollection.url}
                 alt="green iguana"
