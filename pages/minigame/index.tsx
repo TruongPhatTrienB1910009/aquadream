@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./minigame.module.css";
 import dynamic from "next/dynamic";
 
@@ -28,13 +28,13 @@ import toastStyle from "../../util/toastConfig";
 import { ethers } from "ethers";
 import { Breadcrumb } from "react-bootstrap";
 
+const INITIAL_COUNT = 0;
 const Index = () => {
   const { contract: miniGameContract } = useContract(
     MINI_GAME_ADDRESS,
     minigameABI
   );
   const address = useAddress();
-  console.log(address);
   const startDate = new Date("July 15, 2023 14:43:00");
   const dateTimeAfterThreeDays = startDate;
   const [{ data, error, loading }, switchNetwork] = useNetwork();
@@ -54,6 +54,8 @@ const Index = () => {
   //loading when claim ETH
   const [loadingClaim, setLoadingClaim] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const prevCountRef = useRef<number>(INITIAL_COUNT);
   // handle status
   const [status, setStatus] = useState({
     statusMessage: "",
@@ -152,15 +154,14 @@ const Index = () => {
   const GetTotalMinted = async () => {
     const data = await miniGameContract?.call("totalSupply", []);
     if (data) {
-      console.log("hello", data);
       const index = new BigNumber(data.toString()).toNumber();
-      console.log("hello2", index);
       setTotalMinted(index);
     } else {
       setTotalMinted(0);
     }
   };
   const tokenOfOwner = async () => {
+    setIsLoading(false);
     if (address) {
       try {
         const data = await miniGameContract?.call("tokenOfOwnerByIndex", [
@@ -175,12 +176,17 @@ const Index = () => {
         console.log(e);
         setTokenOfOwnerByIndex(-1);
       }
+    } else {
+      setTokenOfOwnerByIndex(-1);
     }
   };
 
   const getDataNFT = async () => {
     try {
-      if (tokenOfOwnerByIndex !== -1) {
+      if (
+        tokenOfOwnerByIndex !== -1 &&
+        prevCountRef.current !== tokenOfOwnerByIndex
+      ) {
         const data = await miniGameContract?.call("tokenURI", [
           tokenOfOwnerByIndex,
         ]);
@@ -219,8 +225,8 @@ const Index = () => {
   };
   GetTotalMinted();
   useEffect(() => {
+    setDataNft(null);
     if (address !== null) {
-      checkBalanceOf();
       checkMinted();
       tokenOfOwner();
       getDataNFT();
@@ -230,16 +236,11 @@ const Index = () => {
       GetTotalMinted();
     }
     GetTotalMinted();
+    prevCountRef.current = tokenOfOwnerByIndex;
     if (tokenOfOwnerByIndex !== -1) GetClaim();
-  }, [
-    address,
-    balanceOf,
-    minted,
-    status.message,
-    tokenOfOwnerByIndex,
-    totalMinted,
-  ]);
-  console.log("isLoading", isLoading);
+  }, [address, minted, status.message, tokenOfOwnerByIndex, totalMinted]);
+  // console.log("isLoading", dataNft.name, isLoading);
+
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
@@ -254,7 +255,7 @@ const Index = () => {
       {minted === 1 && chainId === 5 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            {!dataNft.image || !isLoading ? (
+            {!dataNft || !isLoading ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
                   <Skeleton key={index} width={"100%"} height="512px" />
@@ -304,7 +305,7 @@ const Index = () => {
                 ) : claim[0] === 0 ? (
                   ""
                 ) : (
-                  <div className={styles.rightSide} style={{ width: "200px" }}>
+                  <div style={{ width: "200px" }}>
                     <button
                       disabled={true}
                       style={{

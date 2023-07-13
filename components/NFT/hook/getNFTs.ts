@@ -6,7 +6,7 @@ import { MARKETPLACE_ADDRESS, NETWORK } from "../../../const/contractAddresses";
 import { useContract, useNFTs } from "@thirdweb-dev/react";
 
 const settings = {
-  apiKey: process.env.ALCHEMY_API_KEY,
+  apiKey: process.env.ALCHEMY_API_KEY as string,
   network: Network.ETH_GOERLI,
 };
 const alchemy = new Alchemy(settings);
