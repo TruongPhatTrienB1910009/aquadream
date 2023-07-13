@@ -42,9 +42,13 @@
   margin: auto;
 }
 .headerBigButton {
+  display: flex;
   justify-content: center;
-  align-items: center;
-  margin: auto;
+  margin-top: 3%;
+  margin-left: 3%;
+}
+.headerBigButton button{
+  margin-right: 10%;
 }
 @media (max-width: 500px) {
   .headerMin {

@@ -1,5 +1,5 @@
 import { NFT as NFTType } from "@thirdweb-dev/sdk";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import styles from "../../styles/Sale.module.css";
@@ -140,7 +140,6 @@ export default function SaleInfo({ nft }: Props) {
       startTimestamp: new Date(data.startDate),
       endTimestamp: new Date(data.endDate),
     });
-
     return txResult;
   }
 
@@ -159,21 +158,23 @@ export default function SaleInfo({ nft }: Props) {
           {/* <h4 className={styles.formSectionTitle}>When </h4> */}
 
           {/* Input field for auction start date */}
-          <legend className={styles.legend}> Listing Starts on </legend>
+          <legend className={styles.legend}> Listing Starts on</legend>
           <input
             className={styles.input}
             type="datetime-local"
             {...registerDirect("startDate")}
             aria-label="Auction Start Date"
+          
           />
 
           {/* Input field for auction end date */}
           <legend className={styles.legend}> Listing Ends on </legend>
           <input
             className={styles.input}
-            type="datetime-local"
+            type="date"
             {...registerDirect("endDate")}
             aria-label="Auction End Date"
+            
           />
           <h4 className={styles.formSectionTitle}>Price </h4>
 
@@ -183,6 +184,7 @@ export default function SaleInfo({ nft }: Props) {
             className={styles.input}
             type="number"
             step={0.000001}
+            min={0}
             {...registerDirect("price")}
           />
 

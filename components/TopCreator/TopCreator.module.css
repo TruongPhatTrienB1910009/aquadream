@@ -19,11 +19,12 @@
   right: 0;
 }
 
-.topCollectionText{
+.topCollectionText {
   margin-left: 3%;
+  width: 40%;
   font-weight: 500;
 }
-.topCreatorStar{
+.topCreatorStar {
   font-size: 65%;
 }
 
@@ -31,7 +32,14 @@
   display: flex;
   padding: 3%;
 }
-
+.totalVolume {
+  font-weight: 500;
+  right: 0;
+}
+.nameTotal {
+  font-weight: 400;
+  font-size: 80%;
+}
 .topCollectionName {
   margin-left: 5%;
 }
