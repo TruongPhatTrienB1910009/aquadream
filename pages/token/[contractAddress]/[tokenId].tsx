@@ -46,6 +46,8 @@ export default function TokenPage({ nft }: Props) {
   );
 
   // Connect to NFT Collection smart contract
+
+
   const { contract: nftCollection } = useContract(
     router.query.contractAddress as string
   );
