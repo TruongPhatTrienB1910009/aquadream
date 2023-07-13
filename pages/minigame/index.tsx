@@ -224,12 +224,12 @@ const Index = () => {
     }
   };
   GetTotalMinted();
+  getDataNFT();
   useEffect(() => {
     setDataNft(null);
     if (address !== null) {
       checkMinted();
       tokenOfOwner();
-      getDataNFT();
       if (status.message !== "") {
         setOpenToast(true);
       }
@@ -264,7 +264,6 @@ const Index = () => {
             ) : (
               <div className={styles.nftContainer}>
                 <img className={styles.nftImage} src={dataNft.image} alt="" />
-
                 <p className={styles.nftName}>{dataNft.name}</p>
                 {claim[0] > 0 && !claim[1] ? (
                   chainId === 5 ? (
