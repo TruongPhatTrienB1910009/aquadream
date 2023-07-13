@@ -26,6 +26,7 @@ import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
 import { useRouter } from "next/router";
 import { getABI } from "../../../components/NFT/hook/getNFTs";
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
 type Props = {
   nft: any;
@@ -149,55 +150,6 @@ export default function TokenPage({ nft }: Props) {
                   )
                 )}
               </div>
-
-              <h3 className={styles.descriptionTitle}>History</h3>
-
-              <div className={styles.traitsContainer}>
-                {transferEvents?.map((event, index) => (
-                  <div
-                    key={event.transaction.transactionHash}
-                    className={styles.eventsContainer}
-                  >
-                    <div className={styles.eventContainer}>
-                      <p className={styles.traitName}>Event</p>
-                      <p className={styles.traitValue}>
-                        {
-                          // if last event in array, then it's a mint
-                          index === transferEvents.length - 1
-                            ? "Mint"
-                            : "Transfer"
-                        }
-                      </p>
-                    </div>
-
-                    <div className={styles.eventContainer}>
-                      <p className={styles.traitName}>From</p>
-                      <p className={styles.traitValue}>
-                        {event.data.from?.slice(0, 4)}...
-                        {event.data.from?.slice(-2)}
-                      </p>
-                    </div>
-
-                    <div className={styles.eventContainer}>
-                      <p className={styles.traitName}>To</p>
-                      <p className={styles.traitValue}>
-                        {event.data.to?.slice(0, 4)}...
-                        {event.data.to?.slice(-2)}
-                      </p>
-                    </div>
-
-                    <div className={styles.eventContainer}>
-                      <Link
-                        className={styles.txHashArrow}
-                        href={`${ETHERSCAN_URL}/tx/${event.transaction.transactionHash}`}
-                        target="_blank"
-                      >
-                        ↗
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
 
@@ -284,9 +236,59 @@ export default function TokenPage({ nft }: Props) {
                 </>
               )}
             </div>
+          </div>
+        </div>
+        <div className={styles.containerHistory}>
+          <h3 className={styles.descriptionTitle}>History</h3>
 
+          <div className={styles.traitsContainerHistory}>
+            <Scrollbars
+              style={{ height: 300 }}>
+              {transferEvents?.map((event, index) => (
+                <div
+                  key={event.transaction.transactionHash}
+                  className={styles.eventsContainer}
+                >
+                  <div className={styles.eventContainer}>
+                    <p className={styles.traitName}>Event</p>
+                    <p className={styles.traitValue}>
+                      {
+                        // if last event in array, then it's a mint
+                        index === transferEvents.length - 1
+                          ? "Mint"
+                          : "Transfer"
+                      }
+                    </p>
+                  </div>
 
+                  <div className={styles.eventContainer}>
+                    <p className={styles.traitName}>From</p>
+                    <p className={styles.traitValue}>
+                      {event.data.from?.slice(0, 4)}...
+                      {event.data.from?.slice(-2)}
+                    </p>
+                  </div>
 
+                  <div className={styles.eventContainer}>
+                    <p className={styles.traitName}>To</p>
+                    <p className={styles.traitValue}>
+                      {event.data.to?.slice(0, 4)}...
+                      {event.data.to?.slice(-2)}
+                    </p>
+                  </div>
+
+                  <div className={styles.eventContainer}>
+                    <Link
+                      className={styles.txHashArrow}
+                      href={`${ETHERSCAN_URL}/tx/${event.transaction.transactionHash}`}
+                      target="_blank"
+                    >
+                      ↗
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </Scrollbars>
           </div>
         </div>
       </Container>
@@ -320,40 +322,3 @@ export async function getServerSideProps(context: {
     },
   };
 }
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const tokenId = context.params?.tokenId as string;
-
-//   const sdk = new ThirdwebSDK(NETWORK);
-
-//   const contract = await sdk.getContractFromAbi(context.params?.contractAddress as string, minigameABI);
-//   const nft = await contract.erc721.get(tokenId);
-
-//   return {
-//     props: {
-//       nft
-//     },
-//     revalidate: 1,
-//   };
-// };
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const sdk = new ThirdwebSDK(NETWORK);
-//   const contract = await sdk.getContract(NFT_COLLECTION_ADDRESS);
-
-//   const nfts = await contract.erc721.getAll();
-
-//   const paths = nfts.map((nft) => {
-//     return {
-//       params: {
-//         contractAddress: NFT_COLLECTION_ADDRESS,
-//         tokenId: nft.metadata.id,
-//       },
-//     };
-//   });
-
-//   return {
-//     paths,
-//     fallback: "blocking", // can also be true or 'blocking'
-//   };
-// };
