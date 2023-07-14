@@ -106,7 +106,15 @@ export default function ProfilePage() {
               emptyText="Looks like you don't have any NFTs from this collection. Head to the buy page to buy some!"
             />
           </Tab>
-          <Tab eventKey="Listings" title="Listings">
+          <Tab eventKey="Listings" title="Listings" style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: '1%',
+            width: '100%',
+            textDecoration: 'none'
+          }}>
+            {/* <div className={styles.nftGridContainer}> */}
             {loadingDirects ? (
               <p>Loading...</p>
             ) : directListings && directListings.length === 0 ? (
@@ -120,6 +128,7 @@ export default function ProfilePage() {
                 />
               ))
             )}
+            {/* </div> */}
           </Tab>
         </Tabs>
       </div>
@@ -165,6 +174,6 @@ export default function ProfilePage() {
           ))
         )}
       </div> */}
-    </Container>
+    </Container >
   );
 }
