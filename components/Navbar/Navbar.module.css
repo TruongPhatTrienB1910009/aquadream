@@ -120,7 +120,10 @@
   transition: opacity 0.3s ease-out;
   display: none;
 }
-
+.headerSoon{
+  color: #FF9933	;
+  margin-left: 2%;
+}
 .showDropdowMenu {
   opacity: 1;
   display: block;
@@ -140,7 +143,14 @@
 .headerCenter{
   align-items: center;
 }
-
+.navIconWallet{
+  display: flex;
+  align-items: center;
+  
+}
+.navConnect{
+  margin-right: 5%;
+}
 @media (max-width: 920px) {
   .navLeft {
     margin-left: 0;
@@ -155,11 +165,12 @@
   }
 
   .navRight {
-    margin-top: 1rem;
-    width: 100%;
-    margin-right: 0;
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+  .headerLink{
+    margin-bottom: 0.5rem;
   }
 
 }
