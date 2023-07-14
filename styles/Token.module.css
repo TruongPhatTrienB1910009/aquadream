@@ -265,6 +265,22 @@
   width: 99%;
 }
 
+
+.endTime {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.endTime span {
+  margin-right: 10px;
+}
+
+.endTime input {
+  border: none;
+  background-color: #fff;
+}
+
 .traitValue {
   font-weight: 600;
   margin: 0px;

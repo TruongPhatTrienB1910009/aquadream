@@ -77,20 +77,6 @@ export default function TokenPage({ nft }: Props) {
         }
       }
     }
-
-    // const { data, isLoading: loadingTransferEvents } =
-    //   useContractEvents(nftCollection, "Transfer", {
-    //     queryFilter: {
-    //       filters: {
-    //         tokenId: nft.metadata.id,
-    //       },
-    //       order: "desc",
-    //     },
-    //   });
-
-    // if (data) {
-    //   setTransferEvents(data);
-    // }
   }
 
   const { data: directListing, isLoading: loadingDirect } =
@@ -162,6 +148,20 @@ export default function TokenPage({ nft }: Props) {
       throw new Error("No valid listing found for this NFT");
     }
     return txResult;
+  }
+
+  var datetimeLocalString;
+  if (directListing?.[0]) {
+    var referenceDatetime = new Date();
+    var targetDatetime = new Date((directListing[0].startTimeInSeconds * 1000) + (directListing[0].endTimeInSeconds - directListing[0].startTimeInSeconds) * 1000)
+    var year = targetDatetime.getFullYear();
+    var month = (targetDatetime.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    var day = targetDatetime.getDate().toString().padStart(2, '0');
+    var hours = targetDatetime.getHours().toString().padStart(2, '0');
+    var minutes = targetDatetime.getMinutes().toString().padStart(2, '0');
+
+    // Create the datetime-local format string
+    datetimeLocalString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
   }
 
   useEffect(() => {
@@ -245,6 +245,10 @@ export default function TokenPage({ nft }: Props) {
                           <>
                             {directListing[0]?.currencyValuePerToken.displayValue}
                             {" " + directListing[0]?.currencyValuePerToken.symbol}
+                            <div className={styles.endTime}>
+                              <span>End on</span>
+                              <input type="datetime-local" value={datetimeLocalString} disabled />
+                            </div>
                           </>
                         ) : (
                           "Not for sale"
