@@ -26,7 +26,7 @@ import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
 import { useRouter } from "next/router";
 import { getABI } from "../../../components/NFT/hook/getNFTs";
-import { Scrollbars } from 'react-custom-scrollbars-2';
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 type Props = {
   nft: any;
@@ -164,7 +164,9 @@ export default function TokenPage({ nft }: Props) {
               </div>
 
               <h1 className={styles.title}>{nft.metadata.name}</h1>
-              <p className={styles.collectionName}>Token ID #{nft.metadata.id}</p>
+              <p className={styles.collectionName}>
+                Token ID #{nft.metadata.id}
+              </p>
 
               <Link
                 href={`/profile/${nft.owner}`}
@@ -196,8 +198,12 @@ export default function TokenPage({ nft }: Props) {
                       <>
                         {directListing && directListing[0] ? (
                           <>
-                            {directListing[0]?.currencyValuePerToken.displayValue}
-                            {" " + directListing[0]?.currencyValuePerToken.symbol}
+                            {
+                              directListing[0]?.currencyValuePerToken
+                                .displayValue
+                            }
+                            {" " +
+                              directListing[0]?.currencyValuePerToken.symbol}
                           </>
                         ) : (
                           "Not for sale"
@@ -224,11 +230,16 @@ export default function TokenPage({ nft }: Props) {
                       });
                     }}
                     onError={(e) => {
-                      (e as any).info.reason !== "user rejected transaction" ? (toast('Please try again. Confirm the transaction and make sure you are paying enough gas!', {
-                        icon: "❌",
-                        style: toastStyle,
-                        position: "bottom-center",
-                      })) : ''
+                      (e as any).info.reason !== "user rejected transaction"
+                        ? toast(
+                            "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                            {
+                              icon: "❌",
+                              style: toastStyle,
+                              position: "bottom-center",
+                            }
+                          )
+                        : "";
                     }}
                   >
                     Buy at asking price
@@ -242,8 +253,7 @@ export default function TokenPage({ nft }: Props) {
           <h3 className={styles.descriptionTitle}>History</h3>
 
           <div className={styles.traitsContainerHistory}>
-            <Scrollbars
-              style={{ height: 300 }}>
+            <Scrollbars style={{ height: 300 }}>
               {transferEvents?.map((event, index) => (
                 <div
                   key={event.transaction.transactionHash}
@@ -313,7 +323,7 @@ export async function getServerSideProps(context: {
 
   try {
     contractMetadata = await contract.metadata.get();
-  } catch (e) { }
+  } catch (e) {}
 
   return {
     props: {
