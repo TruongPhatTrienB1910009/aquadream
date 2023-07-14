@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   MediaRenderer,
   ThirdwebNftMedia,
@@ -7,7 +8,7 @@ import {
   useValidEnglishAuctions,
   Web3Button,
 } from "@thirdweb-dev/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../../../components/Container/Container";
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
@@ -38,6 +39,7 @@ export default function TokenPage({ nft }: Props) {
   const [bidValue, setBidValue] = useState<string>();
 
   const router = useRouter();
+  const sdk = new ThirdwebSDK(NETWORK);
 
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
@@ -46,9 +48,50 @@ export default function TokenPage({ nft }: Props) {
   );
 
   // Connect to NFT Collection smart contract
-  const { contract: nftCollection } = useContract(
-    router.query.contractAddress as string
-  );
+  const [nftCollection, setNftCollection] = useState<any>(null);
+  const [transferEvents, setTransferEvents] = useState<any>([]);
+
+  // const { contract: nftCollection } = useContract(
+  //   router.query.contractAddress as string
+  // );
+
+  const GetABIForNftCollection = async () => {
+    const abi: any = await getABI(router.query.contractAddress as string);
+    if (abi) {
+      const contract = await sdk.getContractFromAbi(
+        router.query.contractAddress as string,
+        abi
+      );
+
+      if (contract) {
+        setNftCollection(contract);
+        const events = await contract.events.getEvents("Transfer", {
+          filters: {
+            tokenId: nft.metadata.id,
+          },
+          order: "desc",
+        });
+
+        if (events) {
+          setTransferEvents(events);
+        }
+      }
+    }
+
+    // const { data, isLoading: loadingTransferEvents } =
+    //   useContractEvents(nftCollection, "Transfer", {
+    //     queryFilter: {
+    //       filters: {
+    //         tokenId: nft.metadata.id,
+    //       },
+    //       order: "desc",
+    //     },
+    //   });
+
+    // if (data) {
+    //   setTransferEvents(data);
+    // }
+  };
 
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
@@ -64,15 +107,15 @@ export default function TokenPage({ nft }: Props) {
     });
 
   // Load historical transfer events: TODO - more event types like sale
-  const { data: transferEvents, isLoading: loadingTransferEvents } =
-    useContractEvents(nftCollection, "Transfer", {
-      queryFilter: {
-        filters: {
-          tokenId: nft.metadata.id,
-        },
-        order: "desc",
-      },
-    });
+  // const { data: transferEvents, isLoading: loadingTransferEvents } =
+  //   useContractEvents(nftCollection, "Transfer", {
+  //     queryFilter: {
+  //       filters: {
+  //         tokenId: nft.metadata.id,
+  //       },
+  //       order: "desc",
+  //     },
+  //   });
 
   async function createBidOrOffer() {
     let txResult;
@@ -120,6 +163,10 @@ export default function TokenPage({ nft }: Props) {
     }
     return txResult;
   }
+
+  useEffect(() => {
+    GetABIForNftCollection();
+  }, []);
 
   return (
     <>
@@ -254,7 +301,7 @@ export default function TokenPage({ nft }: Props) {
 
           <div className={styles.traitsContainerHistory}>
             <Scrollbars style={{ height: 300 }}>
-              {transferEvents?.map((event, index) => (
+              {transferEvents?.map((event: any, index: any) => (
                 <div
                   key={event.transaction.transactionHash}
                   className={styles.eventsContainer}

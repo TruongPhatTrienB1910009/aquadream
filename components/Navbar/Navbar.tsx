@@ -18,13 +18,13 @@ import {
   Navbar,
   Offcanvas,
 } from "react-bootstrap";
+import reward from "../../public/images/Navbar/reward-removebg-preview.png";
 /**
  * Navigation bar that shows up on all pages.
  * Rendered in _app.tsx file above the page content.
  */
 export function Navbart() {
   const address = useAddress();
-
 
   return (
     <>
@@ -114,8 +114,28 @@ export function Navbart() {
                         <span>Mini Game</span>
                       </div>
                     </Nav.Link>
+                    <Nav.Link
+                      style={{
+                        color: "black",
+                        fontWeight: "550",
+                        fontSize: "20px",
+                      }}
+                      href="/"
+                    >
+                      <div className={styles.headerLink}>
+                        <div className={styles.headerIcon}>
+                          <FontAwesomeIcon icon={faGamepad} />
+                        </div>
+                        <span>Launchpad</span>
+                      </div>
+                    </Nav.Link>
                   </Nav>
+
                   <div className={styles.navRight}>
+                    <div className={styles.navRewards}>
+                      <Image src={reward} alt="reward" width={42} height={42} />
+                      <div>Rewards</div>
+                    </div>
                     <div className={styles.navConnect}>
                       <ConnectWallet
                         style={{ backgroundColor: "black", color: "white" }}
@@ -123,6 +143,7 @@ export function Navbart() {
                         btnTitle="Connect Wallet"
                       />
                     </div>
+
                     {address ? (
                       <Link
                         className={styles.link}
