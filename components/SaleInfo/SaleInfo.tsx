@@ -47,7 +47,31 @@ export default function SaleInfo({ nft }: Props) {
     "marketplace-v3"
   );
 
-  console.log("nft", nft);
+  var today = new Date();
+
+  // Increment the date by 1 to get tomorrow's date
+  var tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  // Get the components of tomorrow's date and time
+  var year = tomorrow.getFullYear();
+  var month = (tomorrow.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+  var day = tomorrow.getDate().toString().padStart(2, '0');
+  var hours = tomorrow.getHours().toString().padStart(2, '0');
+  var minutes = tomorrow.getMinutes().toString().padStart(2, '0');
+
+  // Create the datetime-local format string
+  var datetimeLocalString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+
+  // today
+
+  var year = today.getFullYear();
+  var month = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+  var day = today.getDate().toString().padStart(2, '0');
+  var hours = today.getHours().toString().padStart(2, '0');
+  var minutes = today.getMinutes().toString().padStart(2, '0');
+
+  var datetimeLocalStringToday = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
 
   // useContract is a React hook that returns an object with the contract key.
   // The value of the contract key is an instance of an NFT_COLLECTION on the blockchain.
@@ -164,17 +188,18 @@ export default function SaleInfo({ nft }: Props) {
             type="datetime-local"
             {...registerDirect("startDate")}
             aria-label="Auction Start Date"
-          
+            value={datetimeLocalStringToday}
+            disabled
           />
 
           {/* Input field for auction end date */}
           <legend className={styles.legend}> Listing Ends on </legend>
           <input
             className={styles.input}
-            type="date"
+            type="datetime-local"
             {...registerDirect("endDate")}
             aria-label="Auction End Date"
-            
+            min={datetimeLocalString}
           />
           <h4 className={styles.formSectionTitle}>Price </h4>
 
