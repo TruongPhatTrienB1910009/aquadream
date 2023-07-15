@@ -18,7 +18,7 @@ const NFTGrid = ({
   overrideOnclickBehavior,
   emptyText = "No NFTs found for this collection.",
 }: Props) => {
-  console.log("data", data);
+
   return (
     <div className={styles.nftGridContainer}>
       {isLoading ? (

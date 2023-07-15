@@ -7,6 +7,7 @@ import {
   useValidDirectListings,
   useValidEnglishAuctions,
   Web3Button,
+  useCancelDirectListing,
 } from "@thirdweb-dev/react";
 import React, { useEffect, useState } from "react";
 import Container from "../../../components/Container/Container";
@@ -51,9 +52,6 @@ export default function TokenPage({ nft }: Props) {
   const [nftCollection, setNftCollection] = useState<any>(null);
   const [transferEvents, setTransferEvents] = useState<any>([]);
 
-  // const { contract: nftCollection } = useContract(
-  //   router.query.contractAddress as string
-  // );
 
   const GetABIForNftCollection = async () => {
     const abi: any = await getABI(router.query.contractAddress as string);
@@ -91,17 +89,6 @@ export default function TokenPage({ nft }: Props) {
       tokenContract: router.query.contractAddress as string,
       tokenId: nft.metadata.id,
     });
-
-  // Load historical transfer events: TODO - more event types like sale
-  // const { data: transferEvents, isLoading: loadingTransferEvents } =
-  //   useContractEvents(nftCollection, "Transfer", {
-  //     queryFilter: {
-  //       filters: {
-  //         tokenId: nft.metadata.id,
-  //       },
-  //       order: "desc",
-  //     },
-  //   });
 
   async function createBidOrOffer() {
     let txResult;
@@ -163,6 +150,13 @@ export default function TokenPage({ nft }: Props) {
     // Create the datetime-local format string
     datetimeLocalString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
   }
+
+
+  const {
+    mutateAsync: cancelDirectListing,
+    isLoading,
+    error,
+  } = useCancelDirectListing(marketplace);
 
   useEffect(() => {
     GetABIForNftCollection();

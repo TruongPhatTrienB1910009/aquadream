@@ -22,7 +22,7 @@ const Sell = () => {
   // const { data, isLoading } = useOwnedNFTs(contract, address);
 
   const { nftList: data, isLoadingNFTs: isLoading } = GetNFTs(address);
-  console.log("data", data);
+
 
   const [selectedNft, setSelectedNft] = useState<NFTType>();
   const [nftSellDetail, setnftSellDetail] = useState(false);
