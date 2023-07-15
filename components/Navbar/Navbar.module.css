@@ -127,6 +127,10 @@
 .headerSoon{
   color: #FF9933	;
   margin-left: 2%;
+  font-size: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .showDropdowMenu {
   opacity: 1;
@@ -155,6 +159,19 @@
 }
 .navConnect{
   margin-right: 5%;
+}
+@media (max-width: 1290px){
+  .navRight{
+    float: left;
+  }
+  .headerIcon {
+    display: block;
+    margin-right: 0.5rem;
+    margin-left: 1%;
+  }
+  .headerLink{
+    margin-bottom: 0.5rem;
+  }
 }
 @media (max-width: 920px) {
   .navLeft {

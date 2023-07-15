@@ -51,4 +51,6 @@
 .btn {
   width: 400px !important;
   padding: 5px;
+  background-color: rgb(32, 129, 226) !important;
+  color: white !important;
 }

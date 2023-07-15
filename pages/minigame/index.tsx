@@ -75,10 +75,10 @@ const Index = () => {
       if (result.data) {
         console.log("Switched to Goerli testnet successfully");
       } else {
-        console.log("Error switching to Mumbai testnet", result.error);
+        console.log("Error switching to Goerli testnet", result.error);
       }
     } catch (e) {
-      console.log("Error switching to Mumbai testnet", e);
+      console.log("Error switching to Goerli testnet", e);
     } finally {
       setLoadingChange(false);
     }

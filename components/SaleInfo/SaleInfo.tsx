@@ -46,7 +46,6 @@ export default function SaleInfo({ nft }: Props) {
     MARKETPLACE_ADDRESS,
     "marketplace-v3"
   );
-
   var today = new Date();
 
   // Increment the date by 1 to get tomorrow's date
@@ -55,23 +54,25 @@ export default function SaleInfo({ nft }: Props) {
 
   // Get the components of tomorrow's date and time
   var year = tomorrow.getFullYear();
-  var month = (tomorrow.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-  var day = tomorrow.getDate().toString().padStart(2, '0');
-  var hours = tomorrow.getHours().toString().padStart(2, '0');
-  var minutes = tomorrow.getMinutes().toString().padStart(2, '0');
+  var month = (tomorrow.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  var day = tomorrow.getDate().toString().padStart(2, "0");
+  var hours = tomorrow.getHours().toString().padStart(2, "0");
+  var minutes = tomorrow.getMinutes().toString().padStart(2, "0");
 
   // Create the datetime-local format string
-  var datetimeLocalString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+  var datetimeLocalString =
+    year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
 
   // today
 
   var year = today.getFullYear();
-  var month = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-  var day = today.getDate().toString().padStart(2, '0');
-  var hours = today.getHours().toString().padStart(2, '0');
-  var minutes = today.getMinutes().toString().padStart(2, '0');
+  var month = (today.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  var day = today.getDate().toString().padStart(2, "0");
+  var hours = today.getHours().toString().padStart(2, "0");
+  var minutes = today.getMinutes().toString().padStart(2, "0");
 
-  var datetimeLocalStringToday = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+  var datetimeLocalStringToday =
+    year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
 
   // useContract is a React hook that returns an object with the contract key.
   // The value of the contract key is an instance of an NFT_COLLECTION on the blockchain.
@@ -137,7 +138,7 @@ export default function SaleInfo({ nft }: Props) {
         tokenId: nft.metadata.id,
         startDate: new Date(),
         endDate: new Date(),
-        price: "0",
+        price: "0.001",
       },
     });
 
@@ -173,10 +174,11 @@ export default function SaleInfo({ nft }: Props) {
       <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
         {/* Direct listing fields */}
         <div
-          className={`${tab === "direct"
-            ? styles.activeTabContent
-            : profileStyles.tabContent
-            }`}
+          className={`${
+            tab === "direct"
+              ? styles.activeTabContent
+              : profileStyles.tabContent
+          }`}
           style={{ flexDirection: "column" }}
         >
           {/* <h4 className={styles.formSectionTitle}>When </h4> */}
@@ -208,8 +210,8 @@ export default function SaleInfo({ nft }: Props) {
           <input
             className={styles.input}
             type="number"
-            step={0.000001}
-            min={0}
+            step={0.001}
+            min={0.001}
             {...registerDirect("price")}
           />
 
@@ -235,7 +237,7 @@ export default function SaleInfo({ nft }: Props) {
                 router.push(
                   `/token/${nft.metadata.address}/${nft.metadata.id}`
                 );
-                console.log("nft", nft)
+                console.log("nft", nft);
               }}
               className={styles.btn}
             >
@@ -246,10 +248,11 @@ export default function SaleInfo({ nft }: Props) {
 
         {/* Auction listing fields */}
         <div
-          className={`${tab === "auction"
-            ? styles.activeTabContent
-            : profileStyles.tabContent
-            }`}
+          className={`${
+            tab === "auction"
+              ? styles.activeTabContent
+              : profileStyles.tabContent
+          }`}
           style={{ flexDirection: "column" }}
         >
           <h4 className={styles.formSectionTitle}>When </h4>
