@@ -50,7 +50,6 @@ export default function SaleInfo({ nft }: Props) {
     MARKETPLACE_ADDRESS,
     "marketplace-v3"
   );
-
   var today = new Date();
 
   // Increment the date by 1 to get tomorrow's date
@@ -59,23 +58,25 @@ export default function SaleInfo({ nft }: Props) {
 
   // Get the components of tomorrow's date and time
   var year = tomorrow.getFullYear();
-  var month = (tomorrow.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-  var day = tomorrow.getDate().toString().padStart(2, '0');
-  var hours = tomorrow.getHours().toString().padStart(2, '0');
-  var minutes = tomorrow.getMinutes().toString().padStart(2, '0');
+  var month = (tomorrow.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  var day = tomorrow.getDate().toString().padStart(2, "0");
+  var hours = tomorrow.getHours().toString().padStart(2, "0");
+  var minutes = tomorrow.getMinutes().toString().padStart(2, "0");
 
   // Create the datetime-local format string
-  var datetimeLocalString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+  var datetimeLocalString =
+    year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
 
   // today
 
   var year = today.getFullYear();
-  var month = (today.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-  var day = today.getDate().toString().padStart(2, '0');
-  var hours = today.getHours().toString().padStart(2, '0');
-  var minutes = today.getMinutes().toString().padStart(2, '0');
+  var month = (today.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  var day = today.getDate().toString().padStart(2, "0");
+  var hours = today.getHours().toString().padStart(2, "0");
+  var minutes = today.getMinutes().toString().padStart(2, "0");
 
-  var datetimeLocalStringToday = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+  var datetimeLocalStringToday =
+    year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
 
   // convert date
   const convertDate = (date: number) => {
@@ -158,7 +159,7 @@ export default function SaleInfo({ nft }: Props) {
         tokenId: nft.metadata.id,
         startDate: new Date(),
         endDate: new Date(),
-        price: "0",
+        price: "0.001",
       },
     });
 

@@ -59,6 +59,13 @@
   background-color: rgba(255, 255, 255, 0.04);
   margin: 0 auto;
 }
+.imageBuy {
+  border-radius: 6px;
+  width: 50% !important;
+  height: auto !important;
+  background-color: rgba(255, 255, 255, 0.04);
+  margin: 0 auto;
+}
 
 .input {
   display: block;
@@ -198,7 +205,6 @@
   margin: 0px;
   margin-bottom: 4px;
   color: black;
-
 }
 
 .nftOwnerAddress {
@@ -206,7 +212,6 @@
   margin: 0px;
   /* color: rgba(255, 255, 255, 0.9); */
   color: black;
-
 }
 
 .descriptionContainer {
@@ -265,7 +270,6 @@
   width: 99%;
 }
 
-
 .endTime {
   margin-top: 10px;
   font-size: 16px;
@@ -286,7 +290,6 @@
   margin: 0px;
   /* color: rgba(255, 255, 255, 0.9); */
   color: black;
-
 }
 
 .traitName {
@@ -370,10 +373,30 @@
   margin-top: 16px;
   margin-bottom: 16px;
 }
-
+.infoMetadaContainer button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 18px;
+  margin: 4px 0;
+  color: white;
+  border: none;
+  background-color: rgb(32, 129, 226);
+  transition: 0.2s;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.infoMetadaContainer button:hover {
+  cursor: pointer;
+  background-color: #1e71ad;
+  color: rgb(241, 202, 202);
+  transform: scale(1.02);
+}
 .btn {
   /* fill remainin width */
   width: 100% !important;
+  background-color: rgb(32, 129, 226) !important;
+  color: white !important;
 }
 
 @media (max-width: 960px) {
@@ -417,6 +440,6 @@
 
 @media (max-width: 390px) {
   .metadataContainer {
-    width: 100%
+    width: 100%;
   }
 }

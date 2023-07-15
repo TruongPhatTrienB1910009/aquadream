@@ -1,9 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  ConnectWallet,
   MediaRenderer,
   ThirdwebNftMedia,
+  useAddress,
+  useChainId,
   useContract,
   useContractEvents,
+  useNetwork,
   useValidDirectListings,
   useValidEnglishAuctions,
   Web3Button,
@@ -28,7 +32,9 @@ import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
 import { useRouter } from "next/router";
 import { getABI } from "../../../components/NFT/hook/getNFTs";
-import { Scrollbars } from 'react-custom-scrollbars-2';
+import { Scrollbars } from "react-custom-scrollbars-2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   nft: any;
@@ -38,7 +44,13 @@ const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
 export default function TokenPage({ nft }: Props) {
   const [bidValue, setBidValue] = useState<string>();
-
+  const chainId = useChainId();
+  const [{ data, error, loading }, switchNetwork] = useNetwork();
+  // loading
+  const [loadingMint, setLoadingMint] = useState(false);
+  //loading when change network
+  const [loadingChange, setLoadingChange] = useState(false);
+  const address = useAddress();
   const router = useRouter();
   const sdk = new ThirdwebSDK(NETWORK);
 
@@ -68,14 +80,14 @@ export default function TokenPage({ nft }: Props) {
             tokenId: nft.metadata.id,
           },
           order: "desc",
-        })
+        });
 
         if (events) {
           setTransferEvents(events);
         }
       }
     }
-  }
+  };
 
   const { data: directListing, isLoading: loadingDirect } =
     useValidDirectListings(marketplace, {
@@ -121,46 +133,69 @@ export default function TokenPage({ nft }: Props) {
 
   async function buyListing() {
     let txResult;
-
+    setLoadingMint(true);
     if (auctionListing?.[0]) {
       txResult = await marketplace?.englishAuctions.buyoutAuction(
         auctionListing[0].id
       );
+      setLoadingMint(false);
     } else if (directListing?.[0]) {
       txResult = await marketplace?.directListings.buyFromListing(
         directListing[0].id,
         1
       );
+      setLoadingMint(false);
     } else {
       throw new Error("No valid listing found for this NFT");
+      setLoadingMint(false);
     }
     return txResult;
   }
+  const changeNetwork = async () => {
+    try {
+      setLoadingChange(true);
+      if (!switchNetwork) {
+        console.log("can not switch network");
+        return;
+      }
+
+      const result = await switchNetwork(5);
+      if (result.data) {
+        console.log("Switched to Goerli testnet successfully");
+      } else {
+        console.log("Error switching to Goerli testnet", result.error);
+      }
+    } catch (e) {
+      console.log("Error switching to Goerli testnet", e);
+    } finally {
+      setLoadingChange(false);
+    }
+  };
 
   var datetimeLocalString;
   if (directListing?.[0]) {
     var referenceDatetime = new Date();
-    var targetDatetime = new Date((directListing[0].startTimeInSeconds * 1000) + (directListing[0].endTimeInSeconds - directListing[0].startTimeInSeconds) * 1000)
+    var targetDatetime = new Date(
+      directListing[0].startTimeInSeconds * 1000 +
+      (directListing[0].endTimeInSeconds -
+        directListing[0].startTimeInSeconds) *
+      1000
+    );
     var year = targetDatetime.getFullYear();
-    var month = (targetDatetime.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-    var day = targetDatetime.getDate().toString().padStart(2, '0');
-    var hours = targetDatetime.getHours().toString().padStart(2, '0');
-    var minutes = targetDatetime.getMinutes().toString().padStart(2, '0');
+    var month = (targetDatetime.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    var day = targetDatetime.getDate().toString().padStart(2, "0");
+    var hours = targetDatetime.getHours().toString().padStart(2, "0");
+    var minutes = targetDatetime.getMinutes().toString().padStart(2, "0");
 
     // Create the datetime-local format string
-    datetimeLocalString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+    datetimeLocalString =
+      year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
   }
 
 
-  const {
-    mutateAsync: cancelDirectListing,
-    isLoading,
-    error,
-  } = useCancelDirectListing(marketplace);
-
   useEffect(() => {
     GetABIForNftCollection();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -170,7 +205,7 @@ export default function TokenPage({ nft }: Props) {
           <div className={styles.metadataContainer}>
             <ThirdwebNftMedia
               metadata={nft.metadata}
-              className={styles.image}
+              className={styles.imageBuy}
             />
 
             <div className={styles.descriptionContainer}>
@@ -205,7 +240,9 @@ export default function TokenPage({ nft }: Props) {
               </div>
 
               <h1 className={styles.title}>{nft.metadata.name}</h1>
-              <p className={styles.collectionName}>Token ID #{nft.metadata.id}</p>
+              <p className={styles.collectionName}>
+                Token ID #{nft.metadata.id}
+              </p>
 
               <Link
                 href={`/profile/${nft.owner}`}
@@ -237,11 +274,19 @@ export default function TokenPage({ nft }: Props) {
                       <>
                         {directListing && directListing[0] ? (
                           <>
-                            {directListing[0]?.currencyValuePerToken.displayValue}
-                            {" " + directListing[0]?.currencyValuePerToken.symbol}
+                            {
+                              directListing[0]?.currencyValuePerToken
+                                .displayValue
+                            }
+                            {" " +
+                              directListing[0]?.currencyValuePerToken.symbol}
                             <div className={styles.endTime}>
                               <span>End on</span>
-                              <input type="datetime-local" value={datetimeLocalString} disabled />
+                              <input
+                                type="datetime-local"
+                                value={datetimeLocalString}
+                                disabled
+                              />
                             </div>
                           </>
                         ) : (
@@ -257,7 +302,54 @@ export default function TokenPage({ nft }: Props) {
                 <Skeleton width="100%" height="164" />
               ) : (
                 <>
-                  <Web3Button
+                  {chainId === 5 ? (
+                    <Web3Button
+                      contractAddress={MARKETPLACE_ADDRESS}
+                      action={async () => await buyListing()}
+                      className={styles.btn}
+                      onSuccess={() => {
+                        toast(`Purchase success!`, {
+                          icon: "✅",
+                          style: toastStyle,
+                          position: "bottom-center",
+                        });
+                      }}
+                      onError={(e) => {
+                        (e as any).info.reason !== "user rejected transaction"
+                          ? toast(
+                            "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                            {
+                              icon: "❌",
+                              style: toastStyle,
+                              position: "bottom-center",
+                            }
+                          )
+                          : "";
+                      }}
+                    >
+                      Buy at asking price
+                    </Web3Button>
+                  ) : address ? (
+                    <button
+                      onClick={() => changeNetwork()}
+                      disabled={loadingChange}
+                      style={{ cursor: (loadingChange && "not-allowed") || "" }}
+                    >
+                      Switch Network{""}
+                      {loadingChange ? (
+                        <FontAwesomeIcon
+                          icon={faSpinner}
+                          spin
+                          style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                        />
+                      ) : (
+                        ``
+                      )}
+                    </button>
+                  ) : (
+                    <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
+                  )}
+                  {/* <Web3Button
                     contractAddress={MARKETPLACE_ADDRESS}
                     action={async () => await buyListing()}
                     className={styles.btn}
@@ -277,7 +369,7 @@ export default function TokenPage({ nft }: Props) {
                     }}
                   >
                     Buy at asking price
-                  </Web3Button>
+                  </Web3Button> */}
                 </>
               )}
             </div>
@@ -287,8 +379,7 @@ export default function TokenPage({ nft }: Props) {
           <h3 className={styles.descriptionTitle}>History</h3>
 
           <div className={styles.traitsContainerHistory}>
-            <Scrollbars
-              style={{ height: 300 }}>
+            <Scrollbars style={{ height: 300 }}>
               {transferEvents?.map((event: any, index: any) => (
                 <div
                   key={event.transaction.transactionHash}
