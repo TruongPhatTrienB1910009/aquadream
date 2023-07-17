@@ -179,6 +179,7 @@ export default function SaleInfo({ nft }: Props) {
 
   async function handleSubmissionDirect(data: DirectFormData) {
     await checkAndProvideApproval();
+    console.log("data", data)
     const txResult = await createDirectListing({
       assetContractAddress: data.nftContractAddress,
       tokenId: data.tokenId,
@@ -202,7 +203,10 @@ export default function SaleInfo({ nft }: Props) {
   } = useCancelDirectListing(marketplace);
 
   useEffect(() => {
-    console.log("render")
+    if (cancel) {
+      (document.getElementById("endTime") as HTMLInputElement).value = '';
+      setCancel(false);
+    }
   }, [cancel])
 
   return (
@@ -244,7 +248,7 @@ export default function SaleInfo({ nft }: Props) {
               <input
                 className={styles.input}
                 type="number"
-                // step={0.000001}
+                step={0.000001}
                 min={0}
                 value={directListing[0].currencyValuePerToken.displayValue}
                 disabled
@@ -269,10 +273,7 @@ export default function SaleInfo({ nft }: Props) {
                       style: toastStyle,
                       position: "bottom-center",
                     });
-                    router.push(
-                      `/sell`
-                    );
-                    setCancel(!cancel);
+                    setCancel(true);
                   }}
                   className={styles.btn}
                 >
@@ -303,13 +304,13 @@ export default function SaleInfo({ nft }: Props) {
 
               <legend className={styles.legend}> Listing Ends on </legend>
               <input
+                id="endTime"
                 className={styles.input}
                 type="datetime-local"
                 {...registerDirect("endDate")}
                 aria-label="Auction End Date"
                 min={datetimeLocalString} />
               <h4 className={styles.formSectionTitle}>Price </h4>
-
 
               <input
                 className={styles.input}
@@ -340,7 +341,6 @@ export default function SaleInfo({ nft }: Props) {
                     router.push(
                       `/token/${nft.metadata.address}/${nft.metadata.id}`
                     );
-                    console.log("nft", nft);
                   }}
                   className={styles.btn}
                 >
