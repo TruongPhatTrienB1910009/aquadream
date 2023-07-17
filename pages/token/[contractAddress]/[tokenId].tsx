@@ -45,7 +45,7 @@ const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 export default function TokenPage() {
   const [nft, setNFT] = useState<any>();
 
-  const [bidValue, setBidValue] = useState<string>();
+
   const chainId = useChainId();
   const [{ data, error, loading }, switchNetwork] = useNetwork();
   // loading
@@ -101,51 +101,13 @@ export default function TokenPage() {
       tokenId: nft?.metadata.id,
     });
 
-  // 2. Load if the NFT is for auction
-  const { data: auctionListing, isLoading: loadingAuction } =
-    useValidEnglishAuctions(marketplace, {
-      tokenContract: router.query.contractAddress as string,
-      tokenId: nft?.metadata.id,
-    });
 
-  async function createBidOrOffer() {
-    let txResult;
-    if (!bidValue) {
-      toast(`Please enter a bid value`, {
-        icon: "❌",
-        style: toastStyle,
-        position: "bottom-center",
-      });
-      return;
-    }
 
-    if (auctionListing?.[0]) {
-      txResult = await marketplace?.englishAuctions.makeBid(
-        auctionListing[0].id,
-        bidValue
-      );
-    } else if (directListing?.[0]) {
-      txResult = await marketplace?.offers.makeOffer({
-        assetContractAddress: router.query.contractAddress as string,
-        tokenId: nft?.metadata.id,
-        totalPrice: bidValue,
-      });
-    } else {
-      throw new Error("No valid listing found for this NFT");
-    }
-
-    return txResult;
-  }
 
   async function buyListing() {
     let txResult;
     setLoadingMint(true);
-    if (auctionListing?.[0]) {
-      txResult = await marketplace?.englishAuctions.buyoutAuction(
-        auctionListing[0].id
-      );
-      setLoadingMint(false);
-    } else if (directListing?.[0]) {
+    if (directListing?.[0]) {
       txResult = await marketplace?.directListings.buyFromListing(
         directListing[0].id,
         1
