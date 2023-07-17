@@ -19,7 +19,8 @@ import styles from "../../styles/Profile.module.css";
 import randomColor from "../../util/randomColor";
 import { useAddress } from "@thirdweb-dev/react";
 import { GetNFTs, getABI } from "../../components/NFT/hook/getNFTs";
-import { Tab, Tabs } from "react-bootstrap";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 const [randomColor1, randomColor2, randomColor3, randomColor4] = [
   randomColor(),
@@ -60,6 +61,10 @@ export default function ProfilePage() {
     }
   };
 
+  if (ownedNfts) {
+    console.log("ownedNfts", ownedNfts)
+  }
+
   useEffect(() => {
     if (account !== router.query.address) {
       router.push(`/profile/${account}`);
@@ -94,26 +99,18 @@ export default function ProfilePage() {
       </div>
       <div>
         <Tabs
-          defaultActiveKey="home"
-          transition={false}
+          defaultActiveKey="NFTs"
           id="noanim-tab-example"
           className="mb-3 mt-3"
         >
-          <Tab eventKey="home" title="NFTs">
+          <Tab eventKey="NFTs" title="NFTs">
             <NFTGrid
               data={ownedNfts}
               isLoading={loadingOwnedNfts}
               emptyText="Looks like you don't have any NFTs from this collection. Head to the buy page to buy some!"
             />
           </Tab>
-          <Tab eventKey="Listings" title="Listings" style={{
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            gap: '1%',
-            width: '100%',
-            textDecoration: 'none'
-          }}>
+          <Tab eventKey="Listings" title="Listings" >
             {/* <div className={styles.nftGridContainer}> */}
             {loadingDirects ? (
               <p>Loading...</p>
@@ -128,52 +125,9 @@ export default function ProfilePage() {
                 />
               ))
             )}
-            {/* </div> */}
           </Tab>
         </Tabs>
       </div>
-      {/* <div className={styles.tabs}>
-        <h3
-          className={`${styles.tab} 
-        ${tab === "nfts" ? styles.activeTab : ""}`}
-          onClick={() => setTab("nfts")}
-        >
-          NFTs
-        </h3>
-        <h3
-          className={`${styles.tab} 
-        ${tab === "listings" ? styles.activeTab : ""}`}
-          onClick={() => setTab("listings")}
-        >
-          Listings
-        </h3>
-      </div>
-
-      <div
-        className={`${tab === "nfts" ? styles.activeTabContent : styles.tabContent
-          }`}
-      >
-        <NFTGrid
-          data={ownedNfts}
-          isLoading={loadingOwnedNfts}
-          emptyText="Looks like you don't have any NFTs from this collection. Head to the buy page to buy some!"
-        />
-      </div>
-
-      <div
-        className={`${tab === "listings" ? styles.activeTabContent : styles.tabContent
-          }`}
-      >
-        {loadingDirects ? (
-          <p>Loading...</p>
-        ) : directListings && directListings.length === 0 ? (
-          <p>Nothing for sale yet! Head to the sell tab to list an NFT.</p>
-        ) : (
-          directListings?.map((listing, index) => (
-            <ListingWrapper listing={listing} abi={abiList[index]} key={listing.id} />
-          ))
-        )}
-      </div> */}
     </Container >
   );
 }
