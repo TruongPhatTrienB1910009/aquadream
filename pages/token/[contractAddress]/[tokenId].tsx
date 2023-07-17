@@ -408,30 +408,3 @@ export default function TokenPage() {
     </>
   );
 }
-
-export async function getServerSideProps(context: {
-  params: { tokenId: string; contractAddress: string };
-}) {
-  const tokenId = context.params?.tokenId as string;
-  const sdk = new ThirdwebSDK(NETWORK);
-  const abi: any = await getABI(context.params?.contractAddress);
-  const contract = await sdk.getContractFromAbi(
-    context.params?.contractAddress as string,
-    abi
-  );
-
-  const nft = await contract.erc721.get(tokenId);
-
-  let contractMetadata;
-
-  try {
-    contractMetadata = await contract.metadata.get();
-  } catch (e) { }
-
-  return {
-    props: {
-      nft,
-      contractMetadata: JSON.parse(JSON.stringify(contractMetadata)) || null,
-    },
-  };
-}
