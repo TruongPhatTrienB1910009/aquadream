@@ -192,6 +192,10 @@ export default function TokenPage({ nft }: Props) {
       year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
   }
 
+  if (directListing?.[0]) {
+    console.log(directListing[0])
+    console.log(address === directListing[0].creatorAddress)
+  }
 
   useEffect(() => {
     GetABIForNftCollection();
@@ -303,32 +307,62 @@ export default function TokenPage({ nft }: Props) {
               ) : (
                 <>
                   {chainId === 5 ? (
-                    <Web3Button
-                      contractAddress={MARKETPLACE_ADDRESS}
-                      action={async () => await buyListing()}
-                      className={styles.btn}
-                      onSuccess={() => {
-                        toast(`Purchase success!`, {
-                          icon: "✅",
-                          style: toastStyle,
-                          position: "bottom-center",
-                        });
-                      }}
-                      onError={(e) => {
-                        (e as any).info.reason !== "user rejected transaction"
-                          ? toast(
-                            "Please try again. Confirm the transaction and make sure you are paying enough gas!",
-                            {
-                              icon: "❌",
-                              style: toastStyle,
-                              position: "bottom-center",
-                            }
-                          )
-                          : "";
-                      }}
-                    >
-                      Buy at asking price
-                    </Web3Button>
+                    (address === directListing?.[0].creatorAddress) ? (
+                      <Web3Button
+                        contractAddress={MARKETPLACE_ADDRESS}
+                        action={() => console.log("you")}
+                        className={styles.btn}
+                        onSuccess={() => {
+                          toast(`Purchase success!`, {
+                            icon: "✅",
+                            style: toastStyle,
+                            position: "bottom-center",
+                          });
+                        }}
+                        onError={(e) => {
+                          (e as any).info.reason !== "user rejected transaction"
+                            ? toast(
+                              "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                              {
+                                icon: "❌",
+                                style: toastStyle,
+                                position: "bottom-center",
+                              }
+                            )
+                            : "";
+                        }}
+                        isDisabled
+                      >
+                        you
+                      </Web3Button>
+                    ) : (
+                      <Web3Button
+                        contractAddress={MARKETPLACE_ADDRESS}
+                        action={async () => await buyListing()}
+                        className={styles.btn}
+                        onSuccess={() => {
+                          toast(`Purchase success!`, {
+                            icon: "✅",
+                            style: toastStyle,
+                            position: "bottom-center",
+                          });
+                        }}
+                        onError={(e) => {
+                          (e as any).info.reason !== "user rejected transaction"
+                            ? toast(
+                              "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                              {
+                                icon: "❌",
+                                style: toastStyle,
+                                position: "bottom-center",
+                              }
+                            )
+                            : "";
+                        }}
+                      >
+                        Buy at asking price
+                      </Web3Button>
+                    )
                   ) : address ? (
                     <button
                       onClick={() => changeNetwork()}
@@ -349,27 +383,6 @@ export default function TokenPage({ nft }: Props) {
                   ) : (
                     <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
                   )}
-                  {/* <Web3Button
-                    contractAddress={MARKETPLACE_ADDRESS}
-                    action={async () => await buyListing()}
-                    className={styles.btn}
-                    onSuccess={() => {
-                      toast(`Purchase success!`, {
-                        icon: "✅",
-                        style: toastStyle,
-                        position: "bottom-center",
-                      });
-                    }}
-                    onError={(e) => {
-                      (e as any).info.reason !== "user rejected transaction" ? (toast('Please try again. Confirm the transaction and make sure you are paying enough gas!', {
-                        icon: "❌",
-                        style: toastStyle,
-                        position: "bottom-center",
-                      })) : ''
-                    }}
-                  >
-                    Buy at asking price
-                  </Web3Button> */}
                 </>
               )}
             </div>

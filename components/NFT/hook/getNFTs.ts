@@ -58,14 +58,14 @@ export const GetAllDataNFTsMarketplace = () => {
       try {
         setIsloading(true);
         const contract = await sdk.getContract(MARKETPLACE_ADDRESS);
-        const allListings = await contract.directListings.getAllValid();
-        const arr: any = [...allListings];
-        if (arr.length > 0) {
-          arr.forEach((NFT: any, index: string | number) => {
-            arr[index].asset.address = arr[index].assetContractAddress;
-            arr[index].metadata = arr[index].asset;
+        const allListings: any = await contract.directListings.getAllValid();
+
+        if (allListings.length > 0) {
+          allListings.forEach((NFT: any, index: number) => {
+            allListings[index].asset.address = allListings[index].assetContractAddress;
+            allListings[index].metadata = allListings[index].asset;
           });
-          setListingNFTs(arr);
+          setListingNFTs(allListings);
         }
       } catch (error) {
         console.log(error);
