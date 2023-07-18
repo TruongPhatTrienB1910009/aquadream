@@ -4,6 +4,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./minigame.module.css";
 import dynamic from "next/dynamic";
+import { MediaRenderer } from "@thirdweb-dev/react";
 
 import Skeleton from "../../components/Skeleton/Skeleton";
 
@@ -263,7 +264,17 @@ const Index = () => {
               ))
             ) : (
               <div className={styles.nftContainer}>
-                <img className={styles.nftImage} src={dataNft.image} alt="" />
+                <MediaRenderer
+                  style={{
+                    width: "100% !important",
+                    height: "450px",
+                    borderRadius: "8px",
+                    background: "rgba(255, 255, 255, 0.04)",
+                    objectFit: "cover",
+                  }}
+                  src={dataNft.image}
+                  alt="A Blue Circle"
+                />
                 <p className={styles.nftName}>{dataNft.name}</p>
                 {claim[0] > 0 && !claim[1] ? (
                   chainId === 5 ? (
