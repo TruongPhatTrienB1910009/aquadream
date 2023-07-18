@@ -11,8 +11,7 @@ import tokenPageStyles from "../styles/Token.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 const Buy = () => {
-  const { listingNFTs: data, isLoading: isLoading } =
-    GetAllDataNFTsMarketplace();
+  const { listingNFTs: data, isLoading: isLoading } = GetAllDataNFTsMarketplace();
   return (
     <>
       <Breadcrumb className={tokenPageStyles.Breadcrumb}>

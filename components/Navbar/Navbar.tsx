@@ -32,7 +32,7 @@ export function Navbart() {
         <nav className={styles.nav}>
           <Navbar
             style={{ width: "100%", backgroundColor: "#ececec !important" }}
-            expand="md"
+            expand="xl"
             className="bg-body-tertiary"
           >
             <Container fluid>
@@ -55,7 +55,6 @@ export function Navbart() {
                   <span className={styles.navbarTittleNfts}>AquaDream</span>
                 </div>
               </Navbar.Brand>
-              <div className={styles.navLeft}></div>
               <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-sm`}
@@ -121,12 +120,14 @@ export function Navbart() {
                         fontSize: "20px",
                       }}
                       href="/"
+                      disabled
                     >
                       <div className={styles.headerLink}>
                         <div className={styles.headerIcon}>
                           <FontAwesomeIcon icon={faGamepad} />
                         </div>
                         <span>Launchpad</span>
+                        <div className={styles.headerSoon}>(SOON)</div>
                       </div>
                     </Nav.Link>
                   </Nav>
@@ -135,31 +136,34 @@ export function Navbart() {
                     <div className={styles.navRewards}>
                       <Image src={reward} alt="reward" width={42} height={42} />
                       <div>Rewards</div>
+                      <div className={styles.headerSoon}>(SOON)</div>
                     </div>
-                    <div className={styles.navConnect}>
-                      <ConnectWallet
-                        style={{ backgroundColor: "black", color: "white" }}
-                        theme="dark"
-                        btnTitle="Connect Wallet"
-                      />
-                    </div>
-
-                    {address ? (
-                      <Link
-                        className={styles.link}
-                        href={`/profile/${address}`}
-                      >
-                        <Image
-                          className={styles.profileImage}
-                          src="/user-icon.png"
-                          width={42}
-                          height={42}
-                          alt="Profile"
+                    <div className={styles.navIconWallet}>
+                      <div className={styles.navConnect}>
+                        <ConnectWallet
+                          style={{ backgroundColor: "black", color: "white" }}
+                          theme="dark"
+                          btnTitle="Connect Wallet"
                         />
-                      </Link>
-                    ) : (
-                      ""
-                    )}
+                      </div>
+
+                      {address ? (
+                        <Link
+                          className={styles.link}
+                          href={`/profile/${address}`}
+                        >
+                          <Image
+                            className={styles.profileImage}
+                            src="/user-icon.png"
+                            width={42}
+                            height={42}
+                            alt="Profile"
+                          />
+                        </Link>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </div>
                 </Offcanvas.Body>
               </Navbar.Offcanvas>

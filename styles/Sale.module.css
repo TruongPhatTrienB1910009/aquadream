@@ -45,9 +45,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 10px;
 }
 
 .btn {
   width: 400px !important;
   padding: 5px;
+  background-color: rgb(32, 129, 226) !important;
+  color: white !important;
 }

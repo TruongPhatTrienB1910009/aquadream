@@ -43,7 +43,7 @@
 }
 .headerBigButton {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   margin-top: 3%;
   margin-left: 3%;
 }

@@ -1,0 +1,47 @@
+.topSellerContainer {
+  margin-top: 20px;
+}
+.topSellerName {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+}
+.topSellerTittle {
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: 600;
+}
+.topSellerImage {
+  display: flex;
+  justify-content: center;
+}
+.card {
+  margin-right: 10%;
+  justify-content: center;
+  align-items: center;
+}
+.imagecontainer {
+  position: relative;
+}
+
+.image1 {
+  position: relative;
+  z-index: 1;
+}
+
+.image2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+@media (max-width: 830px) {
+  .topSellernName {
+    font-size: 16px;
+  }
+}
+@media (max-width: 500px) {
+  .topSellerName {
+    font-size: 0.5rem;
+  }
+}
