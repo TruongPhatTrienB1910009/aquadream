@@ -155,10 +155,8 @@ export const TopCreator = () => {
                   </div>
                 </div>
                 <div className={styles.totalVolume}>
-                   0.000213 ETH
-                   <div className={styles.nameTotal}>
-                    total volume
-                   </div>
+                  0.000213 ETH
+                  <div className={styles.nameTotal}>total volume</div>
                 </div>
               </div>
             </Card>

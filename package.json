@@ -37,6 +37,7 @@
     "react-hot-toast": "^2.4.0",
     "react-router-dom": "^6.14.1",
     "react-slideshow-image": "^4.2.1",
+    "swiper": "^10.0.4",
     "viem": "^1.2.6"
   },
   "devDependencies": {

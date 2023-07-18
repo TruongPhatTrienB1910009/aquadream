@@ -68,7 +68,7 @@ export default function ProfilePage() {
   }, [account, directListings?.length]);
 
   return (
-    <Container maxWidth="lg">
+    <>
       <div className={styles.profileHeader}>
         <div
           className={styles.coverImage}
@@ -106,14 +106,18 @@ export default function ProfilePage() {
               emptyText="Looks like you don't have any NFTs from this collection. Head to the buy page to buy some!"
             />
           </Tab>
-          <Tab eventKey="Listings" title="Listings" style={{
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            gap: '1%',
-            width: '100%',
-            textDecoration: 'none'
-          }}>
+          <Tab
+            eventKey="Listings"
+            title="Listings"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: "1%",
+              width: "100%",
+              textDecoration: "none",
+            }}
+          >
             {/* <div className={styles.nftGridContainer}> */}
             {loadingDirects ? (
               <p>Loading...</p>
@@ -132,48 +136,6 @@ export default function ProfilePage() {
           </Tab>
         </Tabs>
       </div>
-      {/* <div className={styles.tabs}>
-        <h3
-          className={`${styles.tab} 
-        ${tab === "nfts" ? styles.activeTab : ""}`}
-          onClick={() => setTab("nfts")}
-        >
-          NFTs
-        </h3>
-        <h3
-          className={`${styles.tab} 
-        ${tab === "listings" ? styles.activeTab : ""}`}
-          onClick={() => setTab("listings")}
-        >
-          Listings
-        </h3>
-      </div>
-
-      <div
-        className={`${tab === "nfts" ? styles.activeTabContent : styles.tabContent
-          }`}
-      >
-        <NFTGrid
-          data={ownedNfts}
-          isLoading={loadingOwnedNfts}
-          emptyText="Looks like you don't have any NFTs from this collection. Head to the buy page to buy some!"
-        />
-      </div>
-
-      <div
-        className={`${tab === "listings" ? styles.activeTabContent : styles.tabContent
-          }`}
-      >
-        {loadingDirects ? (
-          <p>Loading...</p>
-        ) : directListings && directListings.length === 0 ? (
-          <p>Nothing for sale yet! Head to the sell tab to list an NFT.</p>
-        ) : (
-          directListings?.map((listing, index) => (
-            <ListingWrapper listing={listing} abi={abiList[index]} key={listing.id} />
-          ))
-        )}
-      </div> */}
-    </Container >
+    </>
   );
 }

@@ -1,28 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  ConnectWallet,
   MediaRenderer,
   ThirdwebNftMedia,
   useAddress,
-  useChainId,
   useContract,
-  useContractEvents,
-  useNetwork,
   useValidDirectListings,
   useValidEnglishAuctions,
   Web3Button,
-  useCancelDirectListing,
 } from "@thirdweb-dev/react";
 import React, { useEffect, useState } from "react";
 import Container from "../../../components/Container/Container";
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import {
   ETHERSCAN_URL,
   MARKETPLACE_ADDRESS,
-  MINI_GAME_ADDRESS,
   NETWORK,
-  NFT_COLLECTION_ADDRESS,
 } from "../../../const/contractAddresses";
 import styles from "../../../styles/Token.module.css";
 import Link from "next/link";
@@ -33,8 +25,6 @@ import toastStyle from "../../../util/toastConfig";
 import { useRouter } from "next/router";
 import { getABI } from "../../../components/NFT/hook/getNFTs";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   nft: any;
@@ -44,12 +34,6 @@ const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
 export default function TokenPage({ nft }: Props) {
   const [bidValue, setBidValue] = useState<string>();
-  const chainId = useChainId();
-  const [{ data, error, loading }, switchNetwork] = useNetwork();
-  // loading
-  const [loadingMint, setLoadingMint] = useState(false);
-  //loading when change network
-  const [loadingChange, setLoadingChange] = useState(false);
   const address = useAddress();
   const router = useRouter();
   const sdk = new ThirdwebSDK(NETWORK);
@@ -63,7 +47,6 @@ export default function TokenPage({ nft }: Props) {
   // Connect to NFT Collection smart contract
   const [nftCollection, setNftCollection] = useState<any>(null);
   const [transferEvents, setTransferEvents] = useState<any>([]);
-
 
   const GetABIForNftCollection = async () => {
     const abi: any = await getABI(router.query.contractAddress as string);
@@ -133,53 +116,29 @@ export default function TokenPage({ nft }: Props) {
 
   async function buyListing() {
     let txResult;
-    setLoadingMint(true);
     if (auctionListing?.[0]) {
       txResult = await marketplace?.englishAuctions.buyoutAuction(
         auctionListing[0].id
       );
-      setLoadingMint(false);
     } else if (directListing?.[0]) {
       txResult = await marketplace?.directListings.buyFromListing(
         directListing[0].id,
         1
       );
-      setLoadingMint(false);
     } else {
       throw new Error("No valid listing found for this NFT");
-      setLoadingMint(false);
     }
     return txResult;
   }
-  const changeNetwork = async () => {
-    try {
-      setLoadingChange(true);
-      if (!switchNetwork) {
-        console.log("can not switch network");
-        return;
-      }
-
-      const result = await switchNetwork(5);
-      if (result.data) {
-        console.log("Switched to Goerli testnet successfully");
-      } else {
-        console.log("Error switching to Goerli testnet", result.error);
-      }
-    } catch (e) {
-      console.log("Error switching to Goerli testnet", e);
-    } finally {
-      setLoadingChange(false);
-    }
-  };
 
   var datetimeLocalString;
   if (directListing?.[0]) {
     var referenceDatetime = new Date();
     var targetDatetime = new Date(
       directListing[0].startTimeInSeconds * 1000 +
-      (directListing[0].endTimeInSeconds -
-        directListing[0].startTimeInSeconds) *
-      1000
+        (directListing[0].endTimeInSeconds -
+          directListing[0].startTimeInSeconds) *
+          1000
     );
     var year = targetDatetime.getFullYear();
     var month = (targetDatetime.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
@@ -191,7 +150,6 @@ export default function TokenPage({ nft }: Props) {
     datetimeLocalString =
       year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
   }
-
 
   useEffect(() => {
     GetABIForNftCollection();
@@ -302,21 +260,20 @@ export default function TokenPage({ nft }: Props) {
                 <Skeleton width="100%" height="164" />
               ) : (
                 <>
-                  {chainId === 5 ? (
-                    <Web3Button
-                      contractAddress={MARKETPLACE_ADDRESS}
-                      action={async () => await buyListing()}
-                      className={styles.btn}
-                      onSuccess={() => {
-                        toast(`Purchase success!`, {
-                          icon: "✅",
-                          style: toastStyle,
-                          position: "bottom-center",
-                        });
-                      }}
-                      onError={(e) => {
-                        (e as any).info.reason !== "user rejected transaction"
-                          ? toast(
+                  <Web3Button
+                    contractAddress={MARKETPLACE_ADDRESS}
+                    action={async () => await buyListing()}
+                    className={styles.btn}
+                    onSuccess={() => {
+                      toast(`Purchase success!`, {
+                        icon: "✅",
+                        style: toastStyle,
+                        position: "bottom-center",
+                      });
+                    }}
+                    onError={(e) => {
+                      (e as any).info.reason !== "user rejected transaction"
+                        ? toast(
                             "Please try again. Confirm the transaction and make sure you are paying enough gas!",
                             {
                               icon: "❌",
@@ -324,31 +281,11 @@ export default function TokenPage({ nft }: Props) {
                               position: "bottom-center",
                             }
                           )
-                          : "";
-                      }}
-                    >
-                      Buy at asking price
-                    </Web3Button>
-                  ) : address ? (
-                    <button
-                      onClick={() => changeNetwork()}
-                      disabled={loadingChange}
-                      style={{ cursor: (loadingChange && "not-allowed") || "" }}
-                    >
-                      Switch Network{""}
-                      {loadingChange ? (
-                        <FontAwesomeIcon
-                          icon={faSpinner}
-                          spin
-                          style={{ color: "#d0d8e7", marginLeft: "10px" }}
-                        />
-                      ) : (
-                        ``
-                      )}
-                    </button>
-                  ) : (
-                    <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
-                  )}
+                        : "";
+                    }}
+                  >
+                    Buy at asking price
+                  </Web3Button>
                   {/* <Web3Button
                     contractAddress={MARKETPLACE_ADDRESS}
                     action={async () => await buyListing()}
@@ -449,7 +386,7 @@ export async function getServerSideProps(context: {
 
   try {
     contractMetadata = await contract.metadata.get();
-  } catch (e) { }
+  } catch (e) {}
 
   return {
     props: {
