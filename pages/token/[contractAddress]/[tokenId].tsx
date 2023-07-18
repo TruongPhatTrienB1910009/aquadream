@@ -106,8 +106,6 @@ export default function TokenPage() {
     });
 
 
-
-
   async function buyListing() {
     let txResult;
     setLoadingMint(true);
@@ -170,241 +168,246 @@ export default function TokenPage() {
 
   useEffect(() => {
     GetABIForNftCollection();
-  }, [router.query.contractAddress]);
+  }, [router.query.contractAddress, directListing?.[0]]);
 
   return (
     <>
       {
         (nft) ? (
-          <><Toaster position="bottom-center" reverseOrder={false} /><Container maxWidth="lg">
-            <div className={styles.container}>
-              <div className={styles.metadataContainer}>
-                <ThirdwebNftMedia
-                  metadata={nft?.metadata}
-                  className={styles.imageBuy} />
+          <>
+            <Toaster position="bottom-center" reverseOrder={false} /><Container maxWidth="lg">
+              <div className={styles.container}>
+                <div className={styles.metadataContainer}>
+                  <ThirdwebNftMedia
+                    metadata={nft?.metadata}
+                    className={styles.imageBuy} />
 
-                <div className={styles.descriptionContainer}>
-                  <h3 className={styles.descriptionTitle}>Description</h3>
-                  <p className={styles.description}>{nft?.metadata.description}</p>
+                  <div className={styles.descriptionContainer}>
+                    <h3 className={styles.descriptionTitle}>Description</h3>
+                    <p className={styles.description}>{nft?.metadata.description}</p>
 
-                  <h3 className={styles.descriptionTitle}>Traits</h3>
+                    <h3 className={styles.descriptionTitle}>Traits</h3>
 
-                  <div className={styles.traitsContainer}>
-                    {Object.entries(nft?.metadata?.attributes || {}).map(
-                      ([key, value]) => (
-                        <div className={styles.traitContainer} key={key}>
-                          <p className={styles.traitName}>{key}</p>
-                          <p className={styles.traitValue}>
-                            {value?.toString() || ""}
-                          </p>
+                    <div className={styles.traitsContainer}>
+                      {Object.entries(nft?.metadata?.attributes || {}).map(
+                        ([key, value]) => (
+                          <div className={styles.traitContainer} key={key}>
+                            <p className={styles.traitName}>{key}</p>
+                            <p className={styles.traitValue}>
+                              {value?.toString() || ""}
+                            </p>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.listingContainer}>
+                  <div className={styles.infoMetadaContainer}>
+                    <div className={styles.contractMetadataContainer}>
+                      <MediaRenderer
+                        src={nft?.metadata.image}
+                        className={styles.collectionImage} />
+                      <p className={styles.collectionName}>{nft?.metadata.name}</p>
+                    </div>
+
+                    <h1 className={styles.title}>{nft?.metadata.name}</h1>
+                    <p className={styles.collectionName}>
+                      Token ID #{nft?.metadata.id}
+                    </p>
+
+                    <Link
+                      href={`/profile/${nft?.owner}`}
+                      className={styles.nftOwnerContainer}
+                    >
+                      {/* Random linear gradient circle shape */}
+                      <div
+                        className={styles.nftOwnerImage}
+                        style={{
+                          background: `linear-gradient(90deg, ${randomColor1}, ${randomColor2})`,
+                        }} />
+                      <div className={styles.nftOwnerInfo}>
+                        <p className={styles.label}>Current Owner</p>
+                        <p className={styles.nftOwnerAddress}>
+                          {nft?.owner.slice(0, 8)}...{nft?.owner.slice(-4)}
+                        </p>
+                      </div>
+                    </Link>
+
+                    <div className={styles.pricingContainer}>
+                      {/* Pricing information */}
+                      <div className={styles.pricingInfo}>
+                        <p className={styles.label}>Price</p>
+                        <div className={styles.pricingValue}>
+                          {loadingContract || loadingDirect ? (
+                            <Skeleton width="120" height="24" />
+                          ) : (
+                            <>
+                              {directListing && directListing[0] ? (
+                                <>
+                                  {directListing[0]?.currencyValuePerToken
+                                    .displayValue}
+                                  {" " +
+                                    directListing[0]?.currencyValuePerToken.symbol}
+                                  <div className={styles.endTime}>
+                                    <span>End on</span>
+                                    <input
+                                      type="datetime-local"
+                                      value={datetimeLocalString}
+                                      disabled />
+                                  </div>
+                                </>
+                              ) : (
+                                "Not for sale"
+                              )}
+                            </>
+                          )}
                         </div>
-                      )
+                      </div>
+                    </div>
+
+                    {loadingContract || loadingDirect ? (
+                      <Skeleton width="100%" height="164" />
+                    ) : (
+                      <>
+                        {chainId === 5 ? (
+                          (directListing?.[0]) ? (
+                            (directListing?.[0].creatorAddress === address) ? (
+                              <Web3Button
+                                contractAddress={MARKETPLACE_ADDRESS}
+                                action={() => console.log("you")}
+                                className={styles.btn}
+                                onSuccess={() => {
+                                  toast(`Purchase success!`, {
+                                    icon: "✅",
+                                    style: toastStyle,
+                                    position: "bottom-center",
+                                  });
+                                }}
+                                onError={(e) => {
+                                  (e as any).info.reason !== "user rejected transaction"
+                                    ? toast(
+                                      "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                                      {
+                                        icon: "❌",
+                                        style: toastStyle,
+                                        position: "bottom-center",
+                                      }
+                                    )
+                                    : "";
+                                }}
+                                isDisabled
+                              >
+                                you
+                              </Web3Button>
+                            ) : (
+                              ""
+                            )
+                          ) : (
+                            <Web3Button
+                              contractAddress={MARKETPLACE_ADDRESS}
+                              action={async () => await buyListing()}
+                              className={styles.btn}
+                              onSuccess={() => {
+                                toast(`Purchase success!`, {
+                                  icon: "✅",
+                                  style: toastStyle,
+                                  position: "bottom-center",
+                                });
+                              }}
+                              onError={(e) => {
+                                (e as any).info.reason !== "user rejected transaction"
+                                  ? toast(
+                                    "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                                    {
+                                      icon: "❌",
+                                      style: toastStyle,
+                                      position: "bottom-center",
+                                    }
+                                  )
+                                  : "";
+                              }}
+                            >
+                              Buy at asking price
+                            </Web3Button>
+                          )
+                        ) : address ? (
+                          <button
+                            onClick={() => changeNetwork()}
+                            disabled={loadingChange}
+                            style={{ cursor: (loadingChange && "not-allowed") || "" }}
+                          >
+                            Switch Network{""}
+                            {loadingChange ? (
+                              <FontAwesomeIcon
+                                icon={faSpinner}
+                                spin
+                                style={{ color: "#d0d8e7", marginLeft: "10px" }} />
+                            ) : (
+                              ``
+                            )}
+                          </button>
+                        ) : (
+                          <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
               </div>
+              <div className={styles.containerHistory}>
+                <h3 className={styles.descriptionTitle}>History</h3>
 
-              <div className={styles.listingContainer}>
-                <div className={styles.infoMetadaContainer}>
-                  <div className={styles.contractMetadataContainer}>
-                    <MediaRenderer
-                      src={nft?.metadata.image}
-                      className={styles.collectionImage} />
-                    <p className={styles.collectionName}>{nft?.metadata.name}</p>
-                  </div>
+                <div className={styles.traitsContainerHistory}>
+                  <Scrollbars style={{ height: 300 }}>
+                    {transferEvents?.map((event: any, index: any) => (
+                      <div
+                        key={event.transaction.transactionHash}
+                        className={styles.eventsContainer}
+                      >
+                        <div className={styles.eventContainer}>
+                          <p className={styles.traitName}>Event</p>
+                          <p className={styles.traitValue}>
+                            {
+                              // if last event in array, then it's a mint
+                              index === transferEvents.length - 1
+                                ? "Mint"
+                                : "Transfer"}
+                          </p>
+                        </div>
 
-                  <h1 className={styles.title}>{nft?.metadata.name}</h1>
-                  <p className={styles.collectionName}>
-                    Token ID #{nft?.metadata.id}
-                  </p>
+                        <div className={styles.eventContainer}>
+                          <p className={styles.traitName}>From</p>
+                          <p className={styles.traitValue}>
+                            {event.data.from?.slice(0, 4)}...
+                            {event.data.from?.slice(-2)}
+                          </p>
+                        </div>
 
-                  <Link
-                    href={`/profile/${nft?.owner}`}
-                    className={styles.nftOwnerContainer}
-                  >
-                    {/* Random linear gradient circle shape */}
-                    <div
-                      className={styles.nftOwnerImage}
-                      style={{
-                        background: `linear-gradient(90deg, ${randomColor1}, ${randomColor2})`,
-                      }} />
-                    <div className={styles.nftOwnerInfo}>
-                      <p className={styles.label}>Current Owner</p>
-                      <p className={styles.nftOwnerAddress}>
-                        {nft?.owner.slice(0, 8)}...{nft?.owner.slice(-4)}
-                      </p>
-                    </div>
-                  </Link>
+                        <div className={styles.eventContainer}>
+                          <p className={styles.traitName}>To</p>
+                          <p className={styles.traitValue}>
+                            {event.data.to?.slice(0, 4)}...
+                            {event.data.to?.slice(-2)}
+                          </p>
+                        </div>
 
-                  <div className={styles.pricingContainer}>
-                    {/* Pricing information */}
-                    <div className={styles.pricingInfo}>
-                      <p className={styles.label}>Price</p>
-                      <div className={styles.pricingValue}>
-                        {loadingContract || loadingDirect ? (
-                          <Skeleton width="120" height="24" />
-                        ) : (
-                          <>
-                            {directListing && directListing[0] ? (
-                              <>
-                                {directListing[0]?.currencyValuePerToken
-                                  .displayValue}
-                                {" " +
-                                  directListing[0]?.currencyValuePerToken.symbol}
-                                <div className={styles.endTime}>
-                                  <span>End on</span>
-                                  <input
-                                    type="datetime-local"
-                                    value={datetimeLocalString}
-                                    disabled />
-                                </div>
-                              </>
-                            ) : (
-                              "Not for sale"
-                            )}
-                          </>
-                        )}
+                        <div className={styles.eventContainer}>
+                          <Link
+                            className={styles.txHashArrow}
+                            href={`${ETHERSCAN_URL}/tx/${event.transaction.transactionHash}`}
+                            target="_blank"
+                          >
+                            ↗
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-
-                  {loadingContract || loadingDirect ? (
-                    <Skeleton width="100%" height="164" />
-                  ) : (
-                    <>
-                      {chainId === 5 ? (
-                        (address === directListing?.[0].creatorAddress) ? (
-                          <Web3Button
-                            contractAddress={MARKETPLACE_ADDRESS}
-                            action={() => console.log("you")}
-                            className={styles.btn}
-                            onSuccess={() => {
-                              toast(`Purchase success!`, {
-                                icon: "✅",
-                                style: toastStyle,
-                                position: "bottom-center",
-                              });
-                            }}
-                            onError={(e) => {
-                              (e as any).info.reason !== "user rejected transaction"
-                                ? toast(
-                                  "Please try again. Confirm the transaction and make sure you are paying enough gas!",
-                                  {
-                                    icon: "❌",
-                                    style: toastStyle,
-                                    position: "bottom-center",
-                                  }
-                                )
-                                : "";
-                            }}
-                            isDisabled
-                          >
-                            you
-                          </Web3Button>
-                        ) : (
-                          <Web3Button
-                            contractAddress={MARKETPLACE_ADDRESS}
-                            action={async () => await buyListing()}
-                            className={styles.btn}
-                            onSuccess={() => {
-                              toast(`Purchase success!`, {
-                                icon: "✅",
-                                style: toastStyle,
-                                position: "bottom-center",
-                              });
-                            }}
-                            onError={(e) => {
-                              (e as any).info.reason !== "user rejected transaction"
-                                ? toast(
-                                  "Please try again. Confirm the transaction and make sure you are paying enough gas!",
-                                  {
-                                    icon: "❌",
-                                    style: toastStyle,
-                                    position: "bottom-center",
-                                  }
-                                )
-                                : "";
-                            }}
-                          >
-                            Buy at asking price
-                          </Web3Button>
-                        )
-                      ) : address ? (
-                        <button
-                          onClick={() => changeNetwork()}
-                          disabled={loadingChange}
-                          style={{ cursor: (loadingChange && "not-allowed") || "" }}
-                        >
-                          Switch Network{""}
-                          {loadingChange ? (
-                            <FontAwesomeIcon
-                              icon={faSpinner}
-                              spin
-                              style={{ color: "#d0d8e7", marginLeft: "10px" }} />
-                          ) : (
-                            ``
-                          )}
-                        </button>
-                      ) : (
-                        <ConnectWallet theme="dark" btnTitle="Connect Wallet" />
-                      )}
-                    </>
-                  )}
+                    ))}
+                  </Scrollbars>
                 </div>
               </div>
-            </div>
-            <div className={styles.containerHistory}>
-              <h3 className={styles.descriptionTitle}>History</h3>
-
-              <div className={styles.traitsContainerHistory}>
-                <Scrollbars style={{ height: 300 }}>
-                  {transferEvents?.map((event: any, index: any) => (
-                    <div
-                      key={event.transaction.transactionHash}
-                      className={styles.eventsContainer}
-                    >
-                      <div className={styles.eventContainer}>
-                        <p className={styles.traitName}>Event</p>
-                        <p className={styles.traitValue}>
-                          {
-                            // if last event in array, then it's a mint
-                            index === transferEvents.length - 1
-                              ? "Mint"
-                              : "Transfer"}
-                        </p>
-                      </div>
-
-                      <div className={styles.eventContainer}>
-                        <p className={styles.traitName}>From</p>
-                        <p className={styles.traitValue}>
-                          {event.data.from?.slice(0, 4)}...
-                          {event.data.from?.slice(-2)}
-                        </p>
-                      </div>
-
-                      <div className={styles.eventContainer}>
-                        <p className={styles.traitName}>To</p>
-                        <p className={styles.traitValue}>
-                          {event.data.to?.slice(0, 4)}...
-                          {event.data.to?.slice(-2)}
-                        </p>
-                      </div>
-
-                      <div className={styles.eventContainer}>
-                        <Link
-                          className={styles.txHashArrow}
-                          href={`${ETHERSCAN_URL}/tx/${event.transaction.transactionHash}`}
-                          target="_blank"
-                        >
-                          ↗
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </Scrollbars>
-              </div>
-            </div>
-          </Container></>
+            </Container></>
         ) : (
           ''
         )

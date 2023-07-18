@@ -159,7 +159,6 @@ export default function SaleInfo({ nft }: Props) {
         tokenId: nft.metadata.id,
         startDate: new Date(),
         endDate: new Date(),
-        price: "0.001",
       },
     });
 
@@ -249,7 +248,6 @@ export default function SaleInfo({ nft }: Props) {
                 className={styles.input}
                 type="number"
                 step={0.000001}
-                min={0}
                 value={directListing[0].currencyValuePerToken.displayValue}
                 disabled
                 {...registerDirect("price")} />
