@@ -68,27 +68,31 @@ export default function TokenPage() {
 
 
   const GetABIForNftCollection = async () => {
-    const abi: any = await getABI(router.query.contractAddress as string);
-    if (abi) {
-      const contract = await sdk.getContractFromAbi(
-        router.query.contractAddress as string,
-        abi
-      );
+    const addressContract = router.query.contractAddress as string;
 
-      if (contract) {
-        setNftCollection(contract);
-        const data = await contract.erc721.get(router.query.tokenId as string);
-        if (data) {
-          setNFT(data)
-          const events = await contract.events.getEvents("Transfer", {
-            filters: {
-              tokenId: data.metadata.id,
-            },
-            order: "desc",
-          });
+    if (addressContract) {
+      const abi: any = await getABI(addressContract);
+      if (abi) {
+        const contract = await sdk.getContractFromAbi(
+          router.query.contractAddress as string,
+          abi
+        );
 
-          if (events) {
-            setTransferEvents(events);
+        if (contract) {
+          setNftCollection(contract);
+          const data = await contract.erc721.get(router.query.tokenId as string);
+          if (data) {
+            setNFT(data)
+            const events = await contract.events.getEvents("Transfer", {
+              filters: {
+                tokenId: data.metadata.id,
+              },
+              order: "desc",
+            });
+
+            if (events) {
+              setTransferEvents(events);
+            }
           }
         }
       }
@@ -166,7 +170,7 @@ export default function TokenPage() {
 
   useEffect(() => {
     GetABIForNftCollection();
-  }, []);
+  }, [router.query.contractAddress]);
 
   return (
     <>
