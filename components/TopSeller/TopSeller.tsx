@@ -4,6 +4,8 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import cat from "../../public/images/TopSeller/cat.png";
 import wolf from "../../public/images/TopSeller/wolf.png";
 import people from "../../public/images/TopSeller/people.png";
+import big3 from "../../public/images/TopCreator/big-3.png";
+import big4 from "../../public/images/TopCreator/big-4.png";
 import { faCircleChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,8 +16,13 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
-import { useRef } from "react";
+import {
+  EffectCoverflow,
+  Pagination,
+  Navigation,
+  Keyboard,
+} from "swiper/modules";
+import { useState } from "react";
 export const TopSeller = () => {
   const topSellers = [
     {
@@ -23,12 +30,12 @@ export const TopSeller = () => {
       tittle: "Discover Digital Art Collect",
       id: "iamge1",
       information: {
-        hightestSale: "444.3",
-        floorPrice: "444.3",
-        marketCap: "37",
+        hightestSale: "984.3",
+        floorPrice: "464.3",
+        marketCap: "397",
         items: "7.7",
         owners: "5.2",
-        totalValue: "74",
+        totalValue: "67",
       },
     },
     {
@@ -36,12 +43,12 @@ export const TopSeller = () => {
       tittle: "Discover Digital Art Collect",
       id: "iamge2",
       information: {
-        hightestSale: "444.3",
-        floorPrice: "444.3",
-        marketCap: "37",
+        hightestSale: "844.3",
+        floorPrice: "484.3",
+        marketCap: "97",
         items: "7.7",
         owners: "5.2",
-        totalValue: "74",
+        totalValue: "778",
       },
     },
     {
@@ -49,21 +56,62 @@ export const TopSeller = () => {
       tittle: "Discover Digital Art Collect",
       id: "iamge3",
       information: {
-        hightestSale: "444.3",
-        floorPrice: "444.3",
-        marketCap: "37",
+        hightestSale: "484.3",
+        floorPrice: "449.3",
+        marketCap: "87",
         items: "7.7",
         owners: "5.2",
-        totalValue: "74",
+        totalValue: "784",
+      },
+    },
+    {
+      url: big3.src,
+      tittle: "Discover Digital Art Collect",
+      id: "iamge2",
+      information: {
+        hightestSale: "494.3",
+        floorPrice: "404.3",
+        marketCap: "7",
+        items: "7.7",
+        owners: "5.2",
+        totalValue: "784",
+      },
+    },
+    {
+      url: big4.src,
+      tittle: "Discover Digital Art Collect",
+      id: "iamge2",
+      information: {
+        hightestSale: "744.3",
+        floorPrice: "44.3",
+        marketCap: "7",
+        items: "7.7",
+        owners: "5.2",
+        totalValue: "7",
       },
     },
   ];
+  const [content, setContent] = useState(topSellers[0]);
+  const handleClick = () => {
+    const element = document.querySelector(
+      "#myElement .swiper-wrapper .swiper-slide-active"
+    );
+    const className = element?.className;
+    const atttribute = element?.getAttribute("data-swiper-slide-index");
+    if (atttribute) {
+      setContent(topSellers[Number(atttribute)]);
+    }
+    console.log(className);
+    console.log(atttribute);
+  };
   return (
     <div className={styles.topSellerContainer} style={{ position: "sticky" }}>
       <div className={styles.topSellerTittle}>Top Sellers</div>
       <Row className={styles.rowsContainer}>
         <Col sm={7} className={styles.imagecontainer}>
           <Swiper
+            onBeforeSlideChangeStart={() => handleClick()}
+            id="myElement"
             effect={"coverflow"}
             grabCursor={true}
             centeredSlides={true}
@@ -75,99 +123,63 @@ export const TopSeller = () => {
               depth: 100,
               modifier: 2.5,
             }}
-            pagination={{ el: ".swiper-pagination", clickable: true }}
-            navigation={{
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            }}
             modules={[EffectCoverflow, Pagination, Navigation]}
             className={styles.swiper_container}
           >
-            <SwiperSlide>
-              <Image
-                src={topSellers[0]?.url}
-                width={400}
-                height={400}
-                alt={topSellers[0]?.tittle}
-                style={{ borderRadius: "20px" }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src={topSellers[1]?.url}
-                width={400}
-                height={400}
-                alt={topSellers[1]?.tittle}
-                style={{ borderRadius: "20px" }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src={topSellers[2]?.url}
-                width={400}
-                height={400}
-                alt={topSellers[2]?.tittle}
-                style={{ borderRadius: "20px" }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src={topSellers[0]?.url}
-                width={400}
-                height={400}
-                alt={topSellers[0]?.tittle}
-                style={{ borderRadius: "20px" }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src={topSellers[1]?.url}
-                width={400}
-                height={400}
-                alt={topSellers[1]?.tittle}
-                style={{ borderRadius: "20px" }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src={topSellers[2]?.url}
-                width={400}
-                height={400}
-                alt={topSellers[2]?.tittle}
-                style={{ borderRadius: "20px" }}
-              />
-            </SwiperSlide>
+            {topSellers?.map((topSeller, index) => (
+              <SwiperSlide key={index}>
+                <Image
+                  src={topSeller.url}
+                  width={350}
+                  height={400}
+                  alt={topSeller.tittle}
+                  style={{ borderRadius: "20px" }}
+                />
+              </SwiperSlide>
+            ))}
           </Swiper>
         </Col>
-        <Col sm={5}>
+        <Col sm={5} className={styles.information}>
           <div className={styles.colContainer}>
             <div className={styles.colTittle}>Highest Sale</div>
-            <div className={styles.colTittle}>$443.4k</div>
+            <div className={styles.colTittle}>
+              ${content.information.hightestSale}k
+            </div>
           </div>
           <hr />
           <div className={styles.colContainer}>
             <div className={styles.colTittle}>Floor Price</div>
-            <div className={styles.colTittle}>$443.4k</div>
+            <div className={styles.colTittle}>
+              ${content.information.floorPrice}k
+            </div>
           </div>
           <hr />
           <div className={styles.colContainer}>
             <div className={styles.colTittle}>Market Cap</div>
-            <div className={styles.colTittle}>$443.4k</div>
+            <div className={styles.colTittle}>
+              ${content.information.marketCap}k
+            </div>
           </div>
           <hr />
           <div className={styles.colContainer}>
             <div className={styles.colTittle}>Items</div>
-            <div className={styles.colTittle}>$443.4k</div>
+            <div className={styles.colTittle}>
+              ${content.information.items}k
+            </div>
           </div>
           <hr />
           <div className={styles.colContainer}>
             <div className={styles.colTittle}>Owners</div>
-            <div className={styles.colTittle}>$443.4k</div>
+            <div className={styles.colTittle}>
+              ${content.information.owners}k
+            </div>
           </div>
           <hr />
           <div className={styles.colContainer}>
             <div className={styles.colTittle}>TOTAL VOLUME</div>
-            <div className={styles.colTittle}>$443.4k</div>
+            <div className={styles.colTittle}>
+              ${content.information.totalValue}k
+            </div>
           </div>
           <div className={styles.colButton}>
             <Button variant="outline-success">Buy Now</Button>

@@ -159,7 +159,7 @@ export default function SaleInfo({ nft }: Props) {
         tokenId: nft.metadata.id,
         startDate: new Date(),
         endDate: new Date(),
-        price: "0.001",
+        price: '0',
       },
     });
 
