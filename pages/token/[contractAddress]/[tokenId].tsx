@@ -109,14 +109,15 @@ export default function TokenPage() {
     let txResult;
     setLoadingMint(true);
     if (directListing?.[0]) {
+      console.log("directListing?.[0]", directListing?.[0])
       txResult = await marketplace?.directListings.buyFromListing(
         parseInt(directListing[0].id),
         1
       );
       setLoadingMint(false);
+      console.log("txResult", txResult)
     } else {
       throw new Error("No valid listing found for this NFT");
-      setLoadingMint(false);
     }
     return txResult;
   }
@@ -159,10 +160,6 @@ export default function TokenPage() {
     // Create the datetime-local format string
     datetimeLocalString =
       year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
-  }
-
-  if (directListing?.[0]) {
-    console.log(directListing[0]);
   }
 
   useEffect(() => {

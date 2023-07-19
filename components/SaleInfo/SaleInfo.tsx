@@ -72,15 +72,16 @@ export default function SaleInfo({ nft }: Props) {
     year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
 
   // today
-
-  var year = today.getFullYear();
-  var month = (today.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-  var day = today.getDate().toString().padStart(2, "0");
-  var hours = today.getHours().toString().padStart(2, "0");
-  var minutes = today.getMinutes().toString().padStart(2, "0");
+  var today1 = new Date(today);
+  today1.setDate(today.getDate());
+  var year1 = today1.getFullYear();
+  var month1 = (today1.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  var day1 = today1.getDate().toString().padStart(2, "0");
+  var hours1 = today1.getHours().toString().padStart(2, "0");
+  var minutes1 = today1.getMinutes().toString().padStart(2, "0");
 
   var datetimeLocalStringToday =
-    year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
+    year1 + "-" + month1 + "-" + day1 + "T" + hours1 + ":" + minutes1;
 
   // convert date
   const convertDate = (date: number) => {
@@ -131,7 +132,7 @@ export default function SaleInfo({ nft }: Props) {
   // User requires to set marketplace approval before listing
   async function checkAndProvideApproval() {
     // Check if approval is required
-    console.log("nft.assetContractAddress", nft)
+
     const abi: any = await getABI(nft.contract.address)
     if (abi) {
       const nftCollection = await sdk.getContractFromAbi(nft.contract.address, abi);
@@ -143,6 +144,8 @@ export default function SaleInfo({ nft }: Props) {
 
       // If it is, provide approval
       if (!hasApproval) {
+
+        console.log("nftCollection", nftCollection)
         const txResult = await nftCollection?.call("setApprovalForAll", [
           MARKETPLACE_ADDRESS,
           true,
@@ -200,6 +203,7 @@ export default function SaleInfo({ nft }: Props) {
   useEffect(() => {
     if (cancel) {
       (document.getElementById("endTime") as HTMLInputElement).value = '';
+      (document.getElementById("price") as HTMLInputElement).value = '';
       setCancel(false);
     }
 
@@ -245,6 +249,7 @@ export default function SaleInfo({ nft }: Props) {
 
 
               <input
+                id="price"
                 className={styles.input}
                 type="number"
                 step={0.000001}
@@ -297,7 +302,8 @@ export default function SaleInfo({ nft }: Props) {
                 {...registerDirect("startDate")}
                 aria-label="Auction Start Date"
                 value={datetimeLocalStringToday}
-                disabled />
+                disabled
+              />
 
 
               <legend className={styles.legend}> Listing Ends on </legend>
