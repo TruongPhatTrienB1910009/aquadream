@@ -45,6 +45,7 @@ type DirectFormData = {
 export default function SaleInfo({ nft }: Props) {
   const router = useRouter();
   const [cancel, setCancel] = useState<any>(false)
+  const [render, setRender] = useState(false)
   // Connect to marketplace contract
   const { contract: marketplace } = useContract(
     MARKETPLACE_ADDRESS,
@@ -206,7 +207,11 @@ export default function SaleInfo({ nft }: Props) {
       (document.getElementById("endTime") as HTMLInputElement).value = '';
       setCancel(false);
     }
-  }, [cancel])
+
+    if (!render) {
+      setRender(true)
+    }
+  }, [cancel, render])
 
   return (
     <>
