@@ -1,4 +1,4 @@
-import { NFT as NFTType, ListingType, ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { NFT as NFTType, ListingType } from "@thirdweb-dev/sdk";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -14,16 +14,14 @@ import {
 } from "@thirdweb-dev/react";
 import {
   MARKETPLACE_ADDRESS,
-  NETWORK,
   NFT_COLLECTION_ADDRESS,
 } from "../../const/contractAddresses";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../util/toastConfig";
-import { getABI } from "../NFT/hook/getNFTs";
 
 type Props = {
-  nft: any;
+  nft: NFTType;
 };
 
 type AuctionFormData = {
@@ -43,12 +41,9 @@ type DirectFormData = {
   endDate: Date;
 };
 
-
 export default function SaleInfo({ nft }: Props) {
   const router = useRouter();
-  const [cancel, setCancel] = useState<any>(false)
-  const [render, setRender] = useState(false)
-  const sdk = new ThirdwebSDK(NETWORK);
+  const [cancel, setCancel] = useState<any>(false);
   // Connect to marketplace contract
   const { contract: marketplace } = useContract(
     MARKETPLACE_ADDRESS,
@@ -72,38 +67,38 @@ export default function SaleInfo({ nft }: Props) {
     year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
 
   // today
-  var today1 = new Date(today);
-  today1.setDate(today.getDate());
-  var year1 = today1.getFullYear();
-  var month1 = (today1.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-  var day1 = today1.getDate().toString().padStart(2, "0");
-  var hours1 = today1.getHours().toString().padStart(2, "0");
-  var minutes1 = today1.getMinutes().toString().padStart(2, "0");
+
+  var year = today.getFullYear();
+  var month = (today.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  var day = today.getDate().toString().padStart(2, "0");
+  var hours = today.getHours().toString().padStart(2, "0");
+  var minutes = today.getMinutes().toString().padStart(2, "0");
 
   var datetimeLocalStringToday =
-    year1 + "-" + month1 + "-" + day1 + "T" + hours1 + ":" + minutes1;
+    year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
 
   // convert date
   const convertDate = (date: number) => {
     var datetimeLocalString;
 
     var referenceDatetime = new Date();
-    var targetDatetime = new Date(date * 1000)
+    var targetDatetime = new Date(date * 1000);
     var year = targetDatetime.getFullYear();
-    var month = (targetDatetime.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-    var day = targetDatetime.getDate().toString().padStart(2, '0');
-    var hours = targetDatetime.getHours().toString().padStart(2, '0');
-    var minutes = targetDatetime.getMinutes().toString().padStart(2, '0');
+    var month = (targetDatetime.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    var day = targetDatetime.getDate().toString().padStart(2, "0");
+    var hours = targetDatetime.getHours().toString().padStart(2, "0");
+    var minutes = targetDatetime.getMinutes().toString().padStart(2, "0");
 
     // Create the datetime-local format string
-    datetimeLocalString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+    datetimeLocalString =
+      year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
     return datetimeLocalString;
-  }
+  };
 
   // useContract is a React hook that returns an object with the contract key.
   // The value of the contract key is an instance of an NFT_COLLECTION on the blockchain.
   // This instance is created from the contract address (NFT_COLLECTION_ADDRESS)
-  // const { contract: nftCollection } = useContract(nft.assetContractAddress);
+  const { contract: nftCollection } = useContract(NFT_COLLECTION_ADDRESS);
 
   // Hook provides an async function to create a new auction listing
   const { mutateAsync: createAuctionListing } =
@@ -132,36 +127,28 @@ export default function SaleInfo({ nft }: Props) {
   // User requires to set marketplace approval before listing
   async function checkAndProvideApproval() {
     // Check if approval is required
+    const hasApproval = await nftCollection?.call("isApprovedForAll", [
+      nft.owner,
+      MARKETPLACE_ADDRESS,
+    ]);
 
-    const abi: any = await getABI(nft.contract.address)
-    if (abi) {
-      const nftCollection = await sdk.getContractFromAbi(nft.contract.address, abi);
-
-      const hasApproval = await nftCollection?.call("isApprovedForAll", [
-        nft.owner,
+    // If it is, provide approval
+    if (!hasApproval) {
+      const txResult = await nftCollection?.call("setApprovalForAll", [
         MARKETPLACE_ADDRESS,
+        true,
       ]);
 
-      // If it is, provide approval
-      if (!hasApproval) {
-
-        console.log("nftCollection", nftCollection)
-        const txResult = await nftCollection?.call("setApprovalForAll", [
-          MARKETPLACE_ADDRESS,
-          true,
-        ]);
-
-        if (txResult) {
-          toast.success("Marketplace approval granted", {
-            icon: "👍",
-            style: toastStyle,
-            position: "bottom-center",
-          });
-        }
+      if (txResult) {
+        toast.success("Marketplace approval granted", {
+          icon: "👍",
+          style: toastStyle,
+          position: "bottom-center",
+        });
       }
-
-      return true;
     }
+
+    return true;
   }
 
   // Manage form values using react-hook-form library: Direct form
@@ -172,12 +159,27 @@ export default function SaleInfo({ nft }: Props) {
         tokenId: nft.metadata.id,
         startDate: new Date(),
         endDate: new Date(),
+        // price: "0.001",
       },
     });
 
+  async function handleSubmissionAuction(data: AuctionFormData) {
+    await checkAndProvideApproval();
+    const txResult = await createAuctionListing({
+      assetContractAddress: data.nftContractAddress,
+      tokenId: data.tokenId,
+      buyoutBidAmount: data.buyoutPrice,
+      minimumBidAmount: data.floorPrice,
+      startTimestamp: new Date(data.startDate),
+      endTimestamp: new Date(data.endDate),
+    });
+
+    return txResult;
+  }
+
   async function handleSubmissionDirect(data: DirectFormData) {
     await checkAndProvideApproval();
-    console.log("data", data)
+    console.log("data", data);
     const txResult = await createDirectListing({
       assetContractAddress: data.nftContractAddress,
       tokenId: data.tokenId,
@@ -202,29 +204,26 @@ export default function SaleInfo({ nft }: Props) {
 
   useEffect(() => {
     if (cancel) {
-      (document.getElementById("endTime") as HTMLInputElement).value = '';
-      (document.getElementById("price") as HTMLInputElement).value = '';
+      (document.getElementById("endTime") as HTMLInputElement).value = "";
       setCancel(false);
     }
-
-    if (!render) {
-      setRender(true)
-    }
-  }, [cancel, render])
+  }, [cancel]);
 
   return (
     <>
-      {
-        (directListing?.[0]) ? (
-          <><Toaster position="bottom-center" reverseOrder={false} /><div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
+      {directListing?.[0] ? (
+        <>
+          <Toaster position="bottom-center" reverseOrder={false} />
+          <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
             {/* Direct listing fields */}
             <div
-              className={`${tab === "direct"
-                ? styles.activeTabContent
-                : profileStyles.tabContent}`}
+              className={`${
+                tab === "direct"
+                  ? styles.activeTabContent
+                  : profileStyles.tabContent
+              }`}
               style={{ flexDirection: "column" }}
             >
-
               <legend className={styles.legend}> Listing Starts on</legend>
               <input
                 className={styles.input}
@@ -232,8 +231,8 @@ export default function SaleInfo({ nft }: Props) {
                 {...registerDirect("startDate")}
                 aria-label="Auction Start Date"
                 value={convertDate(directListing[0].startTimeInSeconds)}
-                disabled />
-
+                disabled
+              />
 
               <legend className={styles.legend}> Listing Ends on </legend>
               <input
@@ -247,15 +246,15 @@ export default function SaleInfo({ nft }: Props) {
               />
               <h4 className={styles.formSectionTitle}>Price </h4>
 
-
               <input
-                id="price"
                 className={styles.input}
                 type="number"
                 step={0.000001}
+                min={0}
                 value={directListing[0].currencyValuePerToken.displayValue}
                 disabled
-                {...registerDirect("price")} />
+                {...registerDirect("price")}
+              />
 
               <div className={styles.btnContainer}>
                 <Web3Button
@@ -284,17 +283,21 @@ export default function SaleInfo({ nft }: Props) {
                 </Web3Button>
               </div>
             </div>
-          </div></>
-        ) : (
-          <><Toaster position="bottom-center" reverseOrder={false} /><div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
+          </div>
+        </>
+      ) : (
+        <>
+          <Toaster position="bottom-center" reverseOrder={false} />
+          <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
             {/* Direct listing fields */}
             <div
-              className={`${tab === "direct"
-                ? styles.activeTabContent
-                : profileStyles.tabContent}`}
+              className={`${
+                tab === "direct"
+                  ? styles.activeTabContent
+                  : profileStyles.tabContent
+              }`}
               style={{ flexDirection: "column" }}
             >
-
               <legend className={styles.legend}> Listing Starts on</legend>
               <input
                 className={styles.input}
@@ -305,7 +308,6 @@ export default function SaleInfo({ nft }: Props) {
                 disabled
               />
 
-
               <legend className={styles.legend}> Listing Ends on </legend>
               <input
                 id="endTime"
@@ -313,7 +315,8 @@ export default function SaleInfo({ nft }: Props) {
                 type="datetime-local"
                 {...registerDirect("endDate")}
                 aria-label="Auction End Date"
-                min={datetimeLocalString} />
+                min={datetimeLocalString}
+              />
               <h4 className={styles.formSectionTitle}>Price </h4>
 
               <input
@@ -321,7 +324,8 @@ export default function SaleInfo({ nft }: Props) {
                 type="number"
                 step={0.000001}
                 min={0}
-                {...registerDirect("price")} />
+                {...registerDirect("price")}
+              />
 
               <div className={styles.btnContainer}>
                 <Web3Button
@@ -352,9 +356,9 @@ export default function SaleInfo({ nft }: Props) {
                 </Web3Button>
               </div>
             </div>
-          </div></>
-        )
-      }
+          </div>
+        </>
+      )}
     </>
   );
 }
