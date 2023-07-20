@@ -136,11 +136,7 @@ const Index = () => {
       const data = await miniGameContract?.call("balanceOf", [address]);
       if (data) {
         const index = new BigNumber(data.toString()).toNumber();
-        if (index === 1) {
-          setBalanceOf(1);
-        } else {
-          setBalanceOf(0);
-        }
+        setBalanceOf(index);
       }
     }
   };
@@ -226,11 +222,13 @@ const Index = () => {
   };
   GetTotalMinted();
   getDataNFT();
+  checkBalanceOf();
   useEffect(() => {
     setDataNft(null);
     if (address !== null) {
       checkMinted();
       tokenOfOwner();
+      checkBalanceOf();
       if (status.message !== "") {
         setOpenToast(true);
       }
@@ -239,8 +237,15 @@ const Index = () => {
     GetTotalMinted();
     prevCountRef.current = tokenOfOwnerByIndex;
     if (tokenOfOwnerByIndex !== -1) GetClaim();
-  }, [address, minted, status.message, tokenOfOwnerByIndex, totalMinted]);
-  // console.log("isLoading", dataNft.name, isLoading);
+  }, [
+    address,
+    minted,
+    status.message,
+    tokenOfOwnerByIndex,
+    totalMinted,
+    balanceOf,
+  ]);
+  console.log("isLoading", !isLoading, tokenOfOwnerByIndex, balanceOf, minted);
 
   return (
     <>
@@ -253,7 +258,7 @@ const Index = () => {
         <Breadcrumb.Item active>Mini Game</Breadcrumb.Item>
       </Breadcrumb>
 
-      {minted === 1 && chainId === 5 ? (
+      {balanceOf > 0 && minted === 1 && chainId === 5 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
             {!dataNft || !isLoading ? (
@@ -321,6 +326,10 @@ const Index = () => {
                       style={{
                         cursor: "not-allowed",
                         fontSize: "15px",
+                        backgroundColor: "#e6e8ec",
+                        borderColor: "#e6e8ec",
+                        boxShadow: "none",
+                        color: "#777e91",
                       }}
                     >
                       You claimed reward!
@@ -347,7 +356,14 @@ const Index = () => {
 
               <button
                 disabled={true}
-                style={{ cursor: "not-allowed", fontSize: "20px" }}
+                style={{
+                  cursor: "not-allowed",
+                  fontSize: "20px",
+                  backgroundColor: "#e6e8ec",
+                  borderColor: "#e6e8ec",
+                  boxShadow: "none",
+                  color: "#777e91",
+                }}
               >
                 Minted
               </button>
@@ -357,10 +373,10 @@ const Index = () => {
       ) : (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            {!isLoading && address ? (
+            {!isLoading && address && tokenOfOwnerByIndex !== -1 ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
-                  <Skeleton key={index} width={"100%"} height="512px" />
+                  <Skeleton key={index} width={"100%"} height="522px" />
                 </div>
               ))
             ) : (
@@ -389,22 +405,38 @@ const Index = () => {
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
               <p className={styles.contenta}>Prepare 0.002 ETH to mint</p>
               {chainId === 5 ? (
-                <button
-                  onClick={() => useMintNFT()}
-                  disabled={loadingMint}
-                  style={{ cursor: (loadingMint && "not-allowed") || "" }}
-                >
-                  Mint NFT{" "}
-                  {loadingMint ? (
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      style={{ color: "#d0d8e7", marginLeft: "10px" }}
-                    />
-                  ) : (
-                    ``
-                  )}
-                </button>
+                minted === 0 ? (
+                  <button
+                    onClick={() => useMintNFT()}
+                    disabled={loadingMint}
+                    style={{ cursor: (loadingMint && "not-allowed") || "" }}
+                  >
+                    Mint NFT{" "}
+                    {loadingMint ? (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                      />
+                    ) : (
+                      ``
+                    )}
+                  </button>
+                ) : (
+                  <button
+                    disabled={true}
+                    style={{
+                      cursor: "not-allowed",
+                      fontSize: "20px",
+                      backgroundColor: "#e6e8ec",
+                      borderColor: "#e6e8ec",
+                      boxShadow: "none",
+                      color: "#777e91",
+                    }}
+                  >
+                    Minted
+                  </button>
+                )
               ) : address ? (
                 <button
                   onClick={() => changeNetwork()}
