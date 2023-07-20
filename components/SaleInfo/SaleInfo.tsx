@@ -41,10 +41,9 @@ type DirectFormData = {
   endDate: Date;
 };
 
-
 export default function SaleInfo({ nft }: Props) {
   const router = useRouter();
-  const [cancel, setCancel] = useState<any>(false)
+  const [cancel, setCancel] = useState<any>(false);
   // Connect to marketplace contract
   const { contract: marketplace } = useContract(
     MARKETPLACE_ADDRESS,
@@ -83,17 +82,18 @@ export default function SaleInfo({ nft }: Props) {
     var datetimeLocalString;
 
     var referenceDatetime = new Date();
-    var targetDatetime = new Date(date * 1000)
+    var targetDatetime = new Date(date * 1000);
     var year = targetDatetime.getFullYear();
-    var month = (targetDatetime.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-    var day = targetDatetime.getDate().toString().padStart(2, '0');
-    var hours = targetDatetime.getHours().toString().padStart(2, '0');
-    var minutes = targetDatetime.getMinutes().toString().padStart(2, '0');
+    var month = (targetDatetime.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    var day = targetDatetime.getDate().toString().padStart(2, "0");
+    var hours = targetDatetime.getHours().toString().padStart(2, "0");
+    var minutes = targetDatetime.getMinutes().toString().padStart(2, "0");
 
     // Create the datetime-local format string
-    datetimeLocalString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+    datetimeLocalString =
+      year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
     return datetimeLocalString;
-  }
+  };
 
   // useContract is a React hook that returns an object with the contract key.
   // The value of the contract key is an instance of an NFT_COLLECTION on the blockchain.
@@ -159,7 +159,7 @@ export default function SaleInfo({ nft }: Props) {
         tokenId: nft.metadata.id,
         startDate: new Date(),
         endDate: new Date(),
-        price: "0.001",
+        // price: "0.001",
       },
     });
 
@@ -179,7 +179,7 @@ export default function SaleInfo({ nft }: Props) {
 
   async function handleSubmissionDirect(data: DirectFormData) {
     await checkAndProvideApproval();
-    console.log("data", data)
+    console.log("data", data);
     const txResult = await createDirectListing({
       assetContractAddress: data.nftContractAddress,
       tokenId: data.tokenId,
@@ -204,24 +204,26 @@ export default function SaleInfo({ nft }: Props) {
 
   useEffect(() => {
     if (cancel) {
-      (document.getElementById("endTime") as HTMLInputElement).value = '';
+      (document.getElementById("endTime") as HTMLInputElement).value = "";
       setCancel(false);
     }
-  }, [cancel])
+  }, [cancel]);
 
   return (
     <>
-      {
-        (directListing?.[0]) ? (
-          <><Toaster position="bottom-center" reverseOrder={false} /><div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
+      {directListing?.[0] ? (
+        <>
+          <Toaster position="bottom-center" reverseOrder={false} />
+          <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
             {/* Direct listing fields */}
             <div
-              className={`${tab === "direct"
-                ? styles.activeTabContent
-                : profileStyles.tabContent}`}
+              className={`${
+                tab === "direct"
+                  ? styles.activeTabContent
+                  : profileStyles.tabContent
+              }`}
               style={{ flexDirection: "column" }}
             >
-
               <legend className={styles.legend}> Listing Starts on</legend>
               <input
                 className={styles.input}
@@ -229,8 +231,8 @@ export default function SaleInfo({ nft }: Props) {
                 {...registerDirect("startDate")}
                 aria-label="Auction Start Date"
                 value={convertDate(directListing[0].startTimeInSeconds)}
-                disabled />
-
+                disabled
+              />
 
               <legend className={styles.legend}> Listing Ends on </legend>
               <input
@@ -244,7 +246,6 @@ export default function SaleInfo({ nft }: Props) {
               />
               <h4 className={styles.formSectionTitle}>Price </h4>
 
-
               <input
                 className={styles.input}
                 type="number"
@@ -252,7 +253,8 @@ export default function SaleInfo({ nft }: Props) {
                 min={0}
                 value={directListing[0].currencyValuePerToken.displayValue}
                 disabled
-                {...registerDirect("price")} />
+                {...registerDirect("price")}
+              />
 
               <div className={styles.btnContainer}>
                 <Web3Button
@@ -281,17 +283,21 @@ export default function SaleInfo({ nft }: Props) {
                 </Web3Button>
               </div>
             </div>
-          </div></>
-        ) : (
-          <><Toaster position="bottom-center" reverseOrder={false} /><div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
+          </div>
+        </>
+      ) : (
+        <>
+          <Toaster position="bottom-center" reverseOrder={false} />
+          <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
             {/* Direct listing fields */}
             <div
-              className={`${tab === "direct"
-                ? styles.activeTabContent
-                : profileStyles.tabContent}`}
+              className={`${
+                tab === "direct"
+                  ? styles.activeTabContent
+                  : profileStyles.tabContent
+              }`}
               style={{ flexDirection: "column" }}
             >
-
               <legend className={styles.legend}> Listing Starts on</legend>
               <input
                 className={styles.input}
@@ -299,8 +305,8 @@ export default function SaleInfo({ nft }: Props) {
                 {...registerDirect("startDate")}
                 aria-label="Auction Start Date"
                 value={datetimeLocalStringToday}
-                disabled />
-
+                disabled
+              />
 
               <legend className={styles.legend}> Listing Ends on </legend>
               <input
@@ -309,7 +315,8 @@ export default function SaleInfo({ nft }: Props) {
                 type="datetime-local"
                 {...registerDirect("endDate")}
                 aria-label="Auction End Date"
-                min={datetimeLocalString} />
+                min={datetimeLocalString}
+              />
               <h4 className={styles.formSectionTitle}>Price </h4>
 
               <input
@@ -317,7 +324,8 @@ export default function SaleInfo({ nft }: Props) {
                 type="number"
                 step={0.000001}
                 min={0}
-                {...registerDirect("price")} />
+                {...registerDirect("price")}
+              />
 
               <div className={styles.btnContainer}>
                 <Web3Button
@@ -348,9 +356,9 @@ export default function SaleInfo({ nft }: Props) {
                 </Web3Button>
               </div>
             </div>
-          </div></>
-        )
-      }
+          </div>
+        </>
+      )}
     </>
   );
 }
