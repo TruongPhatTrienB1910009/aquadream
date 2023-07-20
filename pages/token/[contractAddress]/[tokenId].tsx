@@ -15,7 +15,6 @@ import {
 } from "@thirdweb-dev/react";
 import React, { useEffect, useState } from "react";
 import Container from "../../../components/Container/Container";
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
 import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import {
   ETHERSCAN_URL,
@@ -35,7 +34,7 @@ import { getABI } from "../../../components/NFT/hook/getNFTs";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import internal from "stream";
+import { ethers } from "ethers";
 
 type Props = {
   nft: any;
@@ -105,22 +104,36 @@ export default function TokenPage() {
     });
 
 
-  async function buyListing() {
+  const buyListing = async () => {
     let txResult;
     setLoadingMint(true);
     if (directListing?.[0]) {
-      console.log("directListing?.[0]", directListing?.[0])
-      txResult = await marketplace?.directListings.buyFromListing(
-        parseInt(directListing[0].id),
-        1
+      const abi: any = await getABI(MARKETPLACE_ADDRESS);
+      console.log("abi", abi)
+      const contract = await sdk.getContractFromAbi(MARKETPLACE_ADDRESS, abi);
+      txResult = await contract?.call(
+        "buyFromListing",
+        [
+          directListing?.[0].id,
+          address,
+          1,
+          "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          directListing?.[0].pricePerToken
+        ],
+        {
+          gasLimit: 1000000,
+          value: ethers.utils.parseEther("0.1"),
+        }
       );
-      setLoadingMint(false);
       console.log("txResult", txResult)
+      setLoadingMint(false);
     } else {
       throw new Error("No valid listing found for this NFT");
     }
     return txResult;
   }
+
+
   const changeNetwork = async () => {
     try {
       setLoadingChange(true);
@@ -299,32 +312,38 @@ export default function TokenPage() {
                               </Web3Button>
                             )
                               : (
-                                <Web3Button
-                                  contractAddress={MARKETPLACE_ADDRESS}
-                                  action={async () => await buyListing()}
-                                  className={styles.btn}
-                                  onSuccess={() => {
-                                    toast(`Purchase success!`, {
-                                      icon: "✅",
-                                      style: toastStyle,
-                                      position: "bottom-center",
-                                    });
-                                  }}
-                                  onError={(e) => {
-                                    (e as any).info.reason !== "user rejected transaction"
-                                      ? toast(
-                                        "Please try again. Confirm the transaction and make sure you are paying enough gas!",
-                                        {
-                                          icon: "❌",
-                                          style: toastStyle,
-                                          position: "bottom-center",
-                                        }
-                                      )
-                                      : "";
-                                  }}
+                                // <Web3Button
+                                //   contractAddress={MARKETPLACE_ADDRESS}
+                                //   action={async () => await buyListing()}
+                                //   className={styles.btn}
+                                //   onSuccess={() => {
+                                //     toast(`Purchase success!`, {
+                                //       icon: "✅",
+                                //       style: toastStyle,
+                                //       position: "bottom-center",
+                                //     });
+                                //   }}
+                                //   onError={(e) => {
+                                //     console.log("(e as any).info", (e as any).info)
+                                //     // (e as any).info.reason !== "user rejected transaction"
+                                //     // ? toast(
+                                //     //   "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                                //     //   {
+                                //     //     icon: "❌",
+                                //     //     style: toastStyle,
+                                //     //     position: "bottom-center",
+                                //     //   }
+                                //     // )
+                                //     // : "";
+                                //   }}
+                                // >
+                                //   Buy at asking price
+                                // </Web3Button>
+                                <button
+                                  onClick={() => buyListing()}
                                 >
-                                  Buy at asking price
-                                </Web3Button>
+                                  Buy
+                                </button>
                               )
                           )
                         ) : address ? (
