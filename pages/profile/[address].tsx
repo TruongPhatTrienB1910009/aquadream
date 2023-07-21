@@ -73,7 +73,7 @@ export default function ProfilePage() {
   }, [account, directListings?.length]);
 
   return (
-    <Container maxWidth="lg">
+    <>
       <div className={styles.profileHeader}>
         <div
           className={styles.coverImage}
@@ -128,6 +128,6 @@ export default function ProfilePage() {
           </Tab>
         </Tabs>
       </div>
-    </Container >
+    </>
   );
 }
