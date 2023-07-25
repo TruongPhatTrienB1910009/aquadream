@@ -21,6 +21,7 @@ import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../util/toastConfig";
 import { getABI } from "../NFT/hook/getNFTs";
+import { ethers } from "ethers";
 
 type Props = {
   nft: any;
@@ -100,17 +101,15 @@ export default function SaleInfo({ nft }: Props) {
     return datetimeLocalString;
   }
 
-  // useContract is a React hook that returns an object with the contract key.
-  // The value of the contract key is an instance of an NFT_COLLECTION on the blockchain.
-  // This instance is created from the contract address (NFT_COLLECTION_ADDRESS)
-  // const { contract: nftCollection } = useContract(nft.assetContractAddress);
-
   // Hook provides an async function to create a new direct listing
   const { mutateAsync: createDirectListing } =
     useCreateDirectListing(marketplace);
 
   // Manage form submission state using tabs and conditional rendering
   const [tab, setTab] = useState<"direct" | "auction">("direct");
+
+
+  const { contract: nftCollection2 } = useContract(nft.contract.address)
 
   // User requires to set marketplace approval before listing
   async function checkAndProvideApproval() {
@@ -123,17 +122,21 @@ export default function SaleInfo({ nft }: Props) {
       const hasApproval = await nftCollection?.call("isApprovedForAll", [
         nft.owner,
         MARKETPLACE_ADDRESS,
-      ]);
+      ]
+      );
 
+      console.log("hasApproval", hasApproval)
       // If it is, provide approval
       if (!hasApproval) {
 
         console.log("nftCollection", nftCollection)
-        const txResult = await nftCollection?.call("setApprovalForAll", [
+        const txResult = await nftCollection.call("setApprovalForAll", [
           MARKETPLACE_ADDRESS,
           true,
-        ]);
+        ]
+        );
 
+        console.log("txResult", txResult)
         if (txResult) {
           toast.success("Marketplace approval granted", {
             icon: "👍",
@@ -160,7 +163,6 @@ export default function SaleInfo({ nft }: Props) {
 
   async function handleSubmissionDirect(data: DirectFormData) {
     await checkAndProvideApproval();
-    console.log("data", data)
     const txResult = await createDirectListing({
       assetContractAddress: data.nftContractAddress,
       tokenId: data.tokenId,
@@ -186,7 +188,7 @@ export default function SaleInfo({ nft }: Props) {
   useEffect(() => {
     if (cancel) {
       (document.getElementById("endTime") as HTMLInputElement).value = '';
-      (document.getElementById("price") as HTMLInputElement).value = '';
+      (document.getElementById("price") as HTMLInputElement).value = '0';
       setCancel(false);
     }
 
@@ -300,6 +302,7 @@ export default function SaleInfo({ nft }: Props) {
               <h4 className={styles.formSectionTitle}>Price </h4>
 
               <input
+                id="price"
                 className={styles.input}
                 type="number"
                 step={0.000001}

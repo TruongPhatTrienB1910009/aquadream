@@ -4,7 +4,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./minigame.module.css";
 import dynamic from "next/dynamic";
-import { MediaRenderer } from "@thirdweb-dev/react";
+import { MediaRenderer, useOwnedNFTs } from "@thirdweb-dev/react";
 
 import Skeleton from "../../components/Skeleton/Skeleton";
 
@@ -36,7 +36,7 @@ const Index = () => {
     minigameABI
   );
   const address = useAddress();
-  const startDate = new Date("July 15, 2023 14:43:00");
+  const startDate = new Date("July 26, 2023 14:43:00");
   const dateTimeAfterThreeDays = startDate;
   const [{ data, error, loading }, switchNetwork] = useNetwork();
   const chainId = useChainId();
@@ -55,6 +55,13 @@ const Index = () => {
   //loading when claim ETH
   const [loadingClaim, setLoadingClaim] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data: NFTs } = useOwnedNFTs(
+    miniGameContract,
+    address,
+  );
+
+  console.log("nfts", NFTs)
 
   const prevCountRef = useRef<number>(INITIAL_COUNT);
   // handle status

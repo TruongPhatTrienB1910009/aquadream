@@ -61,10 +61,6 @@ export default function ProfilePage() {
     }
   };
 
-  if (ownedNfts) {
-    console.log("ownedNfts", ownedNfts)
-  }
-
   useEffect(() => {
     if (account !== router.query.address) {
       router.push(`/profile/${account}`);
