@@ -111,11 +111,8 @@ export default function SaleInfo({ nft }: Props) {
 
 
   // User requires to set marketplace approval before listing
-
-  const address = useAddress();
   async function checkAndProvideApproval() {
     // Check if approval is required
-
     const abi: any = await getABI(nft.contract.address)
     if (abi) {
       const nftCollection = await sdk.getContractFromAbi(nft.contract.address, abi);
@@ -125,13 +122,8 @@ export default function SaleInfo({ nft }: Props) {
         MARKETPLACE_ADDRESS,
       ]
       );
-
-      console.log("nft.contract.address", nft.contract.address)
-      console.log("hasApproval", hasApproval)
       // If it is, provide approval
       if (!hasApproval) {
-        console.log("nftCollection", nftCollection)
-        console.log("address", address)
         try {
           const txResult = await nftCollection?.call("setApprovalForAll",
             [
@@ -151,7 +143,6 @@ export default function SaleInfo({ nft }: Props) {
           console.log("error", error)
         }
       }
-
       return true;
     }
   }

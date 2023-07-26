@@ -127,12 +127,12 @@ export default function TokenPage() {
 
       const result = await switchNetwork(5);
       if (result.data) {
-        console.log("Switched to Goerli testnet successfully");
+        console.log("Switched to Base Goerli testnet successfully");
       } else {
-        console.log("Error switching to Goerli testnet", result.error);
+        console.log("Error switching to Base Goerli testnet", result.error);
       }
     } catch (e) {
-      console.log("Error switching to Goerli testnet", e);
+      console.log("Error switching to Base Goerli testnet", e);
     } finally {
       setLoadingChange(false);
     }
@@ -222,7 +222,9 @@ export default function TokenPage() {
                       <div className={styles.nftOwnerInfo}>
                         <p className={styles.label}>Current Owner</p>
                         <p className={styles.nftOwnerAddress}>
-                          {nft?.owner.slice(0, 8)}...{nft?.owner.slice(-4)}
+                          {nft?.owner.slice(0, 8)}...{nft?.owner.slice(-4)} {
+                            (nft?.owner === (directListing?.[0].creatorAddress)) ? ("(you)") : ("")
+                          }
                         </p>
                       </div>
                     </Link>
@@ -230,7 +232,7 @@ export default function TokenPage() {
                     <div className={styles.pricingContainer}>
                       {/* Pricing information */}
                       <div className={styles.pricingInfo}>
-                        <p className={styles.label}>Price</p>
+
                         <div className={styles.pricingValue}>
                           {loadingContract || loadingDirect ? (
                             <Skeleton width="120" height="24" />
@@ -238,12 +240,15 @@ export default function TokenPage() {
                             <>
                               {directListing && directListing[0] ? (
                                 <>
-                                  {directListing[0]?.currencyValuePerToken
-                                    .displayValue}
-                                  {" " +
-                                    directListing[0]?.currencyValuePerToken.symbol}
+                                  <div className={styles.currentprice}>
+                                    <p className={styles.label}>Current price</p>
+                                    {directListing[0]?.currencyValuePerToken
+                                      .displayValue}
+                                    {" " +
+                                      directListing[0]?.currencyValuePerToken.symbol}
+                                  </div>
                                   <div className={styles.endTime}>
-                                    <span>End on</span>
+                                    <span>Sale ends</span>
                                     <input
                                       type="datetime-local"
                                       value={datetimeLocalString}
@@ -266,33 +271,7 @@ export default function TokenPage() {
                         {chainId === 84531 ? (
                           (directListing?.[0]) && (
                             (directListing?.[0].creatorAddress === address) ? (
-                              <Web3Button
-                                contractAddress={MARKETPLACE_ADDRESS}
-                                action={() => console.log("you")}
-                                className={styles.btn}
-                                onSuccess={() => {
-                                  toast(`Purchase success!`, {
-                                    icon: "✅",
-                                    style: toastStyle,
-                                    position: "bottom-center",
-                                  });
-                                }}
-                                onError={(e) => {
-                                  (e as any).info.reason !== "user rejected transaction"
-                                    ? toast(
-                                      "Please try again. Confirm the transaction and make sure you are paying enough gas!",
-                                      {
-                                        icon: "❌",
-                                        style: toastStyle,
-                                        position: "bottom-center",
-                                      }
-                                    )
-                                    : "";
-                                }}
-                                isDisabled
-                              >
-                                you
-                              </Web3Button>
+                              ""
                             )
                               : (
                                 <Web3Button
