@@ -10,6 +10,7 @@ import { Breadcrumb } from "react-bootstrap";
 import tokenPageStyles from "../styles/Token.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 const Buy = () => {
   const { listingNFTs: data, isLoading: isLoading } = GetAllDataNFTsMarketplace();
   return (

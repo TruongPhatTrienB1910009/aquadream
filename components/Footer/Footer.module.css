@@ -37,7 +37,7 @@
 }
 
 .footerJoinNfts {
-  margin-top: 3rem;
+  margin-top: 1rem;
   font-size: 20px;
   font-weight: 500;
   color: black;
@@ -81,7 +81,7 @@
 .footerItems {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   width: 60%;
 }
 
