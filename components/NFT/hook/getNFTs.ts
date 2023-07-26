@@ -55,7 +55,7 @@ export const GetNFTs = (account: any) => {
         const res = await fetch(`https://api.covalenthq.com/v1/base-testnet/address/${account}/balances_nft/?no-spam=true&with-uncached=true`, { method: 'GET', headers: headers })
         const listNFTs = await res.json();
 
-        console.log("data1", listNFTs)
+        const arr: any = [];
         if (listNFTs.data.items.length > 0) {
           listNFTs.data.items.forEach((item: any, i: number) => {
             // console.log("item", item)
@@ -66,11 +66,10 @@ export const GetNFTs = (account: any) => {
               nft.external_data.id = nft.token_id;
               nft.metadata = nft.external_data;
               nft.contract = nft.external_data;
-              console.log("nft", nft)
-              setNftList((prev) => {
-                return [...prev, nft];
-              })
+              arr.push(nft);
             });
+
+            setNftList(arr);
           });
         } else {
           setNftList([]);
