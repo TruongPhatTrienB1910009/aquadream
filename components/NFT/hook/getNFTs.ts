@@ -60,6 +60,7 @@ export const GetNFTs = (account: any) => {
           listNFTs.data.items.forEach((item: any, i: number) => {
             // console.log("item", item)
             item.nft_data.forEach((nft: any, j: number) => {
+              nft.tokenId = nft.token_id;
               nft.owner = nft.original_owner;
               nft.external_data.address = item.contract_address;
               nft.external_data.id = nft.token_id;
@@ -117,7 +118,7 @@ export const GetAllDataNFTsMarketplace = () => {
 
 export const getABI = async (contractAddress: string) => {
   try {
-    const BASEURL = `https://api-goerli.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${process.env.NEXT_PUBLIC_API_KEY}`;
+    const BASEURL = `https://api-goerli.basescan.org/api?module=contract&action=getabi&address=${contractAddress}&apikey=${process.env.NEXT_PUBLIC_API_KEY}`;
     const response = await fetch(BASEURL);
     const result = await response.json();
     return JSON.stringify(result?.result)

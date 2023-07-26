@@ -11,6 +11,7 @@ import {
   useValidDirectListings,
   Web3Button,
   useCancelDirectListing,
+  useAddress,
 } from "@thirdweb-dev/react";
 import {
   MARKETPLACE_ADDRESS,
@@ -109,9 +110,9 @@ export default function SaleInfo({ nft }: Props) {
   const [tab, setTab] = useState<"direct" | "auction">("direct");
 
 
-  const { contract: nftCollection2 } = useContract(nft.contract.address)
-
   // User requires to set marketplace approval before listing
+
+  const address = useAddress();
   async function checkAndProvideApproval() {
     // Check if approval is required
 
@@ -125,24 +126,29 @@ export default function SaleInfo({ nft }: Props) {
       ]
       );
 
+      console.log("nft.contract.address", nft.contract.address)
       console.log("hasApproval", hasApproval)
       // If it is, provide approval
       if (!hasApproval) {
-
         console.log("nftCollection", nftCollection)
-        const txResult = await nftCollection.call("setApprovalForAll", [
-          MARKETPLACE_ADDRESS,
-          true,
-        ]
-        );
+        console.log("address", address)
+        try {
+          const txResult = await nftCollection?.call("setApprovalForAll",
+            [
+              MARKETPLACE_ADDRESS,
+              true,
+            ]
+          );
 
-        console.log("txResult", txResult)
-        if (txResult) {
-          toast.success("Marketplace approval granted", {
-            icon: "👍",
-            style: toastStyle,
-            position: "bottom-center",
-          });
+          if (txResult) {
+            toast.success("Marketplace approval granted", {
+              icon: "👍",
+              style: toastStyle,
+              position: "bottom-center",
+            });
+          }
+        } catch (error) {
+          console.log("error", error)
         }
       }
 
