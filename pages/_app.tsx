@@ -13,10 +13,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <ThirdwebProvider
         activeChain={{
-          ...NETWORK
+          ...NETWORK,
+          rpc: ["https://base-goerli.public.blastapi.io"]
         }}
-        supportedChains={[NETWORK]}>
-        {/* Progress bar when navigating between pages */}
+        supportedChains={[NETWORK]}
+      >
+
         <NextNProgress
           color="var(--color-tertiary)"
           startPosition={0.3}
@@ -25,9 +27,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           showOnShallow={true}
         />
 
-        {/* Render the navigation menu above each component */}
+
         <Navbart />
-        {/* Render the actual component (page) */}
+
         <Container maxWidth="lg">
           <Component {...pageProps} />
         </Container>

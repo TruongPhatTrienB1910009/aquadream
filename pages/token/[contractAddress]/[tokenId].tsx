@@ -77,12 +77,15 @@ export default function TokenPage() {
           const data = await contract.erc721.get(router.query.tokenId as string);
           if (data) {
             setNFT(data)
+
             // const events = await contract.events.getEvents("Transfer", {
             //   filters: {
             //     tokenId: data.metadata.id,
             //   },
             //   order: "desc",
             // });
+
+
 
             // if (events) {
             //   setTransferEvents(events);

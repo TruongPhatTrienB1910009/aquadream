@@ -2,7 +2,7 @@
   max-width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 32px;
+  gap: 12px;
   margin-top: 128px;
 }
 
@@ -31,7 +31,7 @@
   flex: 1 1 auto;
   vertical-align: inherit;
   display: flex;
-  /* max-width: 40%; */
+  width: 100%;
   padding: 6px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -50,7 +50,7 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 }
 
 .image {
@@ -63,8 +63,9 @@
 
 .imageBuy {
   border-radius: 6px;
-  width: 50% !important;
-  height: auto !important;
+  width: 360px;
+  height: 360px;
+  object-fit: cover;
   background-color: rgba(255, 255, 255, 0.04);
   margin: 0 auto;
 }
@@ -93,7 +94,7 @@
 
 .metadataContainerSell {
   padding: 10px;
-  width: 30%;
+  width: 50%;
 }
 
 .imageContainer {
