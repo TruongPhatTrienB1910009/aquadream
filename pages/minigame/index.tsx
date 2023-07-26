@@ -4,7 +4,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./minigame.module.css";
 import dynamic from "next/dynamic";
-import { MediaRenderer } from "@thirdweb-dev/react";
+import { MediaRenderer, useOwnedNFTs } from "@thirdweb-dev/react";
 
 import Skeleton from "../../components/Skeleton/Skeleton";
 
@@ -36,7 +36,7 @@ const Index = () => {
     minigameABI
   );
   const address = useAddress();
-  const startDate = new Date("July 15, 2023 14:43:00");
+  const startDate = new Date("July 26, 2023 14:43:00");
   const dateTimeAfterThreeDays = startDate;
   const [{ data, error, loading }, switchNetwork] = useNetwork();
   const chainId = useChainId();
@@ -56,6 +56,10 @@ const Index = () => {
   const [loadingClaim, setLoadingClaim] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { data: NFTs } = useOwnedNFTs(miniGameContract, address);
+
+  console.log("nfts", NFTs);
+
   const prevCountRef = useRef<number>(INITIAL_COUNT);
   // handle status
   const [status, setStatus] = useState({
@@ -72,7 +76,7 @@ const Index = () => {
         return;
       }
 
-      const result = await switchNetwork(5);
+      const result = await switchNetwork(84531);
       if (result.data) {
         console.log("Switched to Goerli testnet successfully");
       } else {
@@ -88,8 +92,8 @@ const Index = () => {
     try {
       setLoadingMint(true);
       const data = await miniGameContract?.call("mintNFT", [], {
-        gasLimit: 1000000,
-        value: ethers.utils.parseEther("0.002"),
+        gasLimit: 223900,
+        value: ethers.utils.parseEther("0.00065"),
       });
       if (data) {
         toast.success("Mint NFT Successfully", {
@@ -258,7 +262,7 @@ const Index = () => {
         <Breadcrumb.Item active>Mini Game</Breadcrumb.Item>
       </Breadcrumb>
 
-      {balanceOf > 0 && minted === 1 && chainId === 5 ? (
+      {balanceOf > 0 && minted === 1 && chainId === 84531 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
             {!dataNft || !isLoading ? (
@@ -282,7 +286,7 @@ const Index = () => {
                 />
                 <p className={styles.nftName}>{dataNft.name}</p>
                 {claim[0] > 0 && !claim[1] ? (
-                  chainId === 5 ? (
+                  chainId === 84531 ? (
                     <button
                       disabled={loadingClaim}
                       style={{ cursor: (loadingClaim && "not-allowed") || "" }}
@@ -403,8 +407,8 @@ const Index = () => {
                 Exploring the Deep Sea of BASE NFTs
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-              <p className={styles.contenta}>Prepare 0.002 ETH to mint</p>
-              {chainId === 5 ? (
+              <p className={styles.contenta}>Prepare 0.00065 ETH to mint</p>
+              {chainId === 84531 ? (
                 minted === 0 ? (
                   <button
                     onClick={() => useMintNFT()}

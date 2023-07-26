@@ -289,7 +289,7 @@ export default function TokenPage() {
                                 position: "bottom-center",
                               });
                             }}
-                            onError={(e) => {
+                            onError={(e: any) => {
                               (e as any).info.reason !==
                               "user rejected transaction"
                                 ? toast(
@@ -318,7 +318,7 @@ export default function TokenPage() {
                                 position: "bottom-center",
                               });
                             }}
-                            onError={(e) => {
+                            onError={(e: any) => {
                               console.log("(e as any).info", (e as any).info);
                               // (e as any).info.reason !== "user rejected transaction"
                               // ? toast(
