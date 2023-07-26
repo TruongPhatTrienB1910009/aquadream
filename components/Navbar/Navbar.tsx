@@ -26,9 +26,7 @@ import reward from "../../public/images/Navbar/reward-removebg-preview.png";
 export function Navbart() {
   const address = useAddress();
   const handleClick = () =>{
-    const close = document.getElementsByClassName("btn-close");
-    
-    
+    const close = document.getElementsByClassName("dropdown-menu");
     console.log('kkkk');
   }
 
@@ -94,7 +92,6 @@ export function Navbart() {
                 <Offcanvas.Body className={styles.headerCenter}>
                   <Nav className="justify-content-start flex-grow-1 pe-3">
                   <Link
-                  onClick={handleClick}
                       style={{
                         color: "black",
                         fontWeight: "550",
@@ -110,44 +107,39 @@ export function Navbart() {
                         <span>Mini Game</span>
                       </div>
                     </Link>
-                    {/* <NavDropdown
+                    <NavDropdown
                     title="Marketplace"
                     
                     className={styles.navDropdown}
                   >
+                    <div onClick={handleClick}>
+                    
                     <Link
-                      style={{
-                        color: "black",
-                        fontWeight: "550",
-                        fontSize: "20px",
-                        textDecoration: "none"
-                      }}
+                    className={styles.linkDropdown}
                       href="/buy"
                     >
-                      <div className={styles.headerLink}>
+                      <div className={styles.headerLinkDropdown}>
                         <div className={styles.headerIcon}>
                           <FontAwesomeIcon icon={faCartShopping} />
                         </div>
                         <span>Buy</span>
                       </div>
                     </Link>
+                    </div>
+                    <div>
                     <Link
-                      style={{
-                        color: "black",
-                        fontWeight: "550",
-                        fontSize: "20px",
-                        textDecoration: "none"
-                      }}
+                      className={styles.linkDropdown}
                       href="/sell"
                     >
-                      <div className={styles.headerLink}>
+                      <div className={styles.headerLinkDropdown}>
                         <div className={styles.headerIcon}>
                           <FontAwesomeIcon icon={faShop} />
                         </div>
                         <span>Sell</span>
                       </div>
                     </Link>
-                  </NavDropdown> */}
+                    </div>
+                  </NavDropdown>
                     
                     <Link
                       style={{

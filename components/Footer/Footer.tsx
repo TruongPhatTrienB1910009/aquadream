@@ -74,16 +74,13 @@ function Footer() {
               <ul className={styles.footerTittle}>
                   Marketplace
                   <li>
-                    <Link href='/buy'>Buy</Link>
+                    <Link style={{textDecoration: 'none'}} href='/buy'>Buy</Link>
                   </li>
                   <li>
-                  <Link href='/sell'>Sell</Link>
+                  <Link style={{textDecoration: 'none'}} href='/sell'>Sell</Link>
                   </li>
                   <li>
-                    <a>Art</a>
-                  </li>
-                  <li>
-                    <a>Memberships</a>
+                  <Link style={{textDecoration: 'none'}} href='/minigame'>Mini Game</Link>
                   </li>
                 </ul>
               </div>

@@ -9,6 +9,21 @@
 .navDropdown{
   font-weight: bold;
   font-size: 20px;
+  margin-right: 1rem;
+}
+.linkDropdown{
+  color: "black";
+  font-weight: 550;
+  font-size: 20px;
+  text-decoration: none;
+}
+.linkDropdown :hover{
+  background-color: #146ea2;
+}
+.navDropdown a{
+  padding: 0 !important;
+  color: black;
+  font-weight: 550;
 }
 .nav {
   display: flex;
@@ -92,7 +107,11 @@
   align-items: center;
   margin-right: 12px;
 }
-
+.headerLinkDropdown{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .headerIcon {
   display: none;
 }
