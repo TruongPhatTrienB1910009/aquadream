@@ -4,40 +4,37 @@ import ParrotImage from "../../public/images/Navbar/vetAndFire.png";
 import "react-slideshow-image/dist/styles.css";
 import { Slide } from "react-slideshow-image";
 import { Button } from "react-bootstrap";
-
 const slideImages = [
   {
     url: ParrotImage,
-    caption: "Discover Digital Art Collect and Sell your Specifice NFTs",
+    caption: "Discover Digital Art Collect and Sell your Specifice NFT\'s",
     description:
-      "Buy and sell NETs from the world&rsquo;s artists. More than 1000 premium digital artworks are aviable to be your&rsquo;s",
+      `Buy and sell NFTs from the world\'s artists. More than 1000 premium digital artworks are aviable to be your\'s`,
   },
   {
     url: ParrotImage,
     caption: "Discover Digital Art Collect and Sell your Specifice NFTs",
     description:
-      "Buy and sell NETs from the world&rsquo;s artists. More than 1000 premium digital artworks are aviable to be your&rsquo;s",
+      "Buy and sell NETs from the world&rsquo;s artists. More than 1000 premium digital artworks are aviable to be your&#34s",
   },
   {
     url: ParrotImage,
     caption: "Discover Digital Art Collect and Sell your Specifice NFTs",
     description:
-      "Buy and sell NETs from the world&rsquo;s artists. More than 1000 premium digital artworks are aviable to be your&rsquo;s",
+      "Buy and sell NETs from the world&rsquo;s artists. More than 1000 premium digital artworks are aviable to be your&#34;s",
   },
 ];
 
 export const HeaderBig = () => {
   return (
     <div style={{ position: "sticky" }}>
-      <Slide>
-        {slideImages.map((slideImage, index) => (
-          <div key={index} className={styles.headerBigContainer}>
+      <div className={styles.headerBigContainer}>
             <div className={styles.headerBig}>
               <div className={styles.headerBigText}>
-                <span>{slideImage.caption}</span>
+                <span>{slideImages[0].caption}</span>
               </div>
               <div className={styles.headerMinText}>
-                <span>{slideImage.description}</span>
+                <span>{slideImages[0].description}</span>
               </div>
               <div className={styles.headerBigButton}>
                 <Button variant="outline-success">Buy Now</Button>
@@ -48,14 +45,12 @@ export const HeaderBig = () => {
               <Image
                 width={500}
                 height={500}
-                src={slideImage.url}
+                src={slideImages[0].url}
                 className={styles.headerParrotImage}
                 alt="Parrot image"
               />
             </div>
           </div>
-        ))}
-      </Slide>
     </div>
   );
 };

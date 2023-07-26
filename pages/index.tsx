@@ -13,12 +13,12 @@ const Home: NextPage = () => {
   return (
     <>
       <HeaderBig />
-      <TopCollection />
+      {/* <TopCollection />
       <TopSeller />
-      <TopCreator />
+      <TopCreator /> */}
       <ExploreCategories />
-      <NFT101 />
-      <Community />
+      {/* <NFT101 />
+      <Community /> */}
     </>
   );
 };

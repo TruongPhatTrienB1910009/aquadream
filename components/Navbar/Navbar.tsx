@@ -25,6 +25,12 @@ import reward from "../../public/images/Navbar/reward-removebg-preview.png";
  */
 export function Navbart() {
   const address = useAddress();
+  const handleClick = () =>{
+    const close = document.getElementsByClassName("btn-close");
+    
+    
+    console.log('kkkk');
+  }
 
   return (
     <>
@@ -36,7 +42,7 @@ export function Navbart() {
             className="bg-body-tertiary"
           >
             <Container fluid>
-              <Navbar.Brand href="/">
+              <Link href="/" style={{color: "black", textDecoration: "none"}}>
                 <div
                   style={{
                     display: "flex",
@@ -54,7 +60,7 @@ export function Navbart() {
                   />
                   <span className={styles.navbarTittleNfts}>AquaDream</span>
                 </div>
-              </Navbar.Brand>
+              </Link>
               <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-sm`}
@@ -70,7 +76,7 @@ export function Navbart() {
                     }}
                   >
                     <Nav>
-                      <Nav.Link href="/">
+                      <Link href="/" style={{color: "black", textDecoration: "none"}}>
                       <FontAwesomeIcon
                         icon={faEthereum}
                         style={{
@@ -81,47 +87,19 @@ export function Navbart() {
                         }}
                       />
                       <span className={styles.navbarTittleNfts}>AquaDream</span>
-                      </Nav.Link>
+                      </Link>
                     </Nav>
                   </div>
                 </Offcanvas.Header>
                 <Offcanvas.Body className={styles.headerCenter}>
                   <Nav className="justify-content-start flex-grow-1 pe-3">
-                    <Nav.Link
+                  <Link
+                  onClick={handleClick}
                       style={{
                         color: "black",
                         fontWeight: "550",
                         fontSize: "20px",
-                      }}
-                      href="/buy"
-                    >
-                      <div className={styles.headerLink}>
-                        <div className={styles.headerIcon}>
-                          <FontAwesomeIcon icon={faCartShopping} />
-                        </div>
-                        <span>Buy</span>
-                      </div>
-                    </Nav.Link>
-                    <Nav.Link
-                      style={{
-                        color: "black",
-                        fontWeight: "550",
-                        fontSize: "20px",
-                      }}
-                      href="/sell"
-                    >
-                      <div className={styles.headerLink}>
-                        <div className={styles.headerIcon}>
-                          <FontAwesomeIcon icon={faShop} />
-                        </div>
-                        <span>Sell</span>
-                      </div>
-                    </Nav.Link>
-                    <Nav.Link
-                      style={{
-                        color: "black",
-                        fontWeight: "550",
-                        fontSize: "20px",
+                        textDecoration: "none"
                       }}
                       href="/minigame"
                     >
@@ -131,24 +109,63 @@ export function Navbart() {
                         </div>
                         <span>Mini Game</span>
                       </div>
-                    </Nav.Link>
-                    <Nav.Link
+                    </Link>
+                    {/* <NavDropdown
+                    title="Marketplace"
+                    
+                    className={styles.navDropdown}
+                  >
+                    <Link
                       style={{
                         color: "black",
                         fontWeight: "550",
                         fontSize: "20px",
+                        textDecoration: "none"
+                      }}
+                      href="/buy"
+                    >
+                      <div className={styles.headerLink}>
+                        <div className={styles.headerIcon}>
+                          <FontAwesomeIcon icon={faCartShopping} />
+                        </div>
+                        <span>Buy</span>
+                      </div>
+                    </Link>
+                    <Link
+                      style={{
+                        color: "black",
+                        fontWeight: "550",
+                        fontSize: "20px",
+                        textDecoration: "none"
+                      }}
+                      href="/sell"
+                    >
+                      <div className={styles.headerLink}>
+                        <div className={styles.headerIcon}>
+                          <FontAwesomeIcon icon={faShop} />
+                        </div>
+                        <span>Sell</span>
+                      </div>
+                    </Link>
+                  </NavDropdown> */}
+                    
+                    <Link
+                      style={{
+                        color: "black",
+                        fontWeight: "550",
+                        fontSize: "20px",
+                        textDecoration: "none"
                       }}
                       href="/"
-                      disabled
                     >
                       <div className={styles.headerLink}>
                         <div className={styles.headerIcon}>
                           <FontAwesomeIcon icon={faGamepad} />
                         </div>
-                        <span>Launchpad</span>
+                        <span>INO</span>
                         <div className={styles.headerSoon}>(SOON)</div>
                       </div>
-                    </Nav.Link>
+                    </Link>
                   </Nav>
 
                   <div className={styles.navRight}>
