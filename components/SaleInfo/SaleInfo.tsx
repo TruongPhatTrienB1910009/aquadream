@@ -1,4 +1,4 @@
-import { NFT as NFTType, ListingType, ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { NFT as NFTType, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -105,29 +105,12 @@ export default function SaleInfo({ nft }: Props) {
   // This instance is created from the contract address (NFT_COLLECTION_ADDRESS)
   // const { contract: nftCollection } = useContract(nft.assetContractAddress);
 
-  // Hook provides an async function to create a new auction listing
-  const { mutateAsync: createAuctionListing } =
-    useCreateAuctionListing(marketplace);
-
   // Hook provides an async function to create a new direct listing
   const { mutateAsync: createDirectListing } =
     useCreateDirectListing(marketplace);
 
   // Manage form submission state using tabs and conditional rendering
   const [tab, setTab] = useState<"direct" | "auction">("direct");
-
-  // Manage form values using react-hook-form library: Auction form
-  const { register: registerAuction, handleSubmit: handleSubmitAuction } =
-    useForm<AuctionFormData>({
-      defaultValues: {
-        nftContractAddress: NFT_COLLECTION_ADDRESS,
-        tokenId: nft.metadata.id,
-        startDate: new Date(),
-        endDate: new Date(),
-        floorPrice: "0",
-        buyoutPrice: "0",
-      },
-    });
 
   // User requires to set marketplace approval before listing
   async function checkAndProvideApproval() {
@@ -145,7 +128,7 @@ export default function SaleInfo({ nft }: Props) {
         MARKETPLACE_ADDRESS,
       ]);
 
-      // If it is, provide approval
+      // If it is, provide approvals
       if (!hasApproval) {
         console.log("nftCollection", nftCollection);
         const txResult = await nftCollection?.call("setApprovalForAll", [
@@ -267,14 +250,14 @@ export default function SaleInfo({ nft }: Props) {
                   action={async () => {
                     await cancelDirectListing(directListing[0].id);
                   }}
-                  onError={(error) => {
+                  onError={(error: any) => {
                     toast((error as any).info.reason, {
                       icon: "❌",
                       style: toastStyle,
                       position: "bottom-center",
                     });
                   }}
-                  onSuccess={(txResult) => {
+                  onSuccess={(txResult: any) => {
                     toast("Canceled Successfully!", {
                       icon: "🥳",
                       style: toastStyle,
@@ -338,14 +321,14 @@ export default function SaleInfo({ nft }: Props) {
                   action={async () => {
                     await handleSubmitDirect(handleSubmissionDirect)();
                   }}
-                  onError={(error) => {
+                  onError={(error: any) => {
                     toast((error as any).info.reason, {
                       icon: "❌",
                       style: toastStyle,
                       position: "bottom-center",
                     });
                   }}
-                  onSuccess={(txResult) => {
+                  onSuccess={(txResult: any) => {
                     toast("Listed Successfully!", {
                       icon: "🥳",
                       style: toastStyle,

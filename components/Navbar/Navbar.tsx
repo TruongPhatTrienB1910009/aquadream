@@ -62,10 +62,29 @@ export function Navbart() {
                 placement="end"
                 style={{ width: "75%" }}
               >
-                <Offcanvas.Header
-                  closeButton
-                  className="justify-content-end"
-                ></Offcanvas.Header>
+                <Offcanvas.Header closeButton className="justify-content-end">
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Nav>
+                      <Nav.Link href="/">
+                      <FontAwesomeIcon
+                        icon={faEthereum}
+                        style={{
+                          padding: "10px 15px 10px 15px",
+                          backgroundColor: "#c0ff3e",
+                          borderRadius: "10px",
+                          fontSize: "25px",
+                        }}
+                      />
+                      <span className={styles.navbarTittleNfts}>AquaDream</span>
+                      </Nav.Link>
+                    </Nav>
+                  </div>
+                </Offcanvas.Header>
                 <Offcanvas.Body className={styles.headerCenter}>
                   <Nav className="justify-content-start flex-grow-1 pe-3">
                     <Nav.Link

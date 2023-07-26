@@ -76,7 +76,8 @@ export const TopCollection = () => {
       <Slide
         slidesToScroll={slidesCount}
         slidesToShow={slidesCount}
-        indicators={true}
+        indicators={false}
+
       >
         {topCollections?.map((topCollection, index) => (
           <div key={index} className={styles.card}>
