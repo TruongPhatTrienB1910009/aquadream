@@ -11,7 +11,11 @@ import React from "react";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <ThirdwebProvider activeChain={NETWORK} supportedChains={[NETWORK]}>
+      <ThirdwebProvider
+        activeChain={{
+          ...NETWORK
+        }}
+        supportedChains={[NETWORK]}>
         {/* Progress bar when navigating between pages */}
         <NextNProgress
           color="var(--color-tertiary)"

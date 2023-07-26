@@ -77,16 +77,16 @@ export default function TokenPage() {
           const data = await contract.erc721.get(router.query.tokenId as string);
           if (data) {
             setNFT(data)
-            const events = await contract.events.getEvents("Transfer", {
-              filters: {
-                tokenId: data.metadata.id,
-              },
-              order: "desc",
-            });
+            // const events = await contract.events.getEvents("Transfer", {
+            //   filters: {
+            //     tokenId: data.metadata.id,
+            //   },
+            //   order: "desc",
+            // });
 
-            if (events) {
-              setTransferEvents(events);
-            }
+            // if (events) {
+            //   setTransferEvents(events);
+            // }
           }
         }
       }
@@ -263,7 +263,7 @@ export default function TokenPage() {
                       <Skeleton width="100%" height="164" />
                     ) : (
                       <>
-                        {chainId === 5 ? (
+                        {chainId === 84531 ? (
                           (directListing?.[0]) && (
                             (directListing?.[0].creatorAddress === address) ? (
                               <Web3Button
@@ -307,17 +307,16 @@ export default function TokenPage() {
                                     });
                                   }}
                                   onError={(e) => {
-                                    console.log("(e as any).info", (e as any).info)
-                                    // (e as any).info.reason !== "user rejected transaction"
-                                    // ? toast(
-                                    //   "Please try again. Confirm the transaction and make sure you are paying enough gas!",
-                                    //   {
-                                    //     icon: "❌",
-                                    //     style: toastStyle,
-                                    //     position: "bottom-center",
-                                    //   }
-                                    // )
-                                    // : "";
+                                    (e as any).info.reason !== "user rejected transaction"
+                                      ? toast(
+                                        "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                                        {
+                                          icon: "❌",
+                                          style: toastStyle,
+                                          position: "bottom-center",
+                                        }
+                                      )
+                                      : "";
                                   }}
                                 >
                                   Buy at asking price
