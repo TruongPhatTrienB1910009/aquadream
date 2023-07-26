@@ -26,7 +26,7 @@
   align-items: center;
   /* padding: 8px; */
   transition: all 0.25s ease-in-out;
-  box-shadow: 2px 4px 9px 9px rgba(0, 0, 0, 4.25);
+  box-shadow: 3px 4px 9px 9px rgba(0, 0, 0, 0.85);
   border-radius: 15px;
 }
 

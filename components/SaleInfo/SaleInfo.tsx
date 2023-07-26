@@ -1,4 +1,4 @@
-import { NFT as NFTType, ListingType, ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { NFT as NFTType, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -45,11 +45,10 @@ type DirectFormData = {
   endDate: Date;
 };
 
-
 export default function SaleInfo({ nft }: Props) {
   const router = useRouter();
-  const [cancel, setCancel] = useState<any>(false)
-  const [render, setRender] = useState(false)
+  const [cancel, setCancel] = useState<any>(false);
+  const [render, setRender] = useState(false);
   const sdk = new ThirdwebSDK(NETWORK);
   // Connect to marketplace contract
   const { contract: marketplace } = useContract(
@@ -90,17 +89,18 @@ export default function SaleInfo({ nft }: Props) {
     var datetimeLocalString;
 
     var referenceDatetime = new Date();
-    var targetDatetime = new Date(date * 1000)
+    var targetDatetime = new Date(date * 1000);
     var year = targetDatetime.getFullYear();
-    var month = (targetDatetime.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
-    var day = targetDatetime.getDate().toString().padStart(2, '0');
-    var hours = targetDatetime.getHours().toString().padStart(2, '0');
-    var minutes = targetDatetime.getMinutes().toString().padStart(2, '0');
+    var month = (targetDatetime.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+    var day = targetDatetime.getDate().toString().padStart(2, "0");
+    var hours = targetDatetime.getHours().toString().padStart(2, "0");
+    var minutes = targetDatetime.getMinutes().toString().padStart(2, "0");
 
     // Create the datetime-local format string
-    datetimeLocalString = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+    datetimeLocalString =
+      year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
     return datetimeLocalString;
-  }
+  };
 
   // Hook provides an async function to create a new direct listing
   const { mutateAsync: createDirectListing } =
@@ -115,7 +115,10 @@ export default function SaleInfo({ nft }: Props) {
     // Check if approval is required
     const abi: any = await getABI(nft.contract.address)
     if (abi) {
-      const nftCollection = await sdk.getContractFromAbi(nft.contract.address, abi);
+      const nftCollection = await sdk.getContractFromAbi(
+        nft.contract.address,
+        abi
+      );
 
       const hasApproval = await nftCollection?.call("isApprovedForAll", [
         nft.owner,
@@ -184,29 +187,30 @@ export default function SaleInfo({ nft }: Props) {
 
   useEffect(() => {
     if (cancel) {
-      (document.getElementById("endTime") as HTMLInputElement).value = '';
-      (document.getElementById("price") as HTMLInputElement).value = '0';
+      (document.getElementById("endTime") as HTMLInputElement).value = "";
+      (document.getElementById("price") as HTMLInputElement).value = "0";
       setCancel(false);
     }
 
     if (!render) {
-      setRender(true)
+      setRender(true);
     }
-  }, [cancel, render])
+  }, [cancel, render]);
 
   return (
     <>
-      {
-        (directListing?.[0]) ? (
-          <><Toaster position="bottom-center" reverseOrder={false} /><div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
+      {directListing?.[0] ? (
+        <>
+          <Toaster position="bottom-center" reverseOrder={false} />
+          <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
             {/* Direct listing fields */}
             <div
               className={`${tab === "direct"
-                ? styles.activeTabContent
-                : profileStyles.tabContent}`}
+                  ? styles.activeTabContent
+                  : profileStyles.tabContent
+                }`}
               style={{ flexDirection: "column" }}
             >
-
               <legend className={styles.legend}> Listing Starts on</legend>
               <input
                 className={styles.input}
@@ -214,8 +218,8 @@ export default function SaleInfo({ nft }: Props) {
                 {...registerDirect("startDate")}
                 aria-label="Auction Start Date"
                 value={convertDate(directListing[0].startTimeInSeconds)}
-                disabled />
-
+                disabled
+              />
 
               <legend className={styles.legend}> Listing Ends on </legend>
               <input
@@ -229,7 +233,6 @@ export default function SaleInfo({ nft }: Props) {
               />
               <h4 className={styles.formSectionTitle}>Price </h4>
 
-
               <input
                 id="price"
                 className={styles.input}
@@ -237,7 +240,8 @@ export default function SaleInfo({ nft }: Props) {
                 step={0.000001}
                 value={directListing[0].currencyValuePerToken.displayValue}
                 disabled
-                {...registerDirect("price")} />
+                {...registerDirect("price")}
+              />
 
               <div className={styles.btnContainer}>
                 <Web3Button
@@ -245,14 +249,14 @@ export default function SaleInfo({ nft }: Props) {
                   action={async () => {
                     await cancelDirectListing(directListing[0].id);
                   }}
-                  onError={(error) => {
+                  onError={(error: any) => {
                     toast((error as any).info.reason, {
                       icon: "❌",
                       style: toastStyle,
                       position: "bottom-center",
                     });
                   }}
-                  onSuccess={(txResult) => {
+                  onSuccess={(txResult: any) => {
                     toast("Canceled Successfully!", {
                       icon: "🥳",
                       style: toastStyle,
@@ -266,17 +270,20 @@ export default function SaleInfo({ nft }: Props) {
                 </Web3Button>
               </div>
             </div>
-          </div></>
-        ) : (
-          <><Toaster position="bottom-center" reverseOrder={false} /><div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
+          </div>
+        </>
+      ) : (
+        <>
+          <Toaster position="bottom-center" reverseOrder={false} />
+          <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
             {/* Direct listing fields */}
             <div
               className={`${tab === "direct"
-                ? styles.activeTabContent
-                : profileStyles.tabContent}`}
+                  ? styles.activeTabContent
+                  : profileStyles.tabContent
+                }`}
               style={{ flexDirection: "column" }}
             >
-
               <legend className={styles.legend}> Listing Starts on</legend>
               <input
                 className={styles.input}
@@ -287,7 +294,6 @@ export default function SaleInfo({ nft }: Props) {
                 disabled
               />
 
-
               <legend className={styles.legend}> Listing Ends on </legend>
               <input
                 id="endTime"
@@ -295,7 +301,8 @@ export default function SaleInfo({ nft }: Props) {
                 type="datetime-local"
                 {...registerDirect("endDate")}
                 aria-label="Auction End Date"
-                min={datetimeLocalString} />
+                min={datetimeLocalString}
+              />
               <h4 className={styles.formSectionTitle}>Price </h4>
 
               <input
@@ -304,7 +311,8 @@ export default function SaleInfo({ nft }: Props) {
                 type="number"
                 step={0.000001}
                 min={0}
-                {...registerDirect("price")} />
+                {...registerDirect("price")}
+              />
 
               <div className={styles.btnContainer}>
                 <Web3Button
@@ -312,14 +320,14 @@ export default function SaleInfo({ nft }: Props) {
                   action={async () => {
                     await handleSubmitDirect(handleSubmissionDirect)();
                   }}
-                  onError={(error) => {
+                  onError={(error: any) => {
                     toast((error as any).info.reason, {
                       icon: "❌",
                       style: toastStyle,
                       position: "bottom-center",
                     });
                   }}
-                  onSuccess={(txResult) => {
+                  onSuccess={(txResult: any) => {
                     toast("Listed Successfully!", {
                       icon: "🥳",
                       style: toastStyle,
@@ -335,9 +343,9 @@ export default function SaleInfo({ nft }: Props) {
                 </Web3Button>
               </div>
             </div>
-          </div></>
-        )
-      }
+          </div>
+        </>
+      )}
     </>
   );
 }
