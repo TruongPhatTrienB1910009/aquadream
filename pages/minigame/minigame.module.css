@@ -13,13 +13,14 @@
 }
 
 .nftContainer {
-  width: 300px;
+  width: 360px;
+  height: auto;
   margin: 8px;
   position: relative;
   overflow: hidden;
   border-radius: 8px;
   backface-visibility: hidden;
-  outline: 1px solid rgba(255, 255, 255, 0.1);
+  outline: 1px solid rgba(28, 25, 25, 0.1);
   transform: translate3d(0px, 0px, 0px);
   display: flex;
   flex-direction: column;
@@ -39,6 +40,8 @@
 .nftImage {
   width: 100% !important;
   height: auto;
+  width: 360px;
+  height: 460px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   object-fit: cover;
@@ -71,7 +74,7 @@
   line-height: 22px;
   font-weight: 700;
   margin: 0px;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   margin-top: 4px;
 }
 

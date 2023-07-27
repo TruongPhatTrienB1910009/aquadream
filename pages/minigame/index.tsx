@@ -36,8 +36,10 @@ const Index = () => {
     minigameABI
   );
   const address = useAddress();
-  const startDate = new Date("July 26, 2023 14:43:00");
+  const startDate = new Date("July 30, 2023 14:43:00");
+
   const dateTimeAfterThreeDays = startDate;
+  const [time, setTime] = useState(0);
   const [{ data, error, loading }, switchNetwork] = useNetwork();
   const chainId = useChainId();
   // read contract
@@ -58,8 +60,6 @@ const Index = () => {
 
   const { data: NFTs } = useOwnedNFTs(miniGameContract, address);
 
-  console.log("nfts", NFTs);
-
   const prevCountRef = useRef<number>(INITIAL_COUNT);
   // handle status
   const [status, setStatus] = useState({
@@ -78,14 +78,26 @@ const Index = () => {
 
       const result = await switchNetwork(84531);
       if (result.data) {
-        console.log("Switched to Goerli testnet successfully");
+        console.log("Switched to Base Goerli testnet successfully");
       } else {
-        console.log("Error switching to Goerli testnet", result.error);
+        console.log("Error switching to Base Goerli testnet", result.error);
       }
     } catch (e) {
-      console.log("Error switching to Goerli testnet", e);
+      console.log("Error switching to Base Goerli testnet", e);
     } finally {
       setLoadingChange(false);
+    }
+  };
+
+  const checkDate = async () => {
+    if (dateTimeAfterThreeDays) {
+      if (Date.now().valueOf() - dateTimeAfterThreeDays.valueOf() >= 0) {
+        setTime(1);
+      } else {
+        setTime(0);
+      }
+    } else {
+      setTime(0);
     }
   };
   const useMintNFT = async () => {
@@ -229,6 +241,7 @@ const Index = () => {
   checkBalanceOf();
   useEffect(() => {
     setDataNft(null);
+    checkDate();
     if (address !== null) {
       checkMinted();
       tokenOfOwner();
@@ -248,8 +261,8 @@ const Index = () => {
     tokenOfOwnerByIndex,
     totalMinted,
     balanceOf,
+    time,
   ]);
-  console.log("isLoading", !isLoading, tokenOfOwnerByIndex, balanceOf, minted);
 
   return (
     <>
@@ -275,21 +288,24 @@ const Index = () => {
               <div className={styles.nftContainer}>
                 <MediaRenderer
                   style={{
-                    width: "100% !important",
-                    height: "450px",
+                    width: "360px",
+                    height: "360px",
                     borderRadius: "8px",
                     background: "rgba(255, 255, 255, 0.04)",
                     objectFit: "cover",
                   }}
                   src={dataNft.image}
-                  alt="A Blue Circle"
+                  alt=""
                 />
                 <p className={styles.nftName}>{dataNft.name}</p>
                 {claim[0] > 0 && !claim[1] ? (
                   chainId === 84531 ? (
                     <button
                       disabled={loadingClaim}
-                      style={{ cursor: (loadingClaim && "not-allowed") || "" }}
+                      style={{
+                        cursor: (loadingClaim && "not-allowed") || "",
+                        width: "120px",
+                      }}
                       onClick={() => claimETH()}
                     >
                       Claim{" "}
@@ -352,12 +368,35 @@ const Index = () => {
                   className={styles.icon}
                 />
               </div> */}
-              <h1>Total minted: {totalMinted}</h1>
-              <p className={styles.heading}>
-                Exploring the Deep Sea of BASE NFTs
-              </p>
+              <h1 style={{ fontFamily: "Inter" }}>Lucky octopus</h1>
+              <div className={styles.contenta}>
+                <div
+                  style={{
+                    marginTop: "15px",
+                    display: "inline",
+                    float: "right",
+                    marginBottom: "15px",
+                    fontFamily: "Inter",
+                    fontSize: "18px",
+                  }}
+                >
+                  When you mint an NFT, you will receive a Silver NFT or a Gold
+                  NFT. If you get a silver NFT you will be able to win 0.004
+                  ETH, if you mint NFT you will be able to win 0.005 ETH and you
+                  can claim immediately to your wallet.
+                </div>
+              </div>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-
+              <div
+                style={{
+                  fontFamily: "Inter",
+                  fontSize: "18px",
+                  margin: "0px",
+                  fontWeight: "bold",
+                }}
+              >
+                Total minted: {totalMinted}
+              </div>
               <button
                 disabled={true}
                 style={{
@@ -402,30 +441,62 @@ const Index = () => {
                   className={styles.icon}
                 />
               </div>
-              <h1>Total minted: {totalMinted}</h1>
-              <p className={styles.heading}>
-                Exploring the Deep Sea of BASE NFTs
+              <h1 style={{ fontFamily: "Inter" }}>Lucky octopus</h1>
+              <p
+                className={styles.contenta}
+                style={{
+                  marginBottom: "10px",
+                  display: "inline",
+                  float: "right",
+                  fontFamily: "Inter",
+                  fontSize: "18px",
+                }}
+              >
+                When you mint an NFT, you will receive a Silver NFT or a Gold
+                NFT. If you get a silver NFT you will be able to win 0.004 ETH,
+                if you mint NFT you will be able to win 0.005 ETH and you can
+                claim immediately to your wallet.
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-              <p className={styles.contenta}>Prepare 0.00065 ETH to mint</p>
+
+              <p
+                style={{
+                  fontFamily: "Inter",
+                  fontSize: "18px",
+                  margin: "0px",
+                  fontWeight: "bold",
+                }}
+              >
+                Total minted: {totalMinted}
+              </p>
+              <p
+                className={styles.contenta}
+                style={{ fontFamily: "Inter", fontSize: "18px", margin: "0px" }}
+              >
+                Prepare 0.00065 ETH to mint
+              </p>
               {chainId === 84531 ? (
                 minted === 0 ? (
-                  <button
-                    onClick={() => useMintNFT()}
-                    disabled={loadingMint}
-                    style={{ cursor: (loadingMint && "not-allowed") || "" }}
-                  >
-                    Mint NFT{" "}
-                    {loadingMint ? (
-                      <FontAwesomeIcon
-                        icon={faSpinner}
-                        spin
-                        style={{ color: "#d0d8e7", marginLeft: "10px" }}
-                      />
-                    ) : (
-                      ``
-                    )}
-                  </button>
+                  time === 0 ? (
+                    <button
+                      onClick={() => useMintNFT()}
+                      disabled={loadingMint}
+                      style={{ cursor: (loadingMint && "not-allowed") || "" }}
+                    >
+                      Mint NFT{" "}
+                      {loadingMint ? (
+                        <FontAwesomeIcon
+                          icon={faSpinner}
+                          spin
+                          style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                        />
+                      ) : (
+                        ``
+                      )}
+                    </button>
+                  ) : (
+                    ""
+                  )
                 ) : (
                   <button
                     disabled={true}
