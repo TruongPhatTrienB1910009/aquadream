@@ -90,17 +90,17 @@ export default function TokenPage() {
           if (data) {
             setNFT(data)
 
-            // const events = await contract.events.getEvents("Transfer", {
-            //   filters: {
-            //     tokenId: data.metadata.id,
-            //   },
-            //   order: "desc",
-            // });
+            const events = await contract.events.getEvents("Transfer", {
+              filters: {
+                tokenId: data.metadata.id,
+              },
+              order: "desc",
+            });
 
 
-            // if (events) {
-            //   setTransferEvents(events);
-            // }
+            if (events) {
+              setTransferEvents(events);
+            }
           }
         }
       }
@@ -112,6 +112,7 @@ export default function TokenPage() {
       tokenContract: router.query.contractAddress as string,
       tokenId: nft?.metadata.id,
     });
+
 
 
   async function buyListing() {
@@ -171,6 +172,7 @@ export default function TokenPage() {
     datetimeLocalString =
       year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
   }
+
 
   useEffect(() => {
     GetABIForNftCollection();
@@ -237,7 +239,7 @@ export default function TokenPage() {
                         <p className={styles.label}>Current Owner</p>
                         <p className={styles.nftOwnerAddress}>
                           {nft?.owner.slice(0, 8)}...{nft?.owner.slice(-4)} {
-                            (nft?.owner === (directListing?.[0].creatorAddress)) ? ("(you)") : ("")
+                            (nft?.owner === (address)) ? ("(you)") : ("")
                           }
                         </p>
                       </div>

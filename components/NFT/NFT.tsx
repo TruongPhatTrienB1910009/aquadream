@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/display-name */
 import {
   ThirdwebNftMedia,
@@ -48,12 +49,16 @@ const NFTComponent = React.memo(
         tokenId: nft.metadata.id,
       });
 
+    console.log("nft", nft)
+
     useEffect(() => {
       getEthPrice();
     }, [])
     return (
       <>
-        <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
+        {/* <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} /> */}
+        <img src={`${nft.metadata.image}`} className={styles.nftImage} alt="" />
+        {/* <img src="" alt="" /> */}
 
         {/* <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p> */}
         <p className={styles.nftName}>{nft.metadata.name}</p>

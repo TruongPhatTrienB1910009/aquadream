@@ -10,6 +10,13 @@ const NftcollectionPage = () => {
     const router = useRouter();
     const { contract: nftContract } = useContract(router.query.contractAddressCollections as string);
     const { data, isLoading } = useNFTs(nftContract);
+    console.log("dataCollections", data?.length)
+    if (data) {
+        data.forEach((nft, index) => {
+            data[index].metadata.address = router.query.contractAddressCollections as string;
+            data[index].metadata.creatorAddress = data[index].owner;
+        })
+    }
     return (
         <>
             <Breadcrumb className={style.Breadcrumb}>

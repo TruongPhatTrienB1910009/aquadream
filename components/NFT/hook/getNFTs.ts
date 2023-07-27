@@ -101,6 +101,7 @@ export const GetAllDataNFTsMarketplace = () => {
           allListings.forEach((NFT: any, index: number) => {
             allListings[index].asset.address = allListings[index].assetContractAddress;
             allListings[index].metadata = allListings[index].asset;
+            allListings[index].metadata.creatorAddress = allListings[index].creatorAddress;
           });
           setListingNFTs(allListings);
         }
