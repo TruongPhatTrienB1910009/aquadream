@@ -55,10 +55,11 @@
 
 .image {
   border-radius: 6px;
-  width: 100% !important;
-  height: auto !important;
+  width: 360px !important;
+  height: 360px !important;
   background-color: rgba(255, 255, 255, 0.04);
   margin: 0 auto;
+  object-fit: cover;
 }
 
 .imageBuy {
@@ -93,7 +94,6 @@
 }
 
 .metadataContainerSell {
-  padding: 10px;
   width: 50%;
 }
 
@@ -107,7 +107,8 @@
 .imageContainerSell {
   position: relative;
   border: 1px solid #ccc;
-  max-width: 280px;
+  display: flex;
+  align-items: center;
   border-radius: 6px;
   height: auto;
 }
@@ -150,7 +151,7 @@
   overflow: hidden;
   max-width: 100%;
   margin: 0px;
-  margin-left: 16px;
+  /* margin-left: 16px; */
   margin-right: 16px;
   color: black;
 }
@@ -161,7 +162,7 @@
   hyphens: auto;
   overflow-wrap: break-word;
   margin-bottom: 4px;
-  margin-left: 16px;
+  /* margin-left: 16px; */
   margin-right: 16px;
 }
 
