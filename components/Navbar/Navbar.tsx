@@ -66,7 +66,7 @@ export function Navbart() {
                 placement="end"
                 style={{ width: "75%" }}
               >
-                <Offcanvas.Header closeButton className="justify-content-end">
+                <Offcanvas.Header closeButton className="justify-content-space-between">
                   <div
                     style={{
                       display: "flex",
@@ -74,7 +74,7 @@ export function Navbart() {
                     }}
                   >
                     <Nav>
-                      <Link href="/" style={{color: "black", textDecoration: "none"}}>
+                      <Link href="/" style={{color: "black", textDecoration: "none", display: "flex", alignItems: "center"}}>
                       <FontAwesomeIcon
                         icon={faEthereum}
                         style={{
@@ -107,12 +107,15 @@ export function Navbart() {
                         <span>Mini Game</span>
                       </div>
                     </Link>
+                      <div style={{display: "flex"}}>
+                      <div className={styles.headerIcon} style={{color: "black", fontSize: "22px"}}>
+                          <FontAwesomeIcon icon={faCartShopping} />
+                        </div>    
                     <NavDropdown
                     title="Marketplace"
-                    
                     className={styles.navDropdown}
-                  >
-                    <div onClick={handleClick}>
+                  >       
+                    <div>
                     
                     <Link
                     className={styles.linkDropdown}
@@ -140,6 +143,8 @@ export function Navbart() {
                     </Link>
                     </div>
                   </NavDropdown>
+                      </div>
+
                     
                     <Link
                       style={{
@@ -164,7 +169,7 @@ export function Navbart() {
                     <div className={styles.navRewards}>
                       <Image src={reward} alt="reward" width={42} height={42} />
                       <div>Rewards</div>
-                      <div className={styles.headerSoon}>(SOON)</div>
+                      <span className={styles.headerSoon}>(SOON)</span>
                     </div>
                     <div className={styles.navIconWallet}>
                       <div className={styles.navConnect}>
