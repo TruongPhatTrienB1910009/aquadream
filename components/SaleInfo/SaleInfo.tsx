@@ -49,6 +49,8 @@ export default function SaleInfo({ nft }: Props) {
   const router = useRouter();
   const [cancel, setCancel] = useState<any>(false);
   const [render, setRender] = useState(false);
+  const [usdPrice, setUsdPrice] = useState(0);
+  const [price, setPrice] = useState(0);
   const sdk = new ThirdwebSDK(NETWORK);
   // Connect to marketplace contract
   const { contract: marketplace } = useContract(
@@ -109,7 +111,29 @@ export default function SaleInfo({ nft }: Props) {
   // Manage form submission state using tabs and conditional rendering
   const [tab, setTab] = useState<"direct" | "auction">("direct");
 
-
+  //switch eth to usd
+  async function getEthPrice() {
+    try {
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+      const data = await response.json();
+      setUsdPrice(Number(data.ethereum.usd))
+      
+    } catch (error) {
+      console.error('Error fetching ETH price:', error);
+      return null;
+    }
+  }
+  function handleChange(event: any) {
+    let priceNft = Number(event.target.value);
+    if (priceNft < 0)
+      event.target.value = 0;
+    else{
+      setPrice(priceNft * usdPrice)
+    }
+  }
+  useEffect(() => {
+    getEthPrice();
+  },[])
   // User requires to set marketplace approval before listing
   async function checkAndProvideApproval() {
     // Check if approval is required
@@ -242,7 +266,7 @@ export default function SaleInfo({ nft }: Props) {
                 disabled
                 {...registerDirect("price")}
               />
-
+              
               <div className={styles.btnContainer}>
                 <Web3Button
                   contractAddress={MARKETPLACE_ADDRESS}
@@ -311,8 +335,10 @@ export default function SaleInfo({ nft }: Props) {
                 step={0.000001}
                 min={0}
                 {...registerDirect("price")}
+                onChange={handleChange}
               />
-
+              <span style={{marginLeft: '1%'}}>{"  (~$" +(price).toFixed(2) + ")"
+                  }</span>
               <div className={styles.btnContainer}>
                 <Web3Button
                   contractAddress={MARKETPLACE_ADDRESS}

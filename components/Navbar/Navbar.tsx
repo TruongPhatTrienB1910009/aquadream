@@ -8,6 +8,7 @@ import {
   faGamepad,
   faShop,
 } from "@fortawesome/free-solid-svg-icons";
+import logo from "../../public/images/logo.png";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import {
   Button,
@@ -25,10 +26,6 @@ import reward from "../../public/images/Navbar/reward-removebg-preview.png";
  */
 export function Navbart() {
   const address = useAddress();
-  const handleClick = () =>{
-    const close = document.getElementsByClassName("dropdown-menu");
-    console.log('kkkk');
-  }
 
   return (
     <>
@@ -47,15 +44,9 @@ export function Navbart() {
                     alignItems: "center",
                   }}
                 >
-                  <FontAwesomeIcon
-                    icon={faEthereum}
-                    style={{
-                      padding: "10px 15px 10px 15px",
-                      backgroundColor: "#c0ff3e",
-                      borderRadius: "10px",
-                      fontSize: "25px",
-                    }}
-                  />
+                  <Image style={{
+                    marginLeft: '10px'
+                  }} width={70} height={70} src={logo} alt="logo"/>
                   <span className={styles.navbarTittleNfts}>AquaDream</span>
                 </div>
               </Link>
@@ -120,6 +111,7 @@ export function Navbart() {
                     <Link
                     className={styles.linkDropdown}
                       href="/buy"
+                      
                     >
                       <div className={styles.headerLinkDropdown}>
                         <div className={styles.headerIcon}>

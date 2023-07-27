@@ -201,6 +201,7 @@
   .topCardItems {
     width: 49%;
     text-align: center;
+    text-decoration: none !important;
   }
   .exploreCouter {
     display: flex;
