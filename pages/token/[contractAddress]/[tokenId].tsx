@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   ConnectWallet,
@@ -169,7 +170,6 @@ export default function TokenPage() {
       year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
   }
 
-  console.log("Object.entries(nft?.metadata?.attributes || {})", Object.entries(nft?.metadata?.attributes || {}))
 
   useEffect(() => {
     GetABIForNftCollection();
@@ -183,11 +183,11 @@ export default function TokenPage() {
           <Container maxWidth="lg">
             <div className={styles.container}>
               <div className={styles.metadataContainer}>
-                <ThirdwebNftMedia
+                {/* <ThirdwebNftMedia
                   metadata={nft?.metadata}
                   className={styles.imageBuy}
-                />
-
+                /> */}
+                <img src={nft.metadata.image!} alt="" className={styles.image} />
                 <div className={styles.descriptionContainer}>
                   <h3 className={styles.descriptionTitle}>Description</h3>
                   <p className={styles.description}>

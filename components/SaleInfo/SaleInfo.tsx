@@ -206,8 +206,8 @@ export default function SaleInfo({ nft }: Props) {
             {/* Direct listing fields */}
             <div
               className={`${tab === "direct"
-                  ? styles.activeTabContent
-                  : profileStyles.tabContent
+                ? styles.activeTabContent
+                : profileStyles.tabContent
                 }`}
               style={{ flexDirection: "column" }}
             >
@@ -279,8 +279,8 @@ export default function SaleInfo({ nft }: Props) {
             {/* Direct listing fields */}
             <div
               className={`${tab === "direct"
-                  ? styles.activeTabContent
-                  : profileStyles.tabContent
+                ? styles.activeTabContent
+                : profileStyles.tabContent
                 }`}
               style={{ flexDirection: "column" }}
             >
@@ -304,7 +304,6 @@ export default function SaleInfo({ nft }: Props) {
                 min={datetimeLocalString}
               />
               <h4 className={styles.formSectionTitle}>Price </h4>
-
               <input
                 id="price"
                 className={styles.input}
