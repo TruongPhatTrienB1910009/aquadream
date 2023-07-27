@@ -40,7 +40,7 @@ const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
 export default function TokenPage() {
   const [nft, setNFT] = useState<any>();
-
+  const [usdPrice, setUsdPrice] = useState(0);
   const chainId = useChainId();
   const [{ data, error, loading }, switchNetwork] = useNetwork();
   // loading
@@ -57,13 +57,24 @@ export default function TokenPage() {
     "marketplace-v3"
   );
 
+  async function getEthPrice() {
+    try {
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+      const data = await response.json();
+      setUsdPrice(data.ethereum.usd)
+    } catch (error) {
+      console.error('Error fetching ETH price:', error);
+      return null;
+    }
+  }
+
   // Connect to NFT Collection smart contract
   const [nftCollection, setNftCollection] = useState<any>(null);
   const [transferEvents, setTransferEvents] = useState<any>([]);
 
   const GetABIForNftCollection = async () => {
     const addressContract = router.query.contractAddress as string;
-
+    await getEthPrice();
     if (addressContract) {
       const abi: any = await getABI(addressContract);
       if (abi) {
@@ -79,16 +90,16 @@ export default function TokenPage() {
           );
           if (data) {
             setNFT(data);
-            const events = await contract.events.getEvents("Transfer", {
-              filters: {
-                tokenId: data.metadata.id,
-              },
-              order: "desc",
-            });
+            // const events = await contract.events.getEvents("Transfer", {
+            //   filters: {
+            //     tokenId: data.metadata.id,
+            //   },
+            //   order: "desc",
+            // });
 
-            if (events) {
-              setTransferEvents(events);
-            }
+            // if (events) {
+            //   setTransferEvents(events);
+            // }
           }
         }
       }
@@ -158,6 +169,8 @@ export default function TokenPage() {
       year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
   }
 
+  console.log("Object.entries(nft?.metadata?.attributes || {})", Object.entries(nft?.metadata?.attributes || {}))
+
   useEffect(() => {
     GetABIForNftCollection();
   }, [router.query.contractAddress, directListing?.[0]]);
@@ -184,16 +197,23 @@ export default function TokenPage() {
                   <h3 className={styles.descriptionTitle}>Traits</h3>
 
                   <div className={styles.traitsContainer}>
-                    {Object.entries(nft?.metadata?.attributes || {}).map(
-                      ([key, value]) => (
-                        <div className={styles.traitContainer} key={key}>
-                          <p className={styles.traitName}>{key}</p>
-                          <p className={styles.traitValue}>
-                            {value?.toString() || ""}
-                          </p>
-                        </div>
+                    {
+
+                      Object.entries(nft?.metadata?.attributes || {}).map(
+                        ([key, value]: any) => (
+                          <div className={styles.traitContainer} key={key}>
+                            {/* <p className={styles.traitName}>{key}</p> */}
+                            <p className={styles.traitValue}>
+                              {value.trait_type}
+                            </p>
+                            <p className={styles.traitValue}>
+                              {value.value}
+                            </p>
+                          </div>
+                        )
                       )
-                    )}
+
+                    }
                   </div>
                 </div>
               </div>
@@ -237,7 +257,7 @@ export default function TokenPage() {
                   <div className={styles.pricingContainer}>
                     {/* Pricing information */}
                     <div className={styles.pricingInfo}>
-                      <p className={styles.label}>Price</p>
+
                       <div className={styles.pricingValue}>
                         {loadingContract || loadingDirect ? (
                           <Skeleton width="120" height="24" />
@@ -245,20 +265,25 @@ export default function TokenPage() {
                           <>
                             {directListing && directListing[0] ? (
                               <>
-                                {
-                                  directListing[0]?.currencyValuePerToken
-                                    .displayValue
-                                }
-                                {" " +
-                                  directListing[0]?.currencyValuePerToken
-                                    .symbol}
+                                <div className={styles.currentprice}>
+                                  <p className={styles.label}>Current price</p>
+                                  {
+                                    directListing[0]?.currencyValuePerToken
+                                      .displayValue
+                                  }
+                                  {" " +
+                                    directListing[0]?.currencyValuePerToken.symbol}
+                                  {"  ($" +
+                                    (Number(directListing[0]?.currencyValuePerToken.displayValue) * usdPrice).toFixed(2) + ")"
+                                  }
+                                </div>
+
                                 <div className={styles.endTime}>
-                                  <span>End on</span>
+                                  <span>Sale ends</span>
                                   <input
                                     type="datetime-local"
                                     value={datetimeLocalString}
-                                    disabled
-                                  />
+                                    disabled />
                                 </div>
                               </>
                             ) : (
@@ -274,7 +299,7 @@ export default function TokenPage() {
                     <Skeleton width="100%" height="164" />
                   ) : (
                     <>
-                      {chainId === 5 ? (
+                      {chainId === 84531 ? (
                         directListing?.[0] &&
                         (directListing?.[0].creatorAddress === address ? (
                           <Web3Button
