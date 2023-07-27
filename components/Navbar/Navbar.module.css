@@ -1,5 +1,5 @@
 .navContainer {
-  padding: 10px 0 10px 0;
+  padding: 10px 0 10px;
   width: 100%;
   top: 0px;
   left: 0px;
@@ -115,6 +115,9 @@
 }
 .headerIcon {
   display: none;
+}
+.linkDropdown :hover{
+  background-color: #ececec !important;
 }
 
 /* mobile  */

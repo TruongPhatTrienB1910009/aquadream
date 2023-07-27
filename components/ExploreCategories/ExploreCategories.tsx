@@ -1,6 +1,6 @@
 import styles from "./ExploreCategories.module.css";
 import Button from "react-bootstrap/Button";
-import imageIcon from "../../public/images/TopCollection/iconName.png";
+import imageIcon from "../../public/images/ExploreCategories/Tiger.jpg";
 import iconFish from "../../public/images/TopCollection/iconFish.png";
 import iconCat from "../../public/images/TopCollection/iconCat.png";
 import iconLinh from "../../public/images/TopCollection/iconLinh.png";
@@ -18,48 +18,48 @@ export const ExploreCategories = () => {
     {
       url: imageIcon.src,
       name: "Elon Musk",
-      time: "July 15, 2023 14:43:00",
+      time: "July 31, 2023 14:43:00",
       maxTotal: "10",
       totalSupply: "3",
       description: "Highest bid",
-      price: "2.079",
-      nameNft: "Metaverse Game",
+      price: "0",
+      nameNft: "Tiger",
       icon: iconMusk.src,
       address: "0xDcedd87033db1BCbCA98050E14D985e53F53659e"
     },
     {
       url: iconFish.src,
       name: "Putin",
-      time: "July 11, 2023 14:43:00",
+      time: "July 30, 2023 14:43:00",
       maxTotal: "7",
       totalSupply: "4",
       description: "Highest bid",
-      price: "2.079",
-      nameNft: "Metaverse Game",
+      price: "0",
+      nameNft: "Dog",
       icon: iconMask.src,
       address: "0x0f713466914F138a06cDFC361D6096e41bb4EF01"
     },
     {
       url: iconCat.src,
       name: "Biden",
-      time: "July 11, 2023 14:43:00",
+      time: "July 29, 2023 14:43:00",
       maxTotal: "200",
       totalSupply: "2",
       description: "Highest bid",
-      nameNft: "Metaverse Game",
-      price: "2.079",
+      nameNft: "Cat",
+      price: "0",
       icon: iconLinh.src,
       address: "0xB02AA3E10E5f297061e184aD52416fFa2F73bBc0"
     },
     {
       url: iconCat.src,
       name: "Biden",
-      time: "July 11, 2023 14:43:00",
+      time: "July 28, 2023 14:43:00",
       maxTotal: "200",
       totalSupply: "2",
       description: "Highest bid",
-      nameNft: "Metaverse Game",
-      price: "2.079",
+      nameNft: "Shark",
+      price: "0",
       icon: iconLinh.src,
       address: "0xB02AA3E10E5f297061e184aD52416fFa2F73bBc0"
     },
@@ -74,7 +74,7 @@ export const ExploreCategories = () => {
       </div>
       <div className={styles.topCreatorCard}>
         {exploreCategories.map((explorecategory, index) => (
-          <Link key={index} href={`/nftcollections/${explorecategory.address}`} className={styles.topCardItems}>
+          <Link style={{textDecoration: 'none'}} key={index} href={`/nftcollections/${explorecategory.address}`} className={styles.topCardItems}>
             <div>
               <Card
                 style={{

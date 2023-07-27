@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../Footer/Footer.module.css";
 import Image from "next/image";
+import logo from "../../public/images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDiscord,
@@ -28,15 +29,7 @@ function Footer() {
                   }}
                 >
                   <Link href="/" style={{ color: "black" }}>
-                    <FontAwesomeIcon
-                      icon={faEthereum}
-                      style={{
-                        padding: "15px 25px 15px 25px",
-                        backgroundColor: "#c0ff3e",
-                        borderRadius: "10px",
-                        fontSize: "40px",
-                      }}
-                    />
+                  <Image width={70} height={70} src={logo} alt="logo"/>
                   </Link>
                   <Link href="/" style={{ textDecoration: "none" }}>
                     <span className={styles.footerTittleNfts}>AquaDream</span>
