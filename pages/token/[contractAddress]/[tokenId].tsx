@@ -158,6 +158,8 @@ export default function TokenPage() {
       year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
   }
 
+  console.log("Object.entries(nft?.metadata?.attributes || {})", Object.entries(nft?.metadata?.attributes || {}))
+
   useEffect(() => {
     GetABIForNftCollection();
   }, [router.query.contractAddress, directListing?.[0]]);
@@ -184,16 +186,23 @@ export default function TokenPage() {
                   <h3 className={styles.descriptionTitle}>Traits</h3>
 
                   <div className={styles.traitsContainer}>
-                    {Object.entries(nft?.metadata?.attributes || {}).map(
-                      ([key, value]) => (
-                        <div className={styles.traitContainer} key={key}>
-                          <p className={styles.traitName}>{key}</p>
-                          <p className={styles.traitValue}>
-                            {value?.toString() || ""}
-                          </p>
-                        </div>
+                    {
+
+                      Object.entries(nft?.metadata?.attributes || {}).map(
+                        ([key, value]: any) => (
+                          <div className={styles.traitContainer} key={key}>
+                            {/* <p className={styles.traitName}>{key}</p> */}
+                            <p className={styles.traitValue}>
+                              {value.trait_type}
+                            </p>
+                            <p className={styles.traitValue}>
+                              {value.value}
+                            </p>
+                          </div>
+                        )
                       )
-                    )}
+
+                    }
                   </div>
                 </div>
               </div>
@@ -274,7 +283,7 @@ export default function TokenPage() {
                     <Skeleton width="100%" height="164" />
                   ) : (
                     <>
-                      {chainId === 5 ? (
+                      {chainId === 84531 ? (
                         directListing?.[0] &&
                         (directListing?.[0].creatorAddress === address ? (
                           <Web3Button
