@@ -79,16 +79,16 @@ export default function TokenPage() {
           );
           if (data) {
             setNFT(data);
-            const events = await contract.events.getEvents("Transfer", {
-              filters: {
-                tokenId: data.metadata.id,
-              },
-              order: "desc",
-            });
+            // const events = await contract.events.getEvents("Transfer", {
+            //   filters: {
+            //     tokenId: data.metadata.id,
+            //   },
+            //   order: "desc",
+            // });
 
-            if (events) {
-              setTransferEvents(events);
-            }
+            // if (events) {
+            //   setTransferEvents(events);
+            // }
           }
         }
       }
