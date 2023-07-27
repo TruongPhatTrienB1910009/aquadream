@@ -138,6 +138,7 @@
   }
   .exploreTextBotton {
     display: flex;
+    flex-direction: column;
     justify-content: center;
   }
   .price {
@@ -183,6 +184,7 @@
     padding: 0;
     font-size: 1rem;
     justify-content: center;
+    flex-direction: column;
   }
   .explorePrice {
     display: block;
