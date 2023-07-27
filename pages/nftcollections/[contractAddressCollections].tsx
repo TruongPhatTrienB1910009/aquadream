@@ -27,7 +27,7 @@ const NftcollectionPage = () => {
                     {" "}
                     <FontAwesomeIcon icon={faHome} /> Home
                 </Breadcrumb.Item>
-                <Breadcrumb.Item active>Buy</Breadcrumb.Item>
+                <Breadcrumb.Item active>NFT Collections</Breadcrumb.Item>
             </Breadcrumb>
             <div>
                 <NFTGrid
