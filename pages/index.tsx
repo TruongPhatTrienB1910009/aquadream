@@ -9,6 +9,7 @@ import { TopCreator } from "../components/TopCreator/TopCreator";
 import { ExploreCategories } from "../components/ExploreCategories/ExploreCategories";
 import { NFT101 } from "../components/NFT101/NFT101";
 import { Community } from "../components/Community/Community";
+import React from "react";
 const Home: NextPage = () => {
   return (
     <>

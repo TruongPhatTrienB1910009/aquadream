@@ -20,6 +20,7 @@ import {
   Offcanvas,
 } from "react-bootstrap";
 import reward from "../../public/images/Navbar/reward-removebg-preview.png";
+import React from "react";
 /**
  * Navigation bar that shows up on all pages.
  * Rendered in _app.tsx file above the page content.
@@ -37,7 +38,7 @@ export function Navbart() {
             className="bg-body-tertiary"
           >
             <Container fluid>
-              <Link href="/" style={{color: "black", textDecoration: "none"}}>
+              <Link href="/" style={{ color: "black", textDecoration: "none" }}>
                 <div
                   style={{
                     display: "flex",
@@ -46,7 +47,7 @@ export function Navbart() {
                 >
                   <Image style={{
                     marginLeft: '10px'
-                  }} width={70} height={70} src={logo} alt="logo"/>
+                  }} width={70} height={70} src={logo} alt="logo" />
                   <span className={styles.navbarTittleNfts}>AquaDream</span>
                 </div>
               </Link>
@@ -65,24 +66,24 @@ export function Navbart() {
                     }}
                   >
                     <Nav>
-                      <Link href="/" style={{color: "black", textDecoration: "none", display: "flex", alignItems: "center"}}>
-                      <FontAwesomeIcon
-                        icon={faEthereum}
-                        style={{
-                          padding: "10px 15px 10px 15px",
-                          backgroundColor: "#c0ff3e",
-                          borderRadius: "10px",
-                          fontSize: "25px",
-                        }}
-                      />
-                      <span className={styles.navbarTittleNfts}>AquaDream</span>
+                      <Link href="/" style={{ color: "black", textDecoration: "none", display: "flex", alignItems: "center" }}>
+                        <FontAwesomeIcon
+                          icon={faEthereum}
+                          style={{
+                            padding: "10px 15px 10px 15px",
+                            backgroundColor: "#c0ff3e",
+                            borderRadius: "10px",
+                            fontSize: "25px",
+                          }}
+                        />
+                        <span className={styles.navbarTittleNfts}>AquaDream</span>
                       </Link>
                     </Nav>
                   </div>
                 </Offcanvas.Header>
                 <Offcanvas.Body className={styles.headerCenter}>
                   <Nav className="justify-content-start flex-grow-1 pe-3">
-                  <Link
+                    <Link
                       style={{
                         color: "black",
                         fontWeight: "550",
@@ -98,46 +99,46 @@ export function Navbart() {
                         <span>Mini Game</span>
                       </div>
                     </Link>
-                      <div style={{display: "flex"}}>
-                      <div className={styles.headerIcon} style={{color: "black", fontSize: "22px"}}>
-                          <FontAwesomeIcon icon={faCartShopping} />
-                        </div>    
-                    <NavDropdown
-                    title="Marketplace"
-                    className={styles.navDropdown}
-                  >       
-                    <div>
-                    
-                    <Link
-                    className={styles.linkDropdown}
-                      href="/buy"
-                      
-                    >
-                      <div className={styles.headerLinkDropdown}>
-                        <div className={styles.headerIcon}>
-                          <FontAwesomeIcon icon={faCartShopping} />
-                        </div>
-                        <span>Buy</span>
+                    <div style={{ display: "flex" }}>
+                      <div className={styles.headerIcon} style={{ color: "black", fontSize: "22px" }}>
+                        <FontAwesomeIcon icon={faCartShopping} />
                       </div>
-                    </Link>
-                    </div>
-                    <div>
-                    <Link
-                      className={styles.linkDropdown}
-                      href="/sell"
-                    >
-                      <div className={styles.headerLinkDropdown}>
-                        <div className={styles.headerIcon}>
-                          <FontAwesomeIcon icon={faShop} />
-                        </div>
-                        <span>Sell</span>
-                      </div>
-                    </Link>
-                    </div>
-                  </NavDropdown>
-                      </div>
+                      <NavDropdown
+                        title="Marketplace"
+                        className={styles.navDropdown}
+                      >
+                        <div>
 
-                    
+                          <Link
+                            className={styles.linkDropdown}
+                            href="/buy"
+
+                          >
+                            <div className={styles.headerLinkDropdown}>
+                              <div className={styles.headerIcon}>
+                                <FontAwesomeIcon icon={faCartShopping} />
+                              </div>
+                              <span>Buy</span>
+                            </div>
+                          </Link>
+                        </div>
+                        <div>
+                          <Link
+                            className={styles.linkDropdown}
+                            href="/sell"
+                          >
+                            <div className={styles.headerLinkDropdown}>
+                              <div className={styles.headerIcon}>
+                                <FontAwesomeIcon icon={faShop} />
+                              </div>
+                              <span>Sell</span>
+                            </div>
+                          </Link>
+                        </div>
+                      </NavDropdown>
+                    </div>
+
+
                     <Link
                       style={{
                         color: "black",
