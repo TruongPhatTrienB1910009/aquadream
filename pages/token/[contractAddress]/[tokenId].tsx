@@ -101,6 +101,9 @@ export default function TokenPage() {
             // if (events) {
             //   setTransferEvents(events);
             // }
+
+            // const events = await contract.events.getEvents("Transfer");
+            // console.log("events", events)
           }
         }
       }
@@ -345,16 +348,16 @@ export default function TokenPage() {
                             }}
                             onError={(e: any) => {
                               console.log("(e as any).info", (e as any).info);
-                              // (e as any).info.reason !== "user rejected transaction"
-                              // ? toast(
-                              //   "Please try again. Confirm the transaction and make sure you are paying enough gas!",
-                              //   {
-                              //     icon: "❌",
-                              //     style: toastStyle,
-                              //     position: "bottom-center",
-                              //   }
-                              // )
-                              // : "";
+                              (e as any).info.reason !== "user rejected transaction"
+                                ? toast(
+                                  "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                                  {
+                                    icon: "❌",
+                                    style: toastStyle,
+                                    position: "bottom-center",
+                                  }
+                                )
+                                : "";
                             }}
                           >
                             Buy at asking price
