@@ -281,7 +281,7 @@ const Index = () => {
             {!dataNft || !isLoading ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
-                  <Skeleton key={index} width={"100%"} height="512px" />
+                  <Skeleton key={index} width={"100%"} height="412px" />
                 </div>
               ))
             ) : (
@@ -368,7 +368,7 @@ const Index = () => {
                   className={styles.icon}
                 />
               </div> */}
-              <h1 style={{ fontFamily: "Inter" }}>Lucky octopus</h1>
+              <h1>Lucky octopus</h1>
               <div className={styles.contenta}>
                 <div
                   style={{
@@ -376,7 +376,7 @@ const Index = () => {
                     display: "inline",
                     float: "right",
                     marginBottom: "15px",
-                    fontFamily: "Inter",
+
                     fontSize: "18px",
                   }}
                 >
@@ -389,8 +389,7 @@ const Index = () => {
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
               <div
                 style={{
-                  fontFamily: "Inter",
-                  fontSize: "18px",
+                  fontSize: "22px",
                   margin: "0px",
                   fontWeight: "bold",
                 }}
@@ -441,14 +440,14 @@ const Index = () => {
                   className={styles.icon}
                 />
               </div>
-              <h1 style={{ fontFamily: "Inter" }}>Lucky octopus</h1>
+              <h1>Lucky octopus</h1>
               <p
                 className={styles.contenta}
                 style={{
                   marginBottom: "10px",
                   display: "inline",
                   float: "right",
-                  fontFamily: "Inter",
+
                   fontSize: "18px",
                 }}
               >
@@ -461,8 +460,7 @@ const Index = () => {
 
               <p
                 style={{
-                  fontFamily: "Inter",
-                  fontSize: "18px",
+                  fontSize: "22px",
                   margin: "0px",
                   fontWeight: "bold",
                 }}
@@ -471,7 +469,7 @@ const Index = () => {
               </p>
               <p
                 className={styles.contenta}
-                style={{ fontFamily: "Inter", fontSize: "18px", margin: "0px" }}
+                style={{ fontSize: "18px", margin: "0px" }}
               >
                 Prepare 0.00065 ETH to mint
               </p>

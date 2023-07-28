@@ -128,7 +128,7 @@ export default function TokenPage() {
         return;
       }
 
-      const result = await switchNetwork(5);
+      const result = await switchNetwork(84531);
       if (result.data) {
         console.log("Switched to Base Goerli testnet successfully");
       } else {

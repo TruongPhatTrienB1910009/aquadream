@@ -114,12 +114,14 @@ export default function SaleInfo({ nft }: Props) {
   //switch eth to usd
   async function getEthPrice() {
     try {
-      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+      const response = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+      );
       const data = await response.json();
       setUsdPrice(Number(data.ethereum.usd))
 
     } catch (error) {
-      console.error('Error fetching ETH price:', error);
+      console.error("Error fetching ETH price:", error);
       return null;
     }
   }
@@ -137,7 +139,7 @@ export default function SaleInfo({ nft }: Props) {
   // User requires to set marketplace approval before listing
   async function checkAndProvideApproval() {
     // Check if approval is required
-    const abi: any = await getABI(nft.contract.address)
+    const abi: any = await getABI(nft.contract.address);
     if (abi) {
       const nftCollection = await sdk.getContractFromAbi(
         nft.contract.address,
@@ -147,17 +149,14 @@ export default function SaleInfo({ nft }: Props) {
       const hasApproval = await nftCollection?.call("isApprovedForAll", [
         nft.owner,
         MARKETPLACE_ADDRESS,
-      ]
-      );
+      ]);
       // If it is, provide approval
       if (!hasApproval) {
         try {
-          const txResult = await nftCollection?.call("setApprovalForAll",
-            [
-              MARKETPLACE_ADDRESS,
-              true,
-            ]
-          );
+          const txResult = await nftCollection?.call("setApprovalForAll", [
+            MARKETPLACE_ADDRESS,
+            true,
+          ]);
 
           if (txResult) {
             toast.success("Marketplace approval granted", {
@@ -167,7 +166,7 @@ export default function SaleInfo({ nft }: Props) {
             });
           }
         } catch (error) {
-          console.log("error", error)
+          console.log("error", error);
         }
       }
       return true;
@@ -229,8 +228,8 @@ export default function SaleInfo({ nft }: Props) {
             {/* Direct listing fields */}
             <div
               className={`${tab === "direct"
-                ? styles.activeTabContent
-                : profileStyles.tabContent
+                  ? styles.activeTabContent
+                  : profileStyles.tabContent
                 }`}
               style={{ flexDirection: "column" }}
             >
@@ -303,8 +302,8 @@ export default function SaleInfo({ nft }: Props) {
             {/* Direct listing fields */}
             <div
               className={`${tab === "direct"
-                ? styles.activeTabContent
-                : profileStyles.tabContent
+                  ? styles.activeTabContent
+                  : profileStyles.tabContent
                 }`}
               style={{ flexDirection: "column" }}
             >
