@@ -20,13 +20,25 @@ import {
   Offcanvas,
 } from "react-bootstrap";
 import reward from "../../public/images/Navbar/reward-removebg-preview.png";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 /**
  * Navigation bar that shows up on all pages.
  * Rendered in _app.tsx file above the page content.
  */
 export function Navbart() {
   const address = useAddress();
+  const router = useRouter()
 
+    useEffect(() => {
+        const handleRouteChange = (url: String) => {
+            if (typeof window !== undefined && window.screen.width <= 991.98) { // change the width value according to your navbar breakpoint
+                const navbar = document.getElementById("navbar-toggler");
+                if (navbar !== null && !navbar.classList.contains('collapsed')) navbar.click()
+            }
+        }
+        router.events.on('routeChangeComplete', handleRouteChange)
+    }, [router.events])
   return (
     <>
       <div className={styles.navContainer}>
@@ -50,12 +62,13 @@ export function Navbart() {
                   <span className={styles.navbarTittleNfts}>AquaDream</span>
                 </div>
               </Link>
-              <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+              <Navbar.Toggle id="navbar-toggler"  aria-controls={`offcanvasNavbar-expand-sm`} />
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-sm`}
                 aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
                 placement="end"
                 style={{ width: "75%" }}
+                
               >
                 <Offcanvas.Header closeButton className="justify-content-space-between">
                   <div
@@ -66,22 +79,15 @@ export function Navbart() {
                   >
                     <Nav>
                       <Link href="/" style={{color: "black", textDecoration: "none", display: "flex", alignItems: "center"}}>
-                      <FontAwesomeIcon
-                        icon={faEthereum}
-                        style={{
-                          padding: "10px 15px 10px 15px",
-                          backgroundColor: "#c0ff3e",
-                          borderRadius: "10px",
-                          fontSize: "25px",
-                        }}
-                      />
-                      <span className={styles.navbarTittleNfts}>AquaDream</span>
+                      <Image style={{
+                    marginLeft: '10px'
+                  }} width={70} height={70} src={logo} alt="logo"/>
                       </Link>
                     </Nav>
                   </div>
                 </Offcanvas.Header>
-                <Offcanvas.Body className={styles.headerCenter}>
-                  <Nav className="justify-content-start flex-grow-1 pe-3">
+                <Offcanvas.Body className={`${styles.headerCenter}`}>
+                  <Nav className={`justify-content-start flex-grow-1 pe-3`}>
                   <Link
                       style={{
                         color: "black",
