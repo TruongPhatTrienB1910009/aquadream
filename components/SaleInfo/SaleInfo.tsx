@@ -49,6 +49,8 @@ export default function SaleInfo({ nft }: Props) {
   const router = useRouter();
   const [cancel, setCancel] = useState<any>(false);
   const [render, setRender] = useState(false);
+  const [usdPrice, setUsdPrice] = useState(0);
+  const [price, setPrice] = useState(0);
   const sdk = new ThirdwebSDK(NETWORK);
   // Connect to marketplace contract
   const { contract: marketplace } = useContract(
@@ -109,11 +111,33 @@ export default function SaleInfo({ nft }: Props) {
   // Manage form submission state using tabs and conditional rendering
   const [tab, setTab] = useState<"direct" | "auction">("direct");
 
-
+  //switch eth to usd
+  async function getEthPrice() {
+    try {
+      const response = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+      );
+      const data = await response.json();
+      setUsdPrice(Number(data.ethereum.usd));
+    } catch (error) {
+      console.error("Error fetching ETH price:", error);
+      return null;
+    }
+  }
+  function handleChange(event: any) {
+    let priceNft = Number(event.target.value);
+    if (priceNft < 0) event.target.value = 0;
+    else {
+      setPrice(priceNft * usdPrice);
+    }
+  }
+  useEffect(() => {
+    getEthPrice();
+  }, []);
   // User requires to set marketplace approval before listing
   async function checkAndProvideApproval() {
     // Check if approval is required
-    const abi: any = await getABI(nft.contract.address)
+    const abi: any = await getABI(nft.contract.address);
     if (abi) {
       const nftCollection = await sdk.getContractFromAbi(
         nft.contract.address,
@@ -123,17 +147,14 @@ export default function SaleInfo({ nft }: Props) {
       const hasApproval = await nftCollection?.call("isApprovedForAll", [
         nft.owner,
         MARKETPLACE_ADDRESS,
-      ]
-      );
+      ]);
       // If it is, provide approval
       if (!hasApproval) {
         try {
-          const txResult = await nftCollection?.call("setApprovalForAll",
-            [
-              MARKETPLACE_ADDRESS,
-              true,
-            ]
-          );
+          const txResult = await nftCollection?.call("setApprovalForAll", [
+            MARKETPLACE_ADDRESS,
+            true,
+          ]);
 
           if (txResult) {
             toast.success("Marketplace approval granted", {
@@ -143,7 +164,7 @@ export default function SaleInfo({ nft }: Props) {
             });
           }
         } catch (error) {
-          console.log("error", error)
+          console.log("error", error);
         }
       }
       return true;
@@ -205,10 +226,11 @@ export default function SaleInfo({ nft }: Props) {
           <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
             {/* Direct listing fields */}
             <div
-              className={`${tab === "direct"
+              className={`${
+                tab === "direct"
                   ? styles.activeTabContent
                   : profileStyles.tabContent
-                }`}
+              }`}
               style={{ flexDirection: "column" }}
             >
               <legend className={styles.legend}> Listing Starts on</legend>
@@ -278,10 +300,11 @@ export default function SaleInfo({ nft }: Props) {
           <div className={styles.saleInfoContainer} style={{ marginTop: -42 }}>
             {/* Direct listing fields */}
             <div
-              className={`${tab === "direct"
+              className={`${
+                tab === "direct"
                   ? styles.activeTabContent
                   : profileStyles.tabContent
-                }`}
+              }`}
               style={{ flexDirection: "column" }}
             >
               <legend className={styles.legend}> Listing Starts on</legend>
@@ -304,7 +327,6 @@ export default function SaleInfo({ nft }: Props) {
                 min={datetimeLocalString}
               />
               <h4 className={styles.formSectionTitle}>Price </h4>
-
               <input
                 id="price"
                 className={styles.input}
@@ -312,8 +334,11 @@ export default function SaleInfo({ nft }: Props) {
                 step={0.000001}
                 min={0}
                 {...registerDirect("price")}
+                onChange={handleChange}
               />
-
+              <span style={{ marginLeft: "1%" }}>
+                {"  (~$" + price.toFixed(2) + ")"}
+              </span>
               <div className={styles.btnContainer}>
                 <Web3Button
                   contractAddress={MARKETPLACE_ADDRESS}

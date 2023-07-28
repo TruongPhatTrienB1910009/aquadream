@@ -8,7 +8,7 @@
 }
 
 .nftContainer {
-  width: 32%;
+  width: 32.32%;
   margin: 2px;
   margin-bottom: 20px;
   position: relative;
@@ -42,21 +42,21 @@
 
 @media (min-width: 1200px) {}
 
-@media (min-width: 760px) and (max-width: 1200px) {
+/* @media (min-width: 760px) and (max-width: 1200px) {
   .nftContainer {
     width: 30%;
   }
-}
+} */
 
-@media (min-width: 600px) and (max-width: 760px) {
+@media (min-width: 600px) and (max-width: 1040px) {
   .nftContainer {
-    width: 46%;
+    width: 48.5%;
   }
 }
 
 /* Less than 600 */
 @media (max-width: 600px) {
   .nftContainer {
-    width: 98%;
+    width: 99%;
   }
 }

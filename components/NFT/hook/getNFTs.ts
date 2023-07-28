@@ -17,7 +17,7 @@ export const GetNFTs = (account: any) => {
   const [isLoadingNFTs, setIsLoadingNFTs] = useState(false);
   // console.log("process.env.MYKEY", process.env.MY_KEY as string)
   let headers = new Headers();
-  headers.set('Authorization', `Bearer cqt_rQ46yWprphHwWQX7YMXmpHYC7cDB`)
+  headers.set("Authorization", `Bearer cqt_rQ46yWprphHwWQX7YMXmpHYC7cDB`);
 
   useEffect(() => {
     // const getNFTs = async () => {
@@ -52,7 +52,10 @@ export const GetNFTs = (account: any) => {
     const getNFTs = async () => {
       try {
         setIsLoadingNFTs(true);
-        const res = await fetch(`https://api.covalenthq.com/v1/base-testnet/address/${account}/balances_nft/?no-spam=true&with-uncached=true`, { method: 'GET', headers: headers })
+        const res = await fetch(
+          `https://api.covalenthq.com/v1/base-testnet/address/${account}/balances_nft/?no-spam=true&with-uncached=true`,
+          { method: "GET", headers: headers }
+        );
         const listNFTs = await res.json();
 
         const arr: any = [];
@@ -75,11 +78,11 @@ export const GetNFTs = (account: any) => {
           setNftList([]);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       } finally {
         setIsLoadingNFTs(false);
       }
-    }
+    };
     getNFTs();
   }, [account]);
 
@@ -99,9 +102,11 @@ export const GetAllDataNFTsMarketplace = () => {
 
         if (allListings.length > 0) {
           allListings.forEach((NFT: any, index: number) => {
-            allListings[index].asset.address = allListings[index].assetContractAddress;
+            allListings[index].asset.address =
+              allListings[index].assetContractAddress;
             allListings[index].metadata = allListings[index].asset;
-            allListings[index].metadata.creatorAddress = allListings[index].creatorAddress;
+            allListings[index].metadata.creatorAddress =
+              allListings[index].creatorAddress;
           });
           setListingNFTs(allListings);
         }
