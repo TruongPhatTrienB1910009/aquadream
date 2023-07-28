@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   ConnectWallet,
@@ -184,9 +185,10 @@ export default function TokenPage() {
             <Toaster position="bottom-center" reverseOrder={false} /><Container maxWidth="lg">
               <div className={styles.container}>
                 <div className={styles.metadataContainer}>
-                  <ThirdwebNftMedia
+                  {/* <ThirdwebNftMedia
                     metadata={nft?.metadata}
-                    className={styles.imageBuy} />
+                    className={styles.imageBuy} /> */}
+                  <img src={nft?.metadata.image} className={styles.imageBuy} alt="" />
 
                   <div className={styles.descriptionContainer}>
                     <h3 className={styles.descriptionTitle}>Description</h3>
@@ -237,7 +239,7 @@ export default function TokenPage() {
                         <p className={styles.label}>Current Owner</p>
                         <p className={styles.nftOwnerAddress}>
                           {nft?.owner.slice(0, 8)}...{nft?.owner.slice(-4)} {
-                            (nft?.owner === (directListing?.[0].creatorAddress)) ? ("(you)") : ("")
+                            (nft?.owner === (address)) ? ("(you)") : ("")
                           }
                         </p>
                       </div>
