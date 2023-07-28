@@ -161,6 +161,7 @@ export function Navbart() {
                         textDecoration: "none"
                       }}
                       href="/"
+                      onClick={(e)=> {e.preventDefault()}}
                     >
                       <div className={styles.headerLink}>
                         <div className={styles.headerIcon}>
