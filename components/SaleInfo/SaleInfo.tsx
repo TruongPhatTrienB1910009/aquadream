@@ -16,7 +16,6 @@ import {
 import {
   MARKETPLACE_ADDRESS,
   NETWORK,
-  NFT_COLLECTION_ADDRESS,
 } from "../../const/contractAddresses";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
@@ -50,7 +49,7 @@ export default function SaleInfo({ nft }: Props) {
   const [cancel, setCancel] = useState<any>(false);
   const [render, setRender] = useState(false);
   const [usdPrice, setUsdPrice] = useState(0);
-  
+
   const [price, setPrice] = useState(0);
   const sdk = new ThirdwebSDK(NETWORK);
   // Connect to marketplace contract
@@ -118,7 +117,7 @@ export default function SaleInfo({ nft }: Props) {
       const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
       const data = await response.json();
       setUsdPrice(Number(data.ethereum.usd))
-      
+
     } catch (error) {
       console.error('Error fetching ETH price:', error);
       return null;
@@ -128,13 +127,13 @@ export default function SaleInfo({ nft }: Props) {
     let priceNft = Number(event.target.value);
     if (priceNft < 0)
       event.target.value = 0;
-    else{
+    else {
       setPrice(priceNft * usdPrice)
     }
   }
   useEffect(() => {
     getEthPrice();
-  },[])
+  }, [])
   // User requires to set marketplace approval before listing
   async function checkAndProvideApproval() {
     // Check if approval is required
@@ -266,8 +265,8 @@ export default function SaleInfo({ nft }: Props) {
                 disabled
                 {...registerDirect("price")}
               />
-              <span style={{marginLeft: '1%'}}>{"  (~$" +(Number(directListing[0].currencyValuePerToken.displayValue) * usdPrice).toFixed(2) + ")"
-                  }</span>
+              <span style={{ marginLeft: '1%' }}>{"  (~$" + (Number(directListing[0].currencyValuePerToken.displayValue) * usdPrice).toFixed(2) + ")"
+              }</span>
               <div className={styles.btnContainer}>
                 <Web3Button
                   contractAddress={MARKETPLACE_ADDRESS}
@@ -338,8 +337,8 @@ export default function SaleInfo({ nft }: Props) {
                 {...registerDirect("price")}
                 onChange={handleChange}
               />
-              <span style={{marginLeft: '1%'}}>{"  (~$" +(price).toFixed(2) + ")"
-                  }</span>
+              <span style={{ marginLeft: '1%' }}>{"  (~$" + (price).toFixed(2) + ")"
+              }</span>
               <div className={styles.btnContainer}>
                 <Web3Button
                   contractAddress={MARKETPLACE_ADDRESS}
