@@ -7,13 +7,13 @@ export const NETWORK = BaseGoerli;
 
 // 2. The address of the marketplace V3 smart contract.
 // Deploy your own: https://thirdweb.com/thirdweb.eth/MarketplaceV3
-export const MARKETPLACE_ADDRESS = "0x805D1391C065fBA9EC5893a965524b3102fFA998";
+export const MARKETPLACE_ADDRESS = "0x7aE5279829ad32Ca7DfF15668550De10Eee98B70";
 
 // 3. The address of your NFT collection smart contract.
 export const NFT_COLLECTION_ADDRESS =
-  "0xc83Bfc1a2998cc5D5Cee227E69B4b699B75F21B5";
+  "0xBE65A02e408284e60f54882DB17E81Db204415c9";
 
-export const MINI_GAME_ADDRESS = "0x10848DD46B3a28b7BAe153f2DbdE8c06b67D20B7";
+export const MINI_GAME_ADDRESS = "0xBE65A02e408284e60f54882DB17E81Db204415c9";
 
 // (Optional) Set up the URL of where users can view transactions on
 // For example, below, we use Mumbai.polygonscan to view transactions on the Mumbai testnet.
