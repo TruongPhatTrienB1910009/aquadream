@@ -455,5 +455,10 @@
 @media (max-width: 390px) {
   .metadataContainer {
     width: 100%;
+    overflow: hidden;
+  }
+
+  .image {
+    width: 100% !important;
   }
 }

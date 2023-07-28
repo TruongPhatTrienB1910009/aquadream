@@ -176,6 +176,7 @@ export default function TokenPage() {
 
   useEffect(() => {
     GetABIForNftCollection();
+    getEthPrice();
   }, [router.query.contractAddress, directListing?.[0]]);
 
   return (

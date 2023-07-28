@@ -50,6 +50,7 @@ export default function SaleInfo({ nft }: Props) {
   const [cancel, setCancel] = useState<any>(false);
   const [render, setRender] = useState(false);
   const [usdPrice, setUsdPrice] = useState(0);
+  
   const [price, setPrice] = useState(0);
   const sdk = new ThirdwebSDK(NETWORK);
   // Connect to marketplace contract
@@ -220,7 +221,6 @@ export default function SaleInfo({ nft }: Props) {
       setRender(true);
     }
   }, [cancel, render]);
-
   return (
     <>
       {directListing?.[0] ? (
@@ -266,7 +266,8 @@ export default function SaleInfo({ nft }: Props) {
                 disabled
                 {...registerDirect("price")}
               />
-              
+              <span style={{marginLeft: '1%'}}>{"  (~$" +(Number(directListing[0].currencyValuePerToken.displayValue) * usdPrice).toFixed(2) + ")"
+                  }</span>
               <div className={styles.btnContainer}>
                 <Web3Button
                   contractAddress={MARKETPLACE_ADDRESS}

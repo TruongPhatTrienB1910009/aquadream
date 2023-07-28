@@ -29,13 +29,17 @@ import { useRouter } from "next/router";
 export function Navbart() {
   const address = useAddress();
   const router = useRouter()
-
+  const [showDropdown, setShowDropdown] = useState(false);
   useEffect(() => {
     const handleRouteChange = (url: String) => {
       if (typeof window !== undefined && window.screen.width <= 991.98) { // change the width value according to your navbar breakpoint
         const navbar = document.getElementById("navbar-toggler");
-        if (navbar !== null && !navbar.classList.contains('collapsed')) navbar.click()
-      }
+        if (navbar !== null && !navbar.classList.contains('collapsed')) navbar.click();
+        setShowDropdown(false);
+      } else
+        if (typeof window !== undefined && window.screen.width > 991.98) {
+          setShowDropdown(false);
+        }
     }
     router.events.on('routeChangeComplete', handleRouteChange)
   }, [router.events])
@@ -111,6 +115,11 @@ export function Navbart() {
                       <NavDropdown
                         title="Marketplace"
                         className={styles.navDropdown}
+                        show={showDropdown}
+                        onMouseLeave={() => setShowDropdown(false)}
+                        onMouseOver={() => setShowDropdown(true)}
+                        onClick={() => setShowDropdown(!showDropdown)}
+                        id="dropdown-toggler"
                       >
                         <div>
 
