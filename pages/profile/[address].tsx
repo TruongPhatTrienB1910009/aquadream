@@ -93,7 +93,7 @@ export default function ProfilePage() {
           )}
         </h1>
       </div>
-      <div className={styles.tabsReact}>
+      <div>
         <Tabs
           defaultActiveKey="NFTs"
           id="noanim-tab-example"
@@ -106,7 +106,7 @@ export default function ProfilePage() {
               emptyText="Looks like you don't have any NFTs from this collection. Head to the buy page to buy some!"
             />
           </Tab>
-          <Tab eventKey="Listings" title="Listings" className={styles.tabColor}>
+          <Tab eventKey="Listings" title="Listings">
             {/* <div className={styles.nftGridContainer}> */}
             {loadingDirects ? (
               <p>Loading...</p>
