@@ -40,7 +40,7 @@ const [randomColor1, randomColor2] = [randomColor(), randomColor()];
 
 export default function TokenPage() {
   const [nft, setNFT] = useState<any>();
-
+  const [usdPrice, setUsdPrice] = useState(0);
   const chainId = useChainId();
   const [{ data, error, loading }, switchNetwork] = useNetwork();
   // loading
@@ -57,13 +57,25 @@ export default function TokenPage() {
     "marketplace-v3"
   );
 
+
+  async function getEthPrice() {
+    try {
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+      const data = await response.json();
+      setUsdPrice(data.ethereum.usd)
+    } catch (error) {
+      console.error('Error fetching ETH price:', error);
+      return null;
+    }
+  }
+
   // Connect to NFT Collection smart contract
   const [nftCollection, setNftCollection] = useState<any>(null);
   const [transferEvents, setTransferEvents] = useState<any>([]);
 
   const GetABIForNftCollection = async () => {
     const addressContract = router.query.contractAddress as string;
-
+    await getEthPrice();
     if (addressContract) {
       const abi: any = await getABI(addressContract);
       if (abi) {
@@ -84,7 +96,6 @@ export default function TokenPage() {
             //   },
             //   order: "desc",
             // });
-
 
 
             // if (events) {
@@ -245,11 +256,17 @@ export default function TokenPage() {
                                 <>
                                   <div className={styles.currentprice}>
                                     <p className={styles.label}>Current price</p>
-                                    {directListing[0]?.currencyValuePerToken
-                                      .displayValue}
+                                    {
+                                      directListing[0]?.currencyValuePerToken
+                                        .displayValue
+                                    }
                                     {" " +
                                       directListing[0]?.currencyValuePerToken.symbol}
+                                    {"  ($" +
+                                      (Number(directListing[0]?.currencyValuePerToken.displayValue) * usdPrice).toFixed(2) + ")"
+                                    }
                                   </div>
+
                                   <div className={styles.endTime}>
                                     <span>Sale ends</span>
                                     <input
