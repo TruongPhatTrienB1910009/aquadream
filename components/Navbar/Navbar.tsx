@@ -38,9 +38,7 @@ export function Navbart() {
                 setShowDropdown(false);
             }else
             if (typeof window !== undefined && window.screen.width > 991.98){
-              const dropdown = document.getElementById("dropdown-toggler");
-              console.log(dropdown);
-              if (dropdown !== null) dropdown.click();
+              setShowDropdown(false);
             }
         }
         router.events.on('routeChangeComplete', handleRouteChange)
@@ -120,7 +118,7 @@ export function Navbart() {
                     show={showDropdown}
                     onMouseLeave={() => setShowDropdown(false)}
                     onMouseOver={() => setShowDropdown(true)}
-                   
+                    onClick={() => setShowDropdown(!showDropdown)}
                     id="dropdown-toggler"
                   >       
                     <div>
