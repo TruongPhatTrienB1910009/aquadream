@@ -164,4 +164,16 @@
 }
 
 
-@media (max-width: 390px) {}
+@media (max-width: 550px) {
+  .footerRow{
+    flex-direction: column;
+  }
+  .footerItemsIcon{
+    justify-content: start;
+    margin-left: 2rem;
+    width: auto;
+  }
+  .footerItems{
+    justify-content: start;
+  }
+}
