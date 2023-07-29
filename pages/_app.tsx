@@ -8,6 +8,7 @@ import "../styles/globals.css";
 import Container from "../components/Container/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
+import { useLocation } from "react-router-dom";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>

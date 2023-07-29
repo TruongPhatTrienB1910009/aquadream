@@ -16,16 +16,28 @@ import {
   Nav,
   NavDropdown,
   Navbar,
+  NavbarBrand,
   Offcanvas,
 } from "react-bootstrap";
 import reward from "../../public/images/Navbar/reward-removebg-preview.png";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useRouter } from "next/router";
 /**
  * Navigation bar that shows up on all pages.
  * Rendered in _app.tsx file above the page content.
  */
 export function Navbart() {
   const address = useAddress();
-
+  const handleOnClick = () => {
+    const element = document.getElementById("offcanvasNavbar-expand-sm");
+    const element1 = document.querySelector(".fade");
+    if (element) {
+      element.classList.remove("show");
+    } else console.log("handle not onclik");
+    console.log(element1);
+  };
+  const [expanded, setExpanded] = useState(false);
   return (
     <>
       <div className={styles.navContainer}>
@@ -36,7 +48,7 @@ export function Navbart() {
             className="bg-body-tertiary"
           >
             <Container fluid>
-              <Navbar.Brand href="/">
+              <Link href="/" style={{ color: "black", textDecoration: "none" }}>
                 <div
                   style={{
                     display: "flex",
@@ -54,15 +66,20 @@ export function Navbart() {
                   />
                   <span className={styles.navbarTittleNfts}>AquaDream</span>
                 </div>
-              </Navbar.Brand>
-              <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+              </Link>
+              <Navbar.Toggle
+                aria-controls={`offcanvasNavbar-expand-sm`}
+              />
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-sm`}
                 aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
                 placement="end"
                 style={{ width: "75%" }}
               >
-                <Offcanvas.Header closeButton className="justify-content-end">
+                <Offcanvas.Header
+                  closeButton={true}
+                  className="justify-content-space-beetween"
+                >
                   <div
                     style={{
                       display: "flex",
@@ -70,28 +87,39 @@ export function Navbart() {
                     }}
                   >
                     <Nav>
-                      <Nav.Link href="/">
-                      <FontAwesomeIcon
-                        icon={faEthereum}
-                        style={{
-                          padding: "10px 15px 10px 15px",
-                          backgroundColor: "#c0ff3e",
-                          borderRadius: "10px",
-                          fontSize: "25px",
-                        }}
-                      />
-                      <span className={styles.navbarTittleNfts}>AquaDream</span>
-                      </Nav.Link>
+                      <Link
+                        href="/"
+                        onClick={handleOnClick}
+                        className={styles.iconmobile}
+                      >
+                        <FontAwesomeIcon
+                          icon={faEthereum}
+                          style={{
+                            padding: "10px 15px 10px 15px",
+                            backgroundColor: "#c0ff3e",
+                            borderRadius: "10px",
+                            fontSize: "25px",
+                          }}
+                        />
+                        <span className={styles.navbarTittleNfts}>
+                          AquaDream
+                        </span>
+                      </Link>
                     </Nav>
                   </div>
                 </Offcanvas.Header>
                 <Offcanvas.Body className={styles.headerCenter}>
                   <Nav className="justify-content-start flex-grow-1 pe-3">
-                    <Nav.Link
+                    <Nav.Link as={Link} href="/">
+                      Profile
+                    </Nav.Link>
+                    <Link
+                      onClick={handleOnClick}
                       style={{
                         color: "black",
                         fontWeight: "550",
                         fontSize: "20px",
+                        textDecoration: "none",
                       }}
                       href="/buy"
                     >
@@ -101,12 +129,14 @@ export function Navbart() {
                         </div>
                         <span>Buy</span>
                       </div>
-                    </Nav.Link>
-                    <Nav.Link
+                    </Link>
+                    <Link
+                      onClick={handleOnClick}
                       style={{
                         color: "black",
                         fontWeight: "550",
                         fontSize: "20px",
+                        textDecoration: "none",
                       }}
                       href="/sell"
                     >
@@ -116,12 +146,14 @@ export function Navbart() {
                         </div>
                         <span>Sell</span>
                       </div>
-                    </Nav.Link>
-                    <Nav.Link
+                    </Link>
+                    <Link
+                      onClick={handleOnClick}
                       style={{
                         color: "black",
                         fontWeight: "550",
                         fontSize: "20px",
+                        textDecoration: "none",
                       }}
                       href="/minigame"
                     >
@@ -131,15 +163,16 @@ export function Navbart() {
                         </div>
                         <span>Mini Game</span>
                       </div>
-                    </Nav.Link>
-                    <Nav.Link
+                    </Link>
+                    <Link
+                      onClick={handleOnClick}
                       style={{
                         color: "black",
                         fontWeight: "550",
                         fontSize: "20px",
+                        textDecoration: "none",
                       }}
                       href="/"
-                      disabled
                     >
                       <div className={styles.headerLink}>
                         <div className={styles.headerIcon}>
@@ -148,7 +181,7 @@ export function Navbart() {
                         <span>Launchpad</span>
                         <div className={styles.headerSoon}>(SOON)</div>
                       </div>
-                    </Nav.Link>
+                    </Link>
                   </Nav>
 
                   <div className={styles.navRight}>
@@ -168,6 +201,7 @@ export function Navbart() {
 
                       {address ? (
                         <Link
+                          onClick={handleOnClick}
                           className={styles.link}
                           href={`/profile/${address}`}
                         >

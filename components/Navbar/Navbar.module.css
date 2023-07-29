@@ -160,9 +160,15 @@
 .navConnect{
   margin-right: 5%;
 }
-@media (max-width: 1290px){
+.iconmobile{
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+@media (max-width: 1200px){
   .navRight{
     float: left;
+    display: block;
   }
   .headerIcon {
     display: block;
@@ -172,12 +178,15 @@
   .headerLink{
     margin-bottom: 0.5rem;
   }
+  .navRewards{
+   justify-content: start; 
+  }
 }
 @media (max-width: 920px) {
   .navLeft {
     margin-left: 0;
   }
-
+  
   .navMiddle {
     margin-left: 1rem;
   }

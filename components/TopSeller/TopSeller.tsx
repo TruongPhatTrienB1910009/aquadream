@@ -56,10 +56,10 @@ export const TopSeller = () => {
       tittle: "Discover Digital Art Collect",
       id: "iamge3",
       information: {
-        hightestSale: "484.3",
-        floorPrice: "449.3",
+        hightestSale: "584.3",
+        floorPrice: "549.3",
         marketCap: "87",
-        items: "7.7",
+        items: "9.7",
         owners: "5.2",
         totalValue: "784",
       },
@@ -110,7 +110,7 @@ export const TopSeller = () => {
       <Row className={styles.rowsContainer}>
         <Col sm={7} className={styles.imagecontainer}>
           <Swiper
-            onBeforeSlideChangeStart={() => handleClick()}
+            onSliderMove={() => handleClick()}
             id="myElement"
             effect={"coverflow"}
             grabCursor={true}
