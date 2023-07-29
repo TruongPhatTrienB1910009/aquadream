@@ -81,8 +81,8 @@
 .footerItems {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  width: 15%;
+  justify-content: end;
+  width: 60%;
 }
 .footerTittle span{
   color: #ff9933;

@@ -17,9 +17,9 @@ function Footer() {
   return (
     <>
       <footer className={styles.footerContainer}>
-        <hr />
+        {/* <hr /> */}
         <div className={styles.footerWidget}>
-          <div className={styles.footerRow}>
+          {/* <div className={styles.footerRow}>
             <div className={styles.footerItemsIcon}>
               <div className={styles.footer}>
                 <div
@@ -76,28 +76,9 @@ function Footer() {
                 </div>
               </div>
             </div>
-            <div className={styles.footerItems}>
-              <div className={styles.footerWidget}>
-                <div className={styles.footerTittle}>MiniGame</div>
-              </div>
-            </div>
-            <div className={styles.footerItems}>
-              <div className={styles.footerWidget}>
-                <div className={styles.footerTittle}>
-                  IDO<span> (SOON)</span>
-                </div>
-              </div>
-            </div>
-            <div className={styles.footerItems}>
-              <div className={styles.footerWidget}>
-                <div className={styles.footerTittle}>
-                  Rewards<span> (SOON)</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          </div> */}
           <div className={styles.copyright}>
-            <span>&copy; 2022 NFTs @All Rights Reserved</span>
+            <span>&copy; 2023. Aquadream. All Rights Reserved.</span>
           </div>
         </div>
       </footer>
