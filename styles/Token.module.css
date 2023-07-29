@@ -55,8 +55,8 @@
 
 .image {
   border-radius: 6px;
-  width: 360px !important;
-  height: 360px !important;
+  width: 360px;
+  height: 360px;
   background-color: rgba(255, 255, 255, 0.04);
   margin: 0 auto;
   object-fit: cover;
@@ -64,12 +64,11 @@
 
 .imageBuy {
   border-radius: 6px;
-  width: 360px !important;
-  height: 360px !important;
+  width: 360px;
+  height: 360px;
   object-fit: cover;
   background-color: rgba(255, 255, 255, 0.04);
   margin: 0 auto;
-  object-fit: cover;
 }
 
 .input {
