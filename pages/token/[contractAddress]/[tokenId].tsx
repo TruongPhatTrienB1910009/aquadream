@@ -230,6 +230,7 @@ export default function TokenPage() {
                       <MediaRenderer
                         src={nft?.metadata.image}
                         className={styles.collectionImage} />
+
                       <p className={styles.collectionName}>{nft?.metadata.name}</p>
                     </div>
 
