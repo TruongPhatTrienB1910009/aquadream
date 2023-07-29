@@ -16,7 +16,7 @@ import Link from "next/link";
 export const ExploreCategories = () => {
   const exploreCategories = [
     {
-      url: imageIcon.src,
+      url: iconMask.src,
       name: "Elon Musk",
       time: "July 31, 2023 14:43:00",
       maxTotal: "10",

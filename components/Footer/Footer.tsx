@@ -29,10 +29,7 @@ function Footer() {
                   }}
                 >
                   <Link href="/" style={{ color: "black" }}>
-                  <Image width={70} height={70} src={logo} alt="logo"/>
-                  </Link>
-                  <Link href="/" style={{ textDecoration: "none" }}>
-                    <span className={styles.footerTittleNfts}>AquaDream</span>
+                    <Image width={80} height={80} src={logo} alt="logo" />
                   </Link>
                 </div>
                 <div className={styles.footerJoinNfts}>Join NFTs Community</div>
@@ -62,20 +59,40 @@ function Footer() {
                 </div>
               </div>
             </div>
-            <div className={styles.footerItems}>            
+            <div className={styles.footerItems}>
               <div className={styles.footerWidget}>
-              <ul className={styles.footerTittle}>
+                <div className={styles.footerTittle}>
                   Marketplace
                   <li>
-                    <Link style={{textDecoration: 'none'}} href='/buy'>Buy</Link>
+                    <Link style={{ textDecoration: "none" }} href="/buy">
+                      Buy
+                    </Link>
                   </li>
                   <li>
-                  <Link style={{textDecoration: 'none'}} href='/sell'>Sell</Link>
+                    <Link style={{ textDecoration: "none" }} href="/sell">
+                      Sell
+                    </Link>
                   </li>
-                  <li>
-                  <Link style={{textDecoration: 'none'}} href='/minigame'>Mini Game</Link>
-                  </li>
-                </ul>
+                </div>
+              </div>
+            </div>
+            <div className={styles.footerItems}>
+              <div className={styles.footerWidget}>
+                <div className={styles.footerTittle}>MiniGame</div>
+              </div>
+            </div>
+            <div className={styles.footerItems}>
+              <div className={styles.footerWidget}>
+                <div className={styles.footerTittle}>
+                  IDO<span> (SOON)</span>
+                </div>
+              </div>
+            </div>
+            <div className={styles.footerItems}>
+              <div className={styles.footerWidget}>
+                <div className={styles.footerTittle}>
+                  Rewards<span> (SOON)</span>
+                </div>
               </div>
             </div>
           </div>

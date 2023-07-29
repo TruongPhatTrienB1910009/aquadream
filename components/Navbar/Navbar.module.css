@@ -117,8 +117,9 @@
 
 .headerLinkDropdown {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
+  padding: 0 200px 0 10px;
 }
 
 .headerIcon {
@@ -200,6 +201,9 @@
 
 .navConnect {
   margin-right: 5%;
+}
+.navConnect button .css-1iyoj2o .span{
+  color: black !important;
 }
 
 @media (max-width: 1290px) {

@@ -29,21 +29,23 @@ import { useRouter } from "next/router";
  */
 export function Navbart() {
   const address = useAddress();
-  const router = useRouter()
+  const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   useEffect(() => {
     const handleRouteChange = (url: String) => {
-      if (typeof window !== undefined && window.screen.width <= 991.98) { // change the width value according to your navbar breakpoint
+      if (typeof window !== undefined && window.screen.width <= 991.98) {
+        // change the width value according to your navbar breakpoint
         const navbar = document.getElementById("navbar-toggler");
-        if (navbar !== null && !navbar.classList.contains('collapsed')) navbar.click();
+        if (navbar !== null && !navbar.classList.contains("collapsed"))
+          navbar.click();
         setShowDropdown(false);
-      } else
-        if (typeof window !== undefined && window.screen.width > 991.98) {
-          setShowDropdown(false);
-        }
-    }
-    router.events.on('routeChangeComplete', handleRouteChange)
-  }, [router.events])
+      } else if (typeof window !== undefined && window.screen.width > 991.98) {
+        setShowDropdown(false);
+      }
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+  }, [router.events]);
+
   return (
     <>
       <div className={styles.navContainer}>
@@ -61,32 +63,56 @@ export function Navbart() {
                     alignItems: "center",
                   }}
                 >
-                  <Image style={{
-                    marginLeft: '10px'
-                  }} width={70} height={70} src={logo} alt="logo" />
+                  <Image
+                    style={{
+                      marginLeft: "10px",
+                    }}
+                    width={70}
+                    height={70}
+                    src={logo}
+                    alt="logo"
+                  />
                 </div>
               </Link>
-              <Navbar.Toggle id="navbar-toggler" aria-controls={`offcanvasNavbar-expand-sm`} />
+              <Navbar.Toggle
+                id="navbar-toggler"
+                aria-controls={`offcanvasNavbar-expand-sm`}
+              />
               <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand-sm`}
                 aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
                 placement="end"
                 style={{ width: "75%" }}
-
               >
-                <Offcanvas.Header closeButton className="justify-content-space-between">
+                <Offcanvas.Header
+                  closeButton
+                  className="justify-content-space-between"
+                >
                   <div
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      
                     }}
                   >
                     <Nav>
-                      <Link href="/" style={{ color: "black", textDecoration: "none", display: "flex", alignItems: "center" }}>
-                        <Image style={{
-                          marginLeft: '10px'
-                        }} width={70} height={70} src={logo} alt="logo" />
+                      <Link
+                        href="/"
+                        style={{
+                          color: "black",
+                          textDecoration: "none",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Image
+                          style={{
+                            marginLeft: "10px",
+                          }}
+                          width={70}
+                          height={70}
+                          src={logo}
+                          alt="logo"
+                        />
                       </Link>
                     </Nav>
                   </div>
@@ -99,7 +125,7 @@ export function Navbart() {
                         fontWeight: "550",
                         fontSize: "20px",
                         textDecoration: "none",
-                        marginLeft: '2%'
+                        marginLeft: "5%",
                       }}
                       href="/minigame"
                     >
@@ -110,26 +136,26 @@ export function Navbart() {
                         <span>Mini Game</span>
                       </div>
                     </Link>
-                    <div style={{ display: "flex" }}>
-                      <div className={styles.headerIcon} style={{ color: "black", fontSize: "22px" }}>
+                    <div
+                      style={{ display: "flex" }}
+                      onMouseLeave={() => setShowDropdown(false)}
+                      onMouseOver={() => setShowDropdown(true)}
+                      onClick={() => setShowDropdown(!showDropdown)}
+                    >
+                      <div
+                        className={styles.headerIcon}
+                        style={{ color: "black", fontSize: "22px" }}
+                      >
                         <FontAwesomeIcon icon={faCartShopping} />
                       </div>
                       <NavDropdown
                         title="Marketplace"
                         className={styles.navDropdown}
                         show={showDropdown}
-                        onMouseLeave={() => setShowDropdown(false)}
-                        onMouseOver={() => setShowDropdown(true)}
-                        onClick={() => setShowDropdown(!showDropdown)}
                         id="dropdown-toggler"
                       >
                         <div>
-
-                          <Link
-                            className={styles.linkDropdown}
-                            href="/buy"
-
-                          >
+                          <Link className={styles.linkDropdown} href="/buy">
                             <div className={styles.headerLinkDropdown}>
                               <div className={styles.headerIcon}>
                                 <FontAwesomeIcon icon={faCartShopping} />
@@ -139,10 +165,7 @@ export function Navbart() {
                           </Link>
                         </div>
                         <div>
-                          <Link
-                            className={styles.linkDropdown}
-                            href="/sell"
-                          >
+                          <Link className={styles.linkDropdown} href="/sell">
                             <div className={styles.headerLinkDropdown}>
                               <div className={styles.headerIcon}>
                                 <FontAwesomeIcon icon={faShop} />
@@ -154,13 +177,12 @@ export function Navbart() {
                       </NavDropdown>
                     </div>
 
-
                     <Link
                       style={{
                         color: "black",
                         fontWeight: "550",
                         fontSize: "20px",
-                        textDecoration: "none"
+                        textDecoration: "none",
                       }}
                       href="/"
                     >
@@ -183,8 +205,8 @@ export function Navbart() {
                     <div className={styles.navIconWallet}>
                       <div className={styles.navConnect}>
                         <ConnectWallet
-                          style={{ backgroundColor: "black", color: "white" }}
-                          theme="dark"
+                          style={{ backgroundColor: "#ececec", color: "black" }}
+                          theme="light"
                           btnTitle="Connect Wallet"
                         />
                       </div>

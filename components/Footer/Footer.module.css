@@ -15,7 +15,7 @@
 }
 
 .footerWidget {
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 .footerTittle {
@@ -82,9 +82,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 60%;
+  width: 15%;
 }
-
+.footerTittle span{
+  color: #ff9933;
+}
 .footerWidget .footerTittle li {
   padding: 4px 0;
 }
@@ -150,11 +152,11 @@
   .footerRow {
     flex-direction: row;
     justify-content: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
 
   .footerItems {
-    width: 100%;
+    width: 25%;
     justify-content: space-around;
   }
   .footerWidget{
@@ -170,7 +172,6 @@
   }
   .footerItemsIcon{
     justify-content: start;
-    margin-left: 2rem;
     width: auto;
   }
   .footerItems{

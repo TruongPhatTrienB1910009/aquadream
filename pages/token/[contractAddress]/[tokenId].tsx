@@ -221,10 +221,6 @@ export default function TokenPage() {
                     </div>
 
                     <h1 className={styles.title}>{nft?.metadata.name}</h1>
-                    <p className={styles.collectionName}>
-                      Token ID #{nft?.metadata.id}
-                    </p>
-
                     <Link
                       href={`/profile/${nft?.owner}`}
                       className={styles.nftOwnerContainer}

@@ -7,7 +7,7 @@
 /* left side */
 
 .leftSide {
-  width: 50%;
+  width: 45%;
   height: 50%;
   display: flex;
   align-items: center;
@@ -29,7 +29,7 @@
   align-items: center;
   /* padding: 8px; */
   transition: all 0.25s ease-in-out;
-  box-shadow: rgba(234, 118, 118, 0.45) 0px 10px 29px 10px;
+  box-shadow: #4D88A2  0px 10px 29px 10px;
   border-radius: 15px;
 }
 
@@ -84,7 +84,7 @@
 
 .rightSide {
   width: 50%;
-  height: 50%   ;
+  height: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -189,7 +189,7 @@
   .contenta {
     font-size: 18px;
     padding: 20px;
-    margin: 10px 10px 10px 10px;
+    margin: 15px 10px 10px 10px;
     text-align: justify;
   }
 
