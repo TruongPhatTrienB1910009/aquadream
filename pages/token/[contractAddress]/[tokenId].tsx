@@ -90,8 +90,10 @@ export default function TokenPage() {
           console.log(contract);
           try {
             const data = await contract.erc721.get(router.query.tokenId as string);
+            console.log(router.query.contractAddress as string)
             if (data) {
               setNFT(data)
+              console.log(await contract.events.getAllEvents())
               // const events = await contract.events.getEvents("Transfer", {
               //   filters: {
               //     tokenId: data.metadata.id,
@@ -105,16 +107,17 @@ export default function TokenPage() {
               // }
             }
           } catch (error) {
-            const data = await contract.erc1155.get(router.query.tokenId as string);
-            if (data) {
-              setNFT(data)
+            console.log(error);
+            // const data = await contract.erc1155.get(router.query.tokenId as string);
+            // if (data) {
+              // setNFT(data)
               // const events = await contract.events.getEvents("Transfer");
 
 
               // if (events) {
               //   setTransferEvents(events);
               // }
-            }
+            // }
           }
         }
       }
@@ -211,11 +214,14 @@ export default function TokenPage() {
 
                     <div className={styles.traitsContainer}>
                       {Object.entries(nft?.metadata?.attributes || {}).map(
-                        ([key, value]) => (
+                        ([key, value]: any) => (
                           <div className={styles.traitContainer} key={key}>
-                            <p className={styles.traitName}>{key}</p>
+                            {/* <p className={styles.traitName}>{key}</p> */}
                             <p className={styles.traitValue}>
-                              {value?.toString() || ""}
+                              {value.trait_type}
+                            </p>
+                            <p className={styles.traitValue}>
+                              {value.value}
                             </p>
                           </div>
                         )
