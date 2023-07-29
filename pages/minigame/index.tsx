@@ -4,6 +4,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from "./minigame.module.css";
 import dynamic from "next/dynamic";
+import { MediaRenderer, useOwnedNFTs } from "@thirdweb-dev/react";
 
 import Skeleton from "../../components/Skeleton/Skeleton";
 
@@ -35,8 +36,10 @@ const Index = () => {
     minigameABI
   );
   const address = useAddress();
-  const startDate = new Date("July 15, 2023 14:43:00");
+  const startDate = new Date("July 30, 2023 14:43:00");
+
   const dateTimeAfterThreeDays = startDate;
+  const [time, setTime] = useState(0);
   const [{ data, error, loading }, switchNetwork] = useNetwork();
   const chainId = useChainId();
   // read contract
@@ -55,6 +58,8 @@ const Index = () => {
   const [loadingClaim, setLoadingClaim] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { data: NFTs } = useOwnedNFTs(miniGameContract, address);
+
   const prevCountRef = useRef<number>(INITIAL_COUNT);
   // handle status
   const [status, setStatus] = useState({
@@ -71,24 +76,36 @@ const Index = () => {
         return;
       }
 
-      const result = await switchNetwork(5);
+      const result = await switchNetwork(84531);
       if (result.data) {
-        console.log("Switched to Goerli testnet successfully");
+        console.log("Switched to Base Goerli testnet successfully");
       } else {
-        console.log("Error switching to Goerli testnet", result.error);
+        console.log("Error switching to Base Goerli testnet", result.error);
       }
     } catch (e) {
-      console.log("Error switching to Goerli testnet", e);
+      console.log("Error switching to Base Goerli testnet", e);
     } finally {
       setLoadingChange(false);
+    }
+  };
+
+  const checkDate = async () => {
+    if (dateTimeAfterThreeDays) {
+      if (Date.now().valueOf() - dateTimeAfterThreeDays.valueOf() >= 0) {
+        setTime(1);
+      } else {
+        setTime(0);
+      }
+    } else {
+      setTime(0);
     }
   };
   const useMintNFT = async () => {
     try {
       setLoadingMint(true);
       const data = await miniGameContract?.call("mintNFT", [], {
-        gasLimit: 1000000,
-        value: ethers.utils.parseEther("0.002"),
+        gasLimit: 223900,
+        value: ethers.utils.parseEther("0.00065"),
       });
       if (data) {
         toast.success("Mint NFT Successfully", {
@@ -135,11 +152,7 @@ const Index = () => {
       const data = await miniGameContract?.call("balanceOf", [address]);
       if (data) {
         const index = new BigNumber(data.toString()).toNumber();
-        if (index === 1) {
-          setBalanceOf(1);
-        } else {
-          setBalanceOf(0);
-        }
+        setBalanceOf(index);
       }
     }
   };
@@ -225,11 +238,14 @@ const Index = () => {
   };
   GetTotalMinted();
   getDataNFT();
+  checkBalanceOf();
   useEffect(() => {
     setDataNft(null);
+    checkDate();
     if (address !== null) {
       checkMinted();
       tokenOfOwner();
+      checkBalanceOf();
       if (status.message !== "") {
         setOpenToast(true);
       }
@@ -238,8 +254,15 @@ const Index = () => {
     GetTotalMinted();
     prevCountRef.current = tokenOfOwnerByIndex;
     if (tokenOfOwnerByIndex !== -1) GetClaim();
-  }, [address, minted, status.message, tokenOfOwnerByIndex, totalMinted]);
-  // console.log("isLoading", dataNft.name, isLoading);
+  }, [
+    address,
+    minted,
+    status.message,
+    tokenOfOwnerByIndex,
+    totalMinted,
+    balanceOf,
+    time,
+  ]);
 
   return (
     <>
@@ -252,24 +275,37 @@ const Index = () => {
         <Breadcrumb.Item active>Mini Game</Breadcrumb.Item>
       </Breadcrumb>
 
-      {minted === 1 && chainId === 5 ? (
+      {balanceOf > 0 && minted === 1 && chainId === 84531 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
             {!dataNft || !isLoading ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
-                  <Skeleton key={index} width={"100%"} height="512px" />
+                  <Skeleton key={index} width={"100%"} height="412px" />
                 </div>
               ))
             ) : (
               <div className={styles.nftContainer}>
-                <img className={styles.nftImage} src={dataNft.image} alt="" />
+                <MediaRenderer
+                  style={{
+                    width: "360px",
+                    height: "360px",
+                    borderRadius: "8px",
+                    background: "rgba(255, 255, 255, 0.04)",
+                    objectFit: "cover",
+                  }}
+                  src={dataNft.image}
+                  alt=""
+                />
                 <p className={styles.nftName}>{dataNft.name}</p>
                 {claim[0] > 0 && !claim[1] ? (
-                  chainId === 5 ? (
+                  chainId === 84531 ? (
                     <button
                       disabled={loadingClaim}
-                      style={{ cursor: (loadingClaim && "not-allowed") || "" }}
+                      style={{
+                        cursor: (loadingClaim && "not-allowed") || "",
+                        width: "120px",
+                      }}
                       onClick={() => claimETH()}
                     >
                       Claim{" "}
@@ -310,6 +346,10 @@ const Index = () => {
                       style={{
                         cursor: "not-allowed",
                         fontSize: "15px",
+                        backgroundColor: "#e6e8ec",
+                        borderColor: "#e6e8ec",
+                        boxShadow: "none",
+                        color: "#777e91",
                       }}
                     >
                       You claimed reward!
@@ -328,15 +368,44 @@ const Index = () => {
                   className={styles.icon}
                 />
               </div> */}
-              <h1>Total minted: {totalMinted}</h1>
-              <p className={styles.heading}>
-                Exploring the Deep Sea of BASE NFTs
-              </p>
-              <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+              <h1>Lucky octopus</h1>
+              <div className={styles.contenta}>
+                <div
+                  style={{
+                    marginTop: "15px",
+                    display: "inline",
+                    float: "right",
+                    marginBottom: "15px",
 
+                    fontSize: "18px",
+                  }}
+                >
+                  When you mint an NFT, you will receive a Silver NFT or a Gold
+                  NFT. If you get a silver NFT you will be able to win 0.004
+                  ETH, if you mint NFT you will be able to win 0.005 ETH and you
+                  can claim immediately to your wallet.
+                </div>
+              </div>
+              <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+              <div
+                style={{
+                  fontSize: "22px",
+                  margin: "0px",
+                  fontWeight: "bold",
+                }}
+              >
+                Total minted: {totalMinted}
+              </div>
               <button
                 disabled={true}
-                style={{ cursor: "not-allowed", fontSize: "20px" }}
+                style={{
+                  cursor: "not-allowed",
+                  fontSize: "20px",
+                  backgroundColor: "#e6e8ec",
+                  borderColor: "#e6e8ec",
+                  boxShadow: "none",
+                  color: "#777e91",
+                }}
               >
                 Minted
               </button>
@@ -346,10 +415,10 @@ const Index = () => {
       ) : (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            {!isLoading && address ? (
+            {!isLoading && address && tokenOfOwnerByIndex !== -1 ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
-                  <Skeleton key={index} width={"100%"} height="512px" />
+                  <Skeleton key={index} width={"100%"} height="522px" />
                 </div>
               ))
             ) : (
@@ -371,29 +440,76 @@ const Index = () => {
                   className={styles.icon}
                 />
               </div>
-              <h1>Total minted: {totalMinted}</h1>
-              <p className={styles.heading}>
-                Exploring the Deep Sea of BASE NFTs
+              <h1>Lucky octopus</h1>
+              <p
+                className={styles.contenta}
+                style={{
+                  marginBottom: "10px",
+                  display: "inline",
+                  float: "right",
+
+                  fontSize: "18px",
+                }}
+              >
+                When you mint an NFT, you will receive a Silver NFT or a Gold
+                NFT. If you get a silver NFT you will be able to win 0.004 ETH,
+                if you mint NFT you will be able to win 0.005 ETH and you can
+                claim immediately to your wallet.
               </p>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-              <p className={styles.contenta}>Prepare 0.002 ETH to mint</p>
-              {chainId === 5 ? (
-                <button
-                  onClick={() => useMintNFT()}
-                  disabled={loadingMint}
-                  style={{ cursor: (loadingMint && "not-allowed") || "" }}
-                >
-                  Mint NFT{" "}
-                  {loadingMint ? (
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      spin
-                      style={{ color: "#d0d8e7", marginLeft: "10px" }}
-                    />
+
+              <p
+                style={{
+                  fontSize: "22px",
+                  margin: "0px",
+                  fontWeight: "bold",
+                }}
+              >
+                Total minted: {totalMinted}
+              </p>
+              <p
+                className={styles.contenta}
+                style={{ fontSize: "18px", margin: "0px" }}
+              >
+                Prepare 0.00065 ETH to mint
+              </p>
+              {chainId === 84531 ? (
+                minted === 0 ? (
+                  time === 0 ? (
+                    <button
+                      onClick={() => useMintNFT()}
+                      disabled={loadingMint}
+                      style={{ cursor: (loadingMint && "not-allowed") || "" }}
+                    >
+                      Mint NFT{" "}
+                      {loadingMint ? (
+                        <FontAwesomeIcon
+                          icon={faSpinner}
+                          spin
+                          style={{ color: "#d0d8e7", marginLeft: "10px" }}
+                        />
+                      ) : (
+                        ``
+                      )}
+                    </button>
                   ) : (
-                    ``
-                  )}
-                </button>
+                    ""
+                  )
+                ) : (
+                  <button
+                    disabled={true}
+                    style={{
+                      cursor: "not-allowed",
+                      fontSize: "20px",
+                      backgroundColor: "#e6e8ec",
+                      borderColor: "#e6e8ec",
+                      boxShadow: "none",
+                      color: "#777e91",
+                    }}
+                  >
+                    Minted
+                  </button>
+                )
               ) : address ? (
                 <button
                   onClick={() => changeNetwork()}

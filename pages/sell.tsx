@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   ThirdwebNftMedia,
   useAddress,
@@ -14,7 +15,7 @@ import { GetNFTs } from "../components/NFT/hook/getNFTs";
 import { Breadcrumb } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-
+import Image from "next/image";
 const Sell = () => {
   // Load all of the NFTs from the NFT Collection
   // const { contract } = useContract(NFT_COLLECTION_ADDRESS);
@@ -81,10 +82,12 @@ const Sell = () => {
         <div className={tokenPageStyles.containerSell} style={{ marginTop: 0 }}>
           <div className={tokenPageStyles.metadataContainerSell}>
             <div className={tokenPageStyles.imageContainerSell}>
-              <ThirdwebNftMedia
+              {/* <ThirdwebNftMedia
                 metadata={selectedNft.metadata}
                 className={tokenPageStyles.image}
-              />
+              /> */}
+
+              <img src={selectedNft.metadata.image!} alt="" className={tokenPageStyles.image} />
             </div>
           </div>
 

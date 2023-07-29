@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { useEffect, useState } from "react";
 import { Network, Alchemy } from "alchemy-sdk";
 import { MARKETPLACE_ADDRESS, NETWORK } from "../../../const/contractAddresses";
-import { useContract, useNFTs } from "@thirdweb-dev/react";
+import { useContract, useNFT, useNFTs } from "@thirdweb-dev/react";
 
 const settings = {
   apiKey: process.env.ALCHEMY_API_KEY as string,
@@ -14,26 +15,65 @@ const alchemy = new Alchemy(settings);
 export const GetNFTs = (account: any) => {
   const [nftList, setNftList] = useState<any[]>([]);
   const [isLoadingNFTs, setIsLoadingNFTs] = useState(false);
+  // console.log("process.env.MYKEY", process.env.MY_KEY as string)
+  let headers = new Headers();
+  headers.set("Authorization", `Bearer cqt_rQ46yWprphHwWQX7YMXmpHYC7cDB`);
 
   useEffect(() => {
+    // const getNFTs = async () => {
+    //   try {
+    //     setIsLoadingNFTs(true);
+    //     const nfts: any[] = (await alchemy.nft.getNftsForOwner(account))
+    //       .ownedNfts;
+    //     if (nfts.length > 0) {
+    //       nfts.forEach((nft, index) => {
+    //         nfts[index].rawMetadata.id = nfts[index].tokenId;
+    //         const search = nfts[index].rawMetadata.image.search("ipfs:/");
+    //         if (search != -1) {
+    //           let x = `https://alchemy.mypinata.cloud/${nfts[index].rawMetadata.image}`;
+    //           nfts[index].rawMetadata.image = x.replace("ipfs:/", "ipfs");
+    //         }
+    //         nfts[index].owner = `${account}`;
+    //         nfts[index].rawMetadata.address = nfts[index].contract.address;
+    //         nfts[index].metadata = nfts[index].rawMetadata;
+    //         console.log("nfts[index]", nfts[index])
+    //       });
+    //       setNftList([...nfts]);
+    //     } else {
+    //       setNftList([]);
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   } finally {
+    //     setIsLoadingNFTs(false);
+    //   }
+    // };
+
     const getNFTs = async () => {
       try {
         setIsLoadingNFTs(true);
-        const nfts: any[] = (await alchemy.nft.getNftsForOwner(account))
-          .ownedNfts;
-        if (nfts.length > 0) {
-          nfts.forEach((nft, index) => {
-            nfts[index].rawMetadata.id = nfts[index].tokenId;
-            const search = nfts[index].rawMetadata.image.search("ipfs:/");
-            if (search != -1) {
-              let x = `https://alchemy.mypinata.cloud/${nfts[index].rawMetadata.image}`;
-              nfts[index].rawMetadata.image = x.replace("ipfs:/", "ipfs");
-            }
-            nfts[index].owner = `${account}`;
-            nfts[index].rawMetadata.address = nfts[index].contract.address;
-            nfts[index].metadata = nfts[index].rawMetadata;
+        const res = await fetch(
+          `https://api.covalenthq.com/v1/base-testnet/address/${account}/balances_nft/?no-spam=true&with-uncached=true`,
+          { method: "GET", headers: headers }
+        );
+        const listNFTs = await res.json();
+
+        const arr: any = [];
+        if (listNFTs.data.items.length > 0) {
+          listNFTs.data.items.forEach((item: any, i: number) => {
+            // console.log("item", item)
+            item.nft_data.forEach((nft: any, j: number) => {
+              nft.tokenId = nft.token_id;
+              nft.owner = nft.original_owner;
+              nft.external_data.address = item.contract_address;
+              nft.external_data.id = nft.token_id;
+              nft.metadata = nft.external_data;
+              nft.contract = nft.external_data;
+              arr.push(nft);
+            });
+
+            setNftList(arr);
           });
-          setNftList([...nfts]);
         } else {
           setNftList([]);
         }
@@ -58,14 +98,17 @@ export const GetAllDataNFTsMarketplace = () => {
       try {
         setIsloading(true);
         const contract = await sdk.getContract(MARKETPLACE_ADDRESS);
-        const allListings = await contract.directListings.getAllValid();
-        const arr: any = [...allListings];
-        if (arr.length > 0) {
-          arr.forEach((NFT: any, index: string | number) => {
-            arr[index].asset.address = arr[index].assetContractAddress;
-            arr[index].metadata = arr[index].asset;
+        const allListings: any = await contract.directListings.getAllValid();
+
+        if (allListings.length > 0) {
+          allListings.forEach((NFT: any, index: number) => {
+            allListings[index].asset.address =
+              allListings[index].assetContractAddress;
+            allListings[index].metadata = allListings[index].asset;
+            allListings[index].metadata.creatorAddress =
+              allListings[index].creatorAddress;
           });
-          setListingNFTs(arr);
+          setListingNFTs(allListings);
         }
       } catch (error) {
         console.log(error);
@@ -80,7 +123,7 @@ export const GetAllDataNFTsMarketplace = () => {
 
 export const getABI = async (contractAddress: string) => {
   try {
-    const BASEURL = `https://api-goerli.etherscan.io/api?module=contract&action=getabi&address=${contractAddress}&apikey=${process.env.NEXT_PUBLIC_API_KEY}`;
+    const BASEURL = `https://api-goerli.basescan.org/api?module=contract&action=getabi&address=${contractAddress}&apikey=${process.env.NEXT_PUBLIC_API_KEY}`;
     const response = await fetch(BASEURL);
     const result = await response.json();
     return JSON.stringify(result?.result)

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/display-name */
 import {
   ThirdwebNftMedia,
@@ -6,11 +7,11 @@ import {
   useValidEnglishAuctions,
 } from "@thirdweb-dev/react";
 import { NFT } from "@thirdweb-dev/sdk";
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { MARKETPLACE_ADDRESS } from "../../const/contractAddresses";
 import Skeleton from "../Skeleton/Skeleton";
 import styles from "./NFT.module.css";
-import Card from 'react-bootstrap/Card';
+import Card from "react-bootstrap/Card";
 
 type Props = {
   nft: NFT;
@@ -18,6 +19,18 @@ type Props = {
 
 const NFTComponent = React.memo(
   ({ nft }: Props) => {
+    const [usdPrice, setUsdPrice] = useState(0);
+    async function getEthPrice() {
+      try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+        const data = await response.json();
+        setUsdPrice(data.ethereum.usd)
+      } catch (error) {
+        console.error('Error fetching ETH price:', error);
+        return null;
+      }
+    }
+
     const { contract: marketplace, isLoading: loadingContract } = useContract(
       MARKETPLACE_ADDRESS,
       "marketplace-v3" // contract-type.
@@ -36,12 +49,16 @@ const NFTComponent = React.memo(
         tokenId: nft.metadata.id,
       });
 
-    // if (directListing) {
-    //   console.log("directListing", directListing[0])
-    // }
+    console.log("nft", nft)
+
+    useEffect(() => {
+      getEthPrice();
+    }, [])
     return (
       <>
-        <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
+        {/* <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} /> */}
+        <img src={`${nft.metadata.image}`} className={styles.nftImage} alt="" />
+        {/* <img src="" alt="" /> */}
 
         {/* <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p> */}
         <p className={styles.nftName}>{nft.metadata.name}</p>
@@ -55,6 +72,9 @@ const NFTComponent = React.memo(
                 <p className={styles.nftPriceValue}>
                   {`${directListing[0]?.currencyValuePerToken.displayValue}
           ${directListing[0]?.currencyValuePerToken.symbol}`}
+                  {"  ($" +
+                    (Number(directListing[0]?.currencyValuePerToken.displayValue) * usdPrice).toFixed(2) + ")"
+                  }
                 </p>
               </div>
             </div>
@@ -68,11 +88,13 @@ const NFTComponent = React.memo(
         </div>
       </>
     );
-  }, (prevProps, nextProps) => {
+  },
+  (prevProps, nextProps) => {
     if (prevProps === nextProps) {
       return true;
     }
     return false;
-  });
+  }
+);
 
 export default NFTComponent;

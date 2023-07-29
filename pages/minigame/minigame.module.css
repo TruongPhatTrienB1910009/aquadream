@@ -13,20 +13,21 @@
 }
 
 .nftContainer {
-  width: 300px;
+  width: 360px;
+  height: auto;
   margin: 8px;
   position: relative;
   overflow: hidden;
   border-radius: 8px;
   backface-visibility: hidden;
-  outline: 1px solid rgba(255, 255, 255, 0.1);
+  outline: 1px solid rgba(28, 25, 25, 0.1);
   transform: translate3d(0px, 0px, 0px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px;
+  /* padding: 8px; */
   transition: all 0.25s ease-in-out;
-  box-shadow: 0px 9px 9px rgba(0, 0, 0, 5.25);
+  box-shadow: rgba(234, 118, 118, 0.45) 0px 10px 29px 10px;
   border-radius: 15px;
 }
 
@@ -39,6 +40,8 @@
 .nftImage {
   width: 100% !important;
   height: auto;
+  width: 360px;
+  height: 360px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   object-fit: cover;
@@ -71,7 +74,7 @@
   line-height: 22px;
   font-weight: 700;
   margin: 0px;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   margin-top: 4px;
 }
 
@@ -131,6 +134,15 @@
   transform: scale(1.02);
 }
 
+.disableBut button {
+  cursor: not-allowed;
+  font-size: 20px;
+  background-color: #e6e8ec;
+  border-color: #e6e8ec;
+  box-shadow: none;
+  color: #777e91;
+}
+
 .icon {
   border-radius: 8px;
   width: 24px !important;
@@ -145,7 +157,7 @@
   vertical-align: bottom;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
   .minigameContainer {
     flex-direction: column;
   }
@@ -164,6 +176,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
 
   .heading {
@@ -172,6 +185,9 @@
 
   .contenta {
     font-size: 18px;
+    padding: 20px;
+    margin: 10px 10px 10px 10px;
+    text-align: justify;
   }
 
   .content button {

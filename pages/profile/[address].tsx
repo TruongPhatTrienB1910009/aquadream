@@ -13,13 +13,13 @@ import NFTGrid from "../../components/NFT/NFTGrid";
 import Skeleton from "../../components/Skeleton/Skeleton";
 import {
   MARKETPLACE_ADDRESS,
-  NFT_COLLECTION_ADDRESS,
 } from "../../const/contractAddresses";
 import styles from "../../styles/Profile.module.css";
 import randomColor from "../../util/randomColor";
 import { useAddress } from "@thirdweb-dev/react";
 import { GetNFTs, getABI } from "../../components/NFT/hook/getNFTs";
-import { Tab, Tabs } from "react-bootstrap";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 const [randomColor1, randomColor2, randomColor3, randomColor4] = [
   randomColor(),
@@ -94,30 +94,18 @@ export default function ProfilePage() {
       </div>
       <div>
         <Tabs
-          defaultActiveKey="home"
-          transition={false}
+          defaultActiveKey="NFTs"
           id="noanim-tab-example"
           className="mb-3 mt-3"
         >
-          <Tab eventKey="home" title="NFTs">
+          <Tab eventKey="NFTs" title="NFTs">
             <NFTGrid
               data={ownedNfts}
               isLoading={loadingOwnedNfts}
               emptyText="Looks like you don't have any NFTs from this collection. Head to the buy page to buy some!"
             />
           </Tab>
-          <Tab
-            eventKey="Listings"
-            title="Listings"
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "1%",
-              width: "100%",
-              textDecoration: "none",
-            }}
-          >
+          <Tab eventKey="Listings" title="Listings">
             {/* <div className={styles.nftGridContainer}> */}
             {loadingDirects ? (
               <p>Loading...</p>
@@ -132,7 +120,6 @@ export default function ProfilePage() {
                 />
               ))
             )}
-            {/* </div> */}
           </Tab>
         </Tabs>
       </div>

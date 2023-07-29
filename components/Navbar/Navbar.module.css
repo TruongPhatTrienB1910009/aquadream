@@ -1,4 +1,5 @@
 .navContainer {
+  padding: 10px 0 10px;
   width: 100%;
   top: 0px;
   left: 0px;
@@ -7,10 +8,31 @@
   position: fixed;
 }
 
+.navDropdown {
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 1rem;
+}
+
+.linkDropdown {
+  color: "black";
+  font-weight: 550;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.linkDropdown :hover {
+  background-color: #146ea2;
+}
+
+.navDropdown a {
+  padding: 0 !important;
+  color: black;
+  font-weight: 550;
+}
+
 .nav {
   display: flex;
-  padding-top: 10px;
-  padding-bottom: 10px;
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
@@ -87,11 +109,23 @@
 
 .headerLink {
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin-right: 12px;
+}
+
+.headerLinkDropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .headerIcon {
   display: none;
+}
+
+.linkDropdown :hover {
+  background-color: #ececec !important;
 }
 
 /* mobile  */
@@ -124,19 +158,22 @@
   transition: opacity 0.3s ease-out;
   display: none;
 }
-.headerSoon{
-  color: #FF9933	;
+
+.headerSoon {
+  color: #FF9933;
   margin-left: 2%;
   font-size: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .showDropdowMenu {
   opacity: 1;
   display: block;
 }
-.navRewards{
+
+.navRewards {
   display: flex;
   justify-content: center;
   font-weight: 500;
@@ -144,6 +181,7 @@
   font-size: 20px;
   cursor: pointer;
 }
+
 .svgRotate {
   transform: rotate(90deg) !important;
   transition: 0.1s;
@@ -152,36 +190,44 @@
 .headerCenter {
   align-items: center;
 }
-.navIconWallet{
+
+.navIconWallet {
   display: flex;
   align-items: center;
-  
+
 }
-.navConnect{
+
+.navConnect {
   margin-right: 5%;
 }
-.iconmobile{
-  align-items: center;
-  text-decoration: none;
-  color: black;
-}
-@media (max-width: 1200px){
-  .navRight{
+
+@media (max-width: 1290px) {
+  .navRight {
     float: left;
     display: block;
   }
+
   .headerIcon {
     display: block;
     margin-right: 0.5rem;
     margin-left: 1%;
   }
-  .headerLink{
+
+  .headerMarket {
+    display: flex;
+    align-items: center;
+  }
+
+  .headerLink {
+    justify-content: start;
+    margin-left: 0.rem;
     margin-bottom: 0.5rem;
   }
   .navRewards{
    justify-content: start; 
   }
 }
+
 @media (max-width: 920px) {
   .navLeft {
     margin-left: 0;
@@ -200,7 +246,8 @@
     flex-wrap: wrap;
     justify-content: start;
   }
-  .headerLink{
+
+  .headerLink {
     margin-bottom: 0.5rem;
   }
 

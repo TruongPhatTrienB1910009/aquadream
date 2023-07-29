@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../Footer/Footer.module.css";
 import Image from "next/image";
+import logo from "../../public/images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDiscord,
@@ -28,15 +29,7 @@ function Footer() {
                   }}
                 >
                   <Link href="/" style={{ color: "black" }}>
-                    <FontAwesomeIcon
-                      icon={faEthereum}
-                      style={{
-                        padding: "15px 25px 15px 25px",
-                        backgroundColor: "#c0ff3e",
-                        borderRadius: "10px",
-                        fontSize: "40px",
-                      }}
-                    />
+                  <Image width={70} height={70} src={logo} alt="logo"/>
                   </Link>
                   <Link href="/" style={{ textDecoration: "none" }}>
                     <span className={styles.footerTittleNfts}>AquaDream</span>
@@ -66,83 +59,25 @@ function Footer() {
                       cursor: "pointer",
                     }}
                   />
-                  <FontAwesomeIcon
-                    icon={faInstagram}
-                    style={{
-                      padding: "5px 15px 5px 15px",
-                      backgroundColor: "#E8E8E8",
-                      borderRadius: "10px",
-                      fontSize: "20px",
-                      marginRight: "0.5rem",
-                      cursor: "pointer",
-                    }}
-                  />
-                  <FontAwesomeIcon
-                    icon={faLinkedin}
-                    style={{
-                      padding: "5px 15px 5px 15px",
-                      backgroundColor: "#E8E8E8",
-                      borderRadius: "10px",
-                      fontSize: "20px",
-                      marginRight: "0.5rem",
-                      cursor: "pointer",
-                    }}
-                  />
-                  <FontAwesomeIcon
-                    icon={faGoogle}
-                    style={{
-                      padding: "5px 15px 5px 15px",
-                      backgroundColor: "#E8E8E8",
-                      borderRadius: "10px",
-                      fontSize: "20px",
-                      cursor: "pointer",
-                    }}
-                  />
                 </div>
               </div>
             </div>
-            <div className={styles.footerItems}>
+            <div className={styles.footerItems}>            
               <div className={styles.footerWidget}>
-                <ul className={styles.footerTittle}>
+              <ul className={styles.footerTittle}>
                   Marketplace
                   <li>
-                    <a>All NFTs</a>
+                    <Link style={{textDecoration: 'none'}} href='/buy'>Buy</Link>
                   </li>
                   <li>
-                    <a>Gaming</a>
+                  <Link style={{textDecoration: 'none'}} href='/sell'>Sell</Link>
                   </li>
                   <li>
-                    <a>Art</a>
-                  </li>
-                  <li>
-                    <a>Memberships</a>
-                  </li>
-                </ul>
-              </div>
-              <div className={styles.footerWidget}>
-                <ul className={styles.footerTittle}>Resources
-                  <li>
-                    <a>Help center</a>
-                  </li>
-                  <li>
-                    <a>Taxes</a>
-                  </li>
-                  <li>
-                    <a>Blog</a>
-                  </li>
-                  <li>
-                    <a>Learn</a>
-                  </li>
-                  <li>
-                    <a>Partners</a>
-                  </li>
-                  <li>
-                    <a>Community standards</a>
+                  <Link style={{textDecoration: 'none'}} href='/minigame'>Mini Game</Link>
                   </li>
                 </ul>
               </div>
             </div>
-
           </div>
           <div className={styles.copyright}>
             <span>&copy; 2022 NFTs @All Rights Reserved</span>

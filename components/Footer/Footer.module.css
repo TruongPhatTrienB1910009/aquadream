@@ -31,14 +31,14 @@
 .footerTittleNfts {
   margin-left: 0.5rem;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 30px;
   line-height: 22px;
   color: #000;
 }
 
 .footerJoinNfts {
-  margin-top: 3rem;
-  font-size: 20px;
+  margin-top: 1rem;
+  font-size: 16px;
   font-weight: 500;
   color: black;
 }
@@ -75,13 +75,13 @@
 
 .footerItemsIcon {
   width: 40%;
-  margin-bottom: 3rem !important;
+  margin-bottom: 20px !important;
 }
 
 .footerItems {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   width: 60%;
 }
 
@@ -148,16 +148,32 @@
   }
 
   .footerRow {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
     justify-content: center;
+    flex-wrap: nowrap;
   }
 
   .footerItems {
     width: 100%;
     justify-content: space-around;
   }
+  .footerWidget{
+    margin: 0;
+
+  }
 }
 
 
-@media (max-width: 390px) {}
+@media (max-width: 550px) {
+  .footerRow{
+    flex-direction: column;
+  }
+  .footerItemsIcon{
+    justify-content: start;
+    margin-left: 2rem;
+    width: auto;
+  }
+  .footerItems{
+    justify-content: start;
+  }
+}
