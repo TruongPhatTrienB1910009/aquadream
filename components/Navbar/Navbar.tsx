@@ -64,7 +64,6 @@ export function Navbart() {
                   <Image style={{
                     marginLeft: '10px'
                   }} width={70} height={70} src={logo} alt="logo" />
-                  <span className={styles.navbarTittleNfts}>AquaDream</span>
                 </div>
               </Link>
               <Navbar.Toggle id="navbar-toggler" aria-controls={`offcanvasNavbar-expand-sm`} />
@@ -80,6 +79,7 @@ export function Navbart() {
                     style={{
                       display: "flex",
                       alignItems: "center",
+                      
                     }}
                   >
                     <Nav>
@@ -98,7 +98,8 @@ export function Navbart() {
                         color: "black",
                         fontWeight: "550",
                         fontSize: "20px",
-                        textDecoration: "none"
+                        textDecoration: "none",
+                        marginLeft: '2%'
                       }}
                       href="/minigame"
                     >

@@ -112,13 +112,16 @@ export default function ProfilePage() {
             ) : directListings && directListings.length === 0 ? (
               <p>Nothing for sale yet! Head to the sell tab to list an NFT.</p>
             ) : (
-              directListings?.map((listing, index) => (
+              <div style={{display: 'flex'}}>
+                { directListings?.map((listing, index) => (
                 <ListingWrapper
                   listing={listing}
                   abi={abiList[index]}
                   key={listing.id}
                 />
-              ))
+              ))}
+              </div>
+             
             )}
           </Tab>
         </Tabs>
