@@ -87,20 +87,33 @@ export default function TokenPage() {
 
         if (contract) {
           setNftCollection(contract);
-          const data = await contract.erc721.get(router.query.tokenId as string);
-          if (data) {
-            setNFT(data)
+          console.log(contract);
+          try {
+            const data = await contract.erc721.get(router.query.tokenId as string);
+            if (data) {
+              setNFT(data)
+              // const events = await contract.events.getEvents("Transfer", {
+              //   filters: {
+              //     tokenId: data.metadata.id,
+              //   },
+              //   order: "desc",
+              // });
 
-            const events = await contract.events.getEvents("Transfer", {
-              filters: {
-                tokenId: data.metadata.id,
-              },
-              order: "desc",
-            });
+
+              // if (events) {
+              //   setTransferEvents(events);
+              // }
+            }
+          } catch (error) {
+            const data = await contract.erc1155.get(router.query.tokenId as string);
+            if (data) {
+              setNFT(data)
+              // const events = await contract.events.getEvents("Transfer");
 
 
-            if (events) {
-              setTransferEvents(events);
+              // if (events) {
+              //   setTransferEvents(events);
+              // }
             }
           }
         }
