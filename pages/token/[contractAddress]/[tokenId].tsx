@@ -96,14 +96,6 @@ export default function TokenPage() {
               setNFT(data)
               // console.log(await contract.events.getAllEvents())
               const events = await getEventsApi(router.query.contractAddress as string, router.query.tokenId as string);
-              console.log(events);
-              // const events = await contract.events.getEvents("Transfer", {
-              //   filters: {
-              //     tokenId: data.metadata.id,
-              //   },
-              //   order: "desc",
-              // });
-
 
               if (events) {
                 setTransferEvents(events);
@@ -111,16 +103,15 @@ export default function TokenPage() {
             }
           } catch (error) {
             console.log(error);
-            // const data = await contract.erc1155.get(router.query.tokenId as string);
-            // if (data) {
-              // setNFT(data)
-              // const events = await contract.events.getEvents("Transfer");
+            const data = await contract.erc1155.get(router.query.tokenId as string);
+            if (data) {
+              setNFT(data)
+              const events = await getEventsApi(router.query.contractAddress as string, router.query.tokenId as string);
 
-
-              // if (events) {
-              //   setTransferEvents(events);
-              // }
-            // }
+              if (events) {
+                setTransferEvents(events);
+              }
+            }
           }
         }
       }
