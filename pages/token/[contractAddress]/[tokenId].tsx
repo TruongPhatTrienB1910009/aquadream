@@ -62,9 +62,11 @@ export default function TokenPage() {
 
   async function getEthPrice() {
     try {
-      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+      const response = await fetch(
+        "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD"
+      );
       const data = await response.json();
-      setUsdPrice(data.ethereum.usd)
+      setUsdPrice(data.USD)
     } catch (error) {
       console.error('Error fetching ETH price:', error);
       return null;
@@ -235,10 +237,6 @@ export default function TokenPage() {
                     </div>
 
                     <h1 className={styles.title}>{nft?.metadata.name}</h1>
-                    <p className={styles.collectionName}>
-                      Token ID #{nft?.metadata.id}
-                    </p>
-
                     <Link
                       href={`/profile/${nft?.owner}`}
                       className={styles.nftOwnerContainer}
@@ -386,16 +384,16 @@ export default function TokenPage() {
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>From</p>
                           <p className={styles.traitValue}>
-                            {event.log_events[1].decoded.params[0].value?.slice(0, 4)}...
-                            {event.log_events[1].decoded.params[0].value?.slice(-2)}
+                            {event.log_events[0].decoded.params[0].value?.slice(0, 4)}...
+                            {event.log_events[0].decoded.params[0].value?.slice(-2)}
                           </p>
                         </div>
 
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>To</p>
                           <p className={styles.traitValue}>
-                            {event.log_events[1].decoded.params[1].value?.slice(0, 4)}...
-                            {event.log_events[1].decoded.params[1].value?.slice(-2)}
+                            {event.log_events[0].decoded.params[1].value?.slice(0, 4)}...
+                            {event.log_events[0].decoded.params[1].value?.slice(-2)}
                           </p>
                         </div>
 

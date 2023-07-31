@@ -22,9 +22,11 @@ const NFTComponent = React.memo(
     const [usdPrice, setUsdPrice] = useState(0);
     async function getEthPrice() {
       try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+        const response = await fetch(
+          "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD"
+        );
         const data = await response.json();
-        setUsdPrice(data.ethereum.usd)
+        setUsdPrice(data.USD)
       } catch (error) {
         console.error('Error fetching ETH price:', error);
         return null;

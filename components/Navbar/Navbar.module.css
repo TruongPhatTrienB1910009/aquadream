@@ -1,5 +1,4 @@
 .navContainer {
-  padding: 10px 0 10px;
   width: 100%;
   top: 0px;
   left: 0px;
@@ -7,13 +6,26 @@
   background-color: #ececec;
   position: fixed;
 }
-
+.navMiniGame {
+  color: black !important;
+  font-weight: 550 !important;
+  font-size: 20px !important;
+  text-decoration: none !important;
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
 .navDropdown {
   font-weight: bold;
   font-size: 20px;
   margin-right: 1rem;
+  display: flex;
+  height: 100px;
+  align-items: center;
 }
-
+.navDropdown div{
+  margin-top: 0 !important;
+}
 .linkDropdown {
   color: "black";
   font-weight: 550;
@@ -32,6 +44,7 @@
 }
 
 .nav {
+  background-color: #ececec !important;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -116,8 +129,11 @@
 
 .headerLinkDropdown {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
+  margin: 0.5rem;
+  padding: 10px 200px 10px 10px;
+  border-radius: 10px;
 }
 
 .headerIcon {
@@ -160,8 +176,9 @@
 }
 
 .headerSoon {
-  color: #FF9933;
+  color: #ff9933;
   margin-left: 2%;
+  margin-top: 3px;
   font-size: 70%;
   display: flex;
   justify-content: center;
@@ -189,29 +206,43 @@
 
 .headerCenter {
   align-items: center;
+  margin-left: 5%;
 }
 
 .navIconWallet {
   display: flex;
   align-items: center;
-
 }
 
 .navConnect {
   margin-right: 5%;
 }
+.navConnect button .css-1iyoj2o .span {
+  color: black !important;
+}
 
 @media (max-width: 1290px) {
   .navRight {
     float: left;
+    display: block;
   }
-
+  .navDropdown{
+    height: auto;
+    align-items: normal;
+    display: block;
+  }
+  .navMiniGame{
+    display: block;
+    height: auto;
+  }
   .headerIcon {
     display: block;
     margin-right: 0.5rem;
-    margin-left: 1%;
+    margin-left: 0.75rem;
   }
-
+  .headerCenter {
+    margin: 0;
+  }
   .headerMarket {
     display: flex;
     align-items: center;
@@ -219,8 +250,11 @@
 
   .headerLink {
     justify-content: start;
-    margin-left: 0.rem;
+    margin-left: 0rem;
     margin-bottom: 0.5rem;
+  }
+  .navRewards {
+    justify-content: start;
   }
 }
 
@@ -246,12 +280,10 @@
   .headerLink {
     margin-bottom: 0.5rem;
   }
-
 }
 
 /* Sreens less than 720px */
 @media (max-width: 800px) {
-
   .headerIcon {
     display: block;
     margin-right: 0.5rem;
@@ -264,7 +296,6 @@
   .navbarSearch {
     display: none;
   }
-
 
   .navMiddle {
     display: none;

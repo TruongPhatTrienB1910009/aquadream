@@ -369,22 +369,19 @@ const Index = () => {
                 />
               </div> */}
               <h1>Lucky octopus</h1>
-              <div className={styles.contenta}>
-                <div
-                  style={{
-                    marginTop: "15px",
-                    display: "inline",
-                    float: "right",
-                    marginBottom: "15px",
-
-                    fontSize: "18px",
-                  }}
-                >
-                  When you mint an NFT, you will receive a Silver NFT or a Gold
-                  NFT. If you get a silver NFT you will be able to win 0.004
-                  ETH, if you mint NFT you will be able to win 0.005 ETH and you
-                  can claim immediately to your wallet.
-                </div>
+              <div
+                style={{
+                  marginTop: "20px",
+                  display: "inline",
+                  float: "right",
+                  marginBottom: "20px",
+                  fontSize: "18px",
+                }}
+              >
+                When you mint an NFT, you will receive a Silver NFT or a Gold
+                NFT. If you get a silver NFT you will be able to win 0.004 ETH,
+                if you mint NFT you will be able to win 0.005 ETH and you can
+                claim immediately to your wallet.
               </div>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
               <div
@@ -392,6 +389,7 @@ const Index = () => {
                   fontSize: "22px",
                   margin: "0px",
                   fontWeight: "bold",
+                  marginTop: "20px",
                 }}
               >
                 Total minted: {totalMinted}
@@ -441,13 +439,13 @@ const Index = () => {
                 />
               </div>
               <h1>Lucky octopus</h1>
-              <p
+              <div
                 className={styles.contenta}
                 style={{
-                  marginBottom: "10px",
+                  marginBottom: "20px",
                   display: "inline",
                   float: "right",
-
+                  marginTop: "20px",
                   fontSize: "18px",
                 }}
               >
@@ -455,7 +453,7 @@ const Index = () => {
                 NFT. If you get a silver NFT you will be able to win 0.004 ETH,
                 if you mint NFT you will be able to win 0.005 ETH and you can
                 claim immediately to your wallet.
-              </p>
+              </div>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
 
               <p
@@ -463,13 +461,14 @@ const Index = () => {
                   fontSize: "22px",
                   margin: "0px",
                   fontWeight: "bold",
+                  marginTop: "20px",
                 }}
               >
                 Total minted: {totalMinted}
               </p>
               <p
                 className={styles.contenta}
-                style={{ fontSize: "18px", margin: "0px" }}
+                style={{ fontSize: "18px", marginTop: "10px" }}
               >
                 Prepare 0.00065 ETH to mint
               </p>

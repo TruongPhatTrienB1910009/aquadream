@@ -17,6 +17,7 @@
 }
 .topCreatorCard {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 20px;
@@ -138,7 +139,7 @@
   }
   .exploreTextBotton {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
   }
   .price {
@@ -168,6 +169,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+@media (min-width: 810px) and (max-width: 1050px){
+  .topCardItems {
+    width: 30%;
+    text-align: center;
   }
 }
 @media (max-width: 500px) {

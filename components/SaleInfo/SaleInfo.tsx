@@ -115,10 +115,11 @@ export default function SaleInfo({ nft }: Props) {
   async function getEthPrice() {
     try {
       const response = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+        "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD"
       );
       const data = await response.json();
-      setUsdPrice(Number(data.ethereum.usd))
+      console.log(data.USD)
+      setUsdPrice(Number(data.USD))
 
     } catch (error) {
       console.error("Error fetching ETH price:", error);

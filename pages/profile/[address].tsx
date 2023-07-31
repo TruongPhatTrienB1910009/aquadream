@@ -32,7 +32,6 @@ export default function ProfilePage() {
   const router = useRouter();
   const account = useAddress();
   const [abiList, setAbiList] = useState<any>([]);
-  const [tab, setTab] = useState<"nfts" | "listings" | "auctions">("nfts");
 
   const { contract: marketplace } = useContract(
     MARKETPLACE_ADDRESS,
@@ -66,7 +65,6 @@ export default function ProfilePage() {
     }
     getABIFromAddress();
   }, [account, directListings?.length]);
-
   return (
     <>
       <div className={styles.profileHeader}>
@@ -84,7 +82,7 @@ export default function ProfilePage() {
         />
         <h1 className={styles.profileName}>
           {router.query.address ? (
-            router.query.address.toString().substring(0, 4) +
+            router.query.address.toString().substring(0, 6) +
             "..." +
             router.query.address.toString().substring(38, 42)
           ) : (
@@ -106,19 +104,21 @@ export default function ProfilePage() {
             />
           </Tab>
           <Tab eventKey="Listings" title="Listings">
-            {/* <div className={styles.nftGridContainer}> */}
             {loadingDirects ? (
               <p>Loading...</p>
             ) : directListings && directListings.length === 0 ? (
               <p>Nothing for sale yet! Head to the sell tab to list an NFT.</p>
             ) : (
-              directListings?.map((listing, index) => (
+              <div className={styles.tabListing}>
+                { directListings?.map((listing, index) => (
                 <ListingWrapper
                   listing={listing}
                   abi={abiList[index]}
                   key={listing.id}
                 />
-              ))
+              ))}
+              </div>
+             
             )}
           </Tab>
         </Tabs>

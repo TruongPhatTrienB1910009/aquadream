@@ -1,4 +1,5 @@
-.profileHeader {}
+.profileHeader {
+}
 
 .coverImage {
   width: 100%;
@@ -41,7 +42,7 @@
   cursor: pointer;
   transition: color 0.1s ease-in-out;
 }
-.nav-link{
+.nav-link {
   color: black !important;
 }
 .tab:hover {
@@ -73,4 +74,9 @@
   gap: 1%;
   width: 100%;
   text-decoration: none !important;
+}
+.tabListing {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
