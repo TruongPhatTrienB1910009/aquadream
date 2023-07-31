@@ -164,6 +164,7 @@
 .headerSoon {
   color: #FF9933;
   margin-left: 2%;
+  margin-top: 3px;
   font-size: 70%;
   display: flex;
   justify-content: center;
@@ -191,6 +192,7 @@
 
 .headerCenter {
   align-items: center;
+  margin-left: 5%;
 }
 
 .navIconWallet {

@@ -61,6 +61,7 @@ export function Navbart() {
                   style={{
                     display: "flex",
                     alignItems: "center",
+                  
                   }}
                 >
                   <Image
@@ -125,7 +126,6 @@ export function Navbart() {
                         fontWeight: "550",
                         fontSize: "20px",
                         textDecoration: "none",
-                        marginLeft: "5%",
                       }}
                       href="/minigame"
                     >

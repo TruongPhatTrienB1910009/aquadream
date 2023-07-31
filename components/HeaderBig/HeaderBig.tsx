@@ -9,7 +9,7 @@ const slideImages = [
     url: ParrotImage,
     caption: "Discover Digital Art Collect and Sell your Specifice NFT\'s",
     description:
-      `Buy and sell NFTs from the world\'s artists. More than 1000 premium digital artworks are aviable to be your\'s`,
+      `Aquadream is a place for users to trade nfts with each other, and participate in many small games if you are lucky, you will receive a series of attractive prizes.`,
   },
   {
     url: ParrotImage,
@@ -36,10 +36,10 @@ export const HeaderBig = () => {
               <div className={styles.headerMinText}>
                 <span>{slideImages[0].description}</span>
               </div>
-              <div className={styles.headerBigButton}>
+              {/* <div className={styles.headerBigButton}>
                 <Button variant="outline-success">Buy Now</Button>
                 <Button variant="outline-success">See Categories</Button>
-              </div>
+              </div> */}
             </div>
             <div className={styles.headerMin}>
               <Image
