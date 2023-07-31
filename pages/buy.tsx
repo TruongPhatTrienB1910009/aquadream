@@ -12,16 +12,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 const Buy = () => {
-  const { listingNFTs: data, isLoading: isLoading } = GetAllDataNFTsMarketplace();
+  const { listingNFTs: data, isLoading: isLoading } =
+    GetAllDataNFTsMarketplace();
   return (
     <>
       <Breadcrumb className={tokenPageStyles.Breadcrumb}>
-        <Breadcrumb.Item
-          className={tokenPageStyles.BreadcrumbSellItem}
-          href="/"
-        >
-          {" "}
-          <FontAwesomeIcon icon={faHome} /> Home
+        <Breadcrumb.Item active className={tokenPageStyles.BreadcrumbSellItem}>
+          <Link href="/">
+            <FontAwesomeIcon icon={faHome} /> Home
+          </Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item active>Buy</Breadcrumb.Item>
       </Breadcrumb>
