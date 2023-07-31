@@ -386,16 +386,16 @@ export default function TokenPage() {
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>From</p>
                           <p className={styles.traitValue}>
-                            {event.from_address?.slice(0, 4)}...
-                            {event.from_address?.slice(-2)}
+                            {event.log_events[1].decoded.params[0].value?.slice(0, 4)}...
+                            {event.log_events[1].decoded.params[0].value?.slice(-2)}
                           </p>
                         </div>
 
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>To</p>
                           <p className={styles.traitValue}>
-                            {event.to_address?.slice(0, 4)}...
-                            {event.to_address?.slice(-2)}
+                            {event.log_events[1].decoded.params[1].value?.slice(0, 4)}...
+                            {event.log_events[1].decoded.params[1].value?.slice(-2)}
                           </p>
                         </div>
 
