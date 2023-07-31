@@ -23,6 +23,7 @@ import {
 import reward from "../../public/images/Navbar/reward-removebg-preview.png";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { style } from "@mui/system";
 /**
  * Navigation bar that shows up on all pages.
  * Rendered in _app.tsx file above the page content.
@@ -45,13 +46,23 @@ export function Navbart() {
     };
     router.events.on("routeChangeComplete", handleRouteChange);
   }, [router.events]);
+  const handleDropdownOpen = () => {
+    setShowDropdown(true);
+  };
 
+  const handleDropdownClose = () => {
+    setShowDropdown(false);
+  };
   return (
     <>
       <div className={styles.navContainer}>
         <nav className={styles.nav}>
           <Navbar
-            style={{ width: "100%", backgroundColor: "#ececec !important" }}
+            style={{
+              width: "100%",
+              backgroundColor: "#ececec !important",
+              padding: "0 !important",
+            }}
             expand="xl"
             className="bg-body-tertiary"
           >
@@ -61,7 +72,6 @@ export function Navbart() {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                  
                   }}
                 >
                   <Image
@@ -120,15 +130,7 @@ export function Navbart() {
                 </Offcanvas.Header>
                 <Offcanvas.Body className={`${styles.headerCenter}`}>
                   <Nav className={`justify-content-start flex-grow-1 pe-3`}>
-                    <Link
-                      style={{
-                        color: "black",
-                        fontWeight: "550",
-                        fontSize: "20px",
-                        textDecoration: "none",
-                      }}
-                      href="/minigame"
-                    >
+                    <Link className={styles.navMiniGame} href="/minigame">
                       <div className={styles.headerLink}>
                         <div className={styles.headerIcon}>
                           <FontAwesomeIcon icon={faGamepad} />
@@ -136,12 +138,7 @@ export function Navbart() {
                         <span>Mini Game</span>
                       </div>
                     </Link>
-                    <div
-                      style={{ display: "flex" }}
-                      onMouseLeave={() => setShowDropdown(false)}
-                      onMouseOver={() => setShowDropdown(true)}
-                      onClick={() => setShowDropdown(!showDropdown)}
-                    >
+                    <div style={{ display: "flex" }}>
                       <div
                         className={styles.headerIcon}
                         style={{ color: "black", fontSize: "22px" }}
@@ -153,17 +150,18 @@ export function Navbart() {
                         className={styles.navDropdown}
                         show={showDropdown}
                         id="dropdown-toggler"
+                        onMouseEnter={handleDropdownOpen}
+                        onMouseLeave={handleDropdownClose}
+                        onClick={()=>setShowDropdown(!showDropdown)}
                       >
-                        <div>
-                          <Link className={styles.linkDropdown} href="/buy">
-                            <div className={styles.headerLinkDropdown}>
-                              <div className={styles.headerIcon}>
-                                <FontAwesomeIcon icon={faCartShopping} />
-                              </div>
-                              <span>Buy</span>
+                        <Link className={styles.linkDropdown} href="/buy">
+                          <div className={styles.headerLinkDropdown}>
+                            <div className={styles.headerIcon}>
+                              <FontAwesomeIcon icon={faCartShopping} />
                             </div>
-                          </Link>
-                        </div>
+                            <span>Buy</span>
+                          </div>
+                        </Link>
                         <div>
                           <Link className={styles.linkDropdown} href="/sell">
                             <div className={styles.headerLinkDropdown}>
@@ -177,15 +175,7 @@ export function Navbart() {
                       </NavDropdown>
                     </div>
 
-                    <Link
-                      style={{
-                        color: "black",
-                        fontWeight: "550",
-                        fontSize: "20px",
-                        textDecoration: "none",
-                      }}
-                      href="/"
-                    >
+                    <Link className={styles.navMiniGame} href="/">
                       <div className={styles.headerLink}>
                         <div className={styles.headerIcon}>
                           <FontAwesomeIcon icon={faGamepad} />
