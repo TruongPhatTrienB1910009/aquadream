@@ -103,6 +103,7 @@ export function Navbart() {
                     style={{
                       display: "flex",
                       alignItems: "center",
+                      
                     }}
                   >
                     <Nav>

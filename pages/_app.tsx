@@ -18,8 +18,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             "name": "Base Goerli Testnet",
             "chain": "ETH",
             "rpc": [
-              "https://goerli.base.org",
-              "https://base.blockscout.com"
+              "https://base-goerli.rpc.thirdweb.com",
+              // "https://base.blockscout.com"
             ],
             "faucets": [
               "https://www.coinbase.com/faucets/base-ethereum-goerli-faucet"

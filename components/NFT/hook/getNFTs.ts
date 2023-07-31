@@ -20,35 +20,6 @@ export const GetNFTs = (account: any) => {
   headers.set("Authorization", `Bearer cqt_rQ46yWprphHwWQX7YMXmpHYC7cDB`);
 
   useEffect(() => {
-    // const getNFTs = async () => {
-    //   try {
-    //     setIsLoadingNFTs(true);
-    //     const nfts: any[] = (await alchemy.nft.getNftsForOwner(account))
-    //       .ownedNfts;
-    //     if (nfts.length > 0) {
-    //       nfts.forEach((nft, index) => {
-    //         nfts[index].rawMetadata.id = nfts[index].tokenId;
-    //         const search = nfts[index].rawMetadata.image.search("ipfs:/");
-    //         if (search != -1) {
-    //           let x = `https://alchemy.mypinata.cloud/${nfts[index].rawMetadata.image}`;
-    //           nfts[index].rawMetadata.image = x.replace("ipfs:/", "ipfs");
-    //         }
-    //         nfts[index].owner = `${account}`;
-    //         nfts[index].rawMetadata.address = nfts[index].contract.address;
-    //         nfts[index].metadata = nfts[index].rawMetadata;
-    //         console.log("nfts[index]", nfts[index])
-    //       });
-    //       setNftList([...nfts]);
-    //     } else {
-    //       setNftList([]);
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   } finally {
-    //     setIsLoadingNFTs(false);
-    //   }
-    // };
-
     const getNFTs = async () => {
       try {
         setIsLoadingNFTs(true);
@@ -136,3 +107,14 @@ export const getABI = async (contractAddress: string) => {
     console.log(error);
   }
 };
+
+export const getEventsApi = async (address: any, tokenId: any) => {
+
+  let headers = new Headers();
+    headers.set('Authorization', "Bearer cqt_rQ46yWprphHwWQX7YMXmpHYC7cDB")
+   
+  const res = await fetch(`https://api.covalenthq.com/v1/base-testnet/tokens/${address}/nft_transactions/${tokenId}/?no-spam=false`, {method: 'GET', headers: headers})
+  const data = await res.json();
+  console.log(data.data.items[0].nft_transactions);
+  return data.data.items[0].nft_transactions;
+}

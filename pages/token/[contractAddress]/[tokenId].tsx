@@ -11,6 +11,7 @@ import {
   useValidDirectListings,
   useValidEnglishAuctions,
   Web3Button,
+  useContractEvents
 } from "@thirdweb-dev/react";
 import React, { useEffect, useState } from "react";
 import Container from "../../../components/Container/Container";
@@ -27,7 +28,7 @@ import Skeleton from "../../../components/Skeleton/Skeleton";
 import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../../util/toastConfig";
 import { useRouter } from "next/router";
-import { getABI } from "../../../components/NFT/hook/getNFTs";
+import { getABI, getEventsApi } from "../../../components/NFT/hook/getNFTs";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -89,21 +90,30 @@ export default function TokenPage() {
 
         if (contract) {
           setNftCollection(contract);
-          const data = await contract.erc721.get(router.query.tokenId as string);
-          if (data) {
-            setNFT(data)
+          console.log(contract);
+          try {
+            const data = await contract.erc721.get(router.query.tokenId as string);
+            console.log(router.query.contractAddress as string)
+            if (data) {
+              setNFT(data)
+              // console.log(await contract.events.getAllEvents())
+              const events = await getEventsApi(router.query.contractAddress as string, router.query.tokenId as string);
 
-            // const events = await contract.events.getEvents("Transfer", {
-            //   filters: {
-            //     tokenId: data.metadata.id,
-            //   },
-            //   order: "desc",
-            // });
+              if (events) {
+                setTransferEvents(events);
+              }
+            }
+          } catch (error) {
+            console.log(error);
+            const data = await contract.erc1155.get(router.query.tokenId as string);
+            if (data) {
+              setNFT(data)
+              const events = await getEventsApi(router.query.contractAddress as string, router.query.tokenId as string);
 
-
-            // if (events) {
-            //   setTransferEvents(events);
-            // }
+              if (events) {
+                setTransferEvents(events);
+              }
+            }
           }
         }
       }
@@ -200,11 +210,14 @@ export default function TokenPage() {
 
                     <div className={styles.traitsContainer}>
                       {Object.entries(nft?.metadata?.attributes || {}).map(
-                        ([key, value]) => (
+                        ([key, value]: any) => (
                           <div className={styles.traitContainer} key={key}>
-                            <p className={styles.traitName}>{key}</p>
+                            {/* <p className={styles.traitName}>{key}</p> */}
                             <p className={styles.traitValue}>
-                              {value?.toString() || ""}
+                              {value.trait_type}
+                            </p>
+                            <p className={styles.traitValue}>
+                              {value.value}
                             </p>
                           </div>
                         )
@@ -219,6 +232,7 @@ export default function TokenPage() {
                       <MediaRenderer
                         src={nft?.metadata.image}
                         className={styles.collectionImage} />
+
                       <p className={styles.collectionName}>{nft?.metadata.name}</p>
                     </div>
 
@@ -353,7 +367,7 @@ export default function TokenPage() {
                   <Scrollbars style={{ height: 300 }}>
                     {transferEvents?.map((event: any, index: any) => (
                       <div
-                        key={event.transaction.transactionHash}
+                        key={event.tx_hash}
                         className={styles.eventsContainer}
                       >
                         <div className={styles.eventContainer}>
@@ -370,23 +384,23 @@ export default function TokenPage() {
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>From</p>
                           <p className={styles.traitValue}>
-                            {event.data.from?.slice(0, 4)}...
-                            {event.data.from?.slice(-2)}
+                            {event.log_events[0].decoded.params[0].value?.slice(0, 4)}...
+                            {event.log_events[0].decoded.params[0].value?.slice(-2)}
                           </p>
                         </div>
 
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>To</p>
                           <p className={styles.traitValue}>
-                            {event.data.to?.slice(0, 4)}...
-                            {event.data.to?.slice(-2)}
+                            {event.log_events[0].decoded.params[1].value?.slice(0, 4)}...
+                            {event.log_events[0].decoded.params[1].value?.slice(-2)}
                           </p>
                         </div>
 
                         <div className={styles.eventContainer}>
                           <Link
                             className={styles.txHashArrow}
-                            href={`${ETHERSCAN_URL}/tx/${event.transaction.transactionHash}`}
+                            href={`${ETHERSCAN_URL}/tx/${event.tx_hash}`}
                             target="_blank"
                           >
                             ↗
