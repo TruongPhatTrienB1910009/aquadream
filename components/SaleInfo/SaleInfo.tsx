@@ -16,7 +16,6 @@ import {
 import {
   MARKETPLACE_ADDRESS,
   NETWORK,
-  NFT_COLLECTION_ADDRESS,
 } from "../../const/contractAddresses";
 import { useRouter } from "next/router";
 import toast, { Toaster } from "react-hot-toast";
