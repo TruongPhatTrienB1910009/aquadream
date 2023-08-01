@@ -51,6 +51,7 @@ export default function TokenPage() {
   const address = useAddress();
   const router = useRouter();
   const sdk = new ThirdwebSDK(NETWORK);
+
   let USDollar = new Intl.NumberFormat('en-DE');
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
@@ -209,10 +210,11 @@ export default function TokenPage() {
             <Toaster position="bottom-center" reverseOrder={false} /><Container maxWidth="lg">
               <div className={styles.container}>
                 <div className={styles.metadataContainer}>
-                  {/* <ThirdwebNftMedia
+                  <ThirdwebNftMedia
                     metadata={nft?.metadata}
-                    className={styles.imageBuy} /> */}
-                  <img src={nft?.metadata.image} className={styles.imageBuy} alt="" />
+                    className={styles.imageBuy} 
+                    />
+                  {/* <img src={nft?.metadata.image} className={styles.imageBuy} alt="" /> */}
 
                   <div className={styles.descriptionContainer}>
                     <h3 className={styles.descriptionTitle}>Description</h3>
@@ -394,7 +396,7 @@ export default function TokenPage() {
                           </p>
                         </div>
 
-                        <div className={styles.eventContainer}>
+                        {/* <div className={styles.eventContainer}>
                           <p className={styles.traitName}>From</p>
                           <p className={styles.traitValue}>
                             {event.log_events[0].decoded.params[0].value?.slice(0, 4)}...
@@ -408,7 +410,7 @@ export default function TokenPage() {
                             {event.log_events[0].decoded.params[1].value?.slice(0, 4)}...
                             {event.log_events[0].decoded.params[1].value?.slice(-2)}
                           </p>
-                        </div>
+                        </div> */}
 
                         <div className={styles.eventContainer}>
                           <Link

@@ -58,8 +58,8 @@ const NFTComponent = React.memo(
     }, []);
     return (
       <>
-        {/* <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} /> */}
-        <img src={`${nft.metadata.image}`} className={styles.nftImage} alt="" />
+        <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} />
+        {/* <img src={`${nft.metadata.image}`} className={styles.nftImage} alt="" /> */}
         {/* <img src="" alt="" /> */}
 
         {/* <p className={styles.nftTokenId}>Token ID #{nft.metadata.id}</p> */}
