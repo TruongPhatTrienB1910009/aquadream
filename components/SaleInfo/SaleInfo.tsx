@@ -57,6 +57,7 @@ export default function SaleInfo({ nft }: Props) {
     MARKETPLACE_ADDRESS,
     "marketplace-v3"
   );
+  let USDollar = new Intl.NumberFormat('en-DE');
   var today = new Date();
 
   // Increment the date by 1 to get tomorrow's date
@@ -265,7 +266,7 @@ export default function SaleInfo({ nft }: Props) {
                 disabled
                 {...registerDirect("price")}
               />
-              <span style={{ marginLeft: '1%' }}>{"  (~$" + (Number(directListing[0].currencyValuePerToken.displayValue) * usdPrice).toFixed(2) + ")"
+              <span style={{ marginLeft: '1%' }}>{"  (~$" +(USDollar.format(Number((Number(directListing[0].currencyValuePerToken.displayValue) * usdPrice).toFixed(2)))) + ")"
               }</span>
               <div className={styles.btnContainer}>
                 <Web3Button
@@ -325,7 +326,7 @@ export default function SaleInfo({ nft }: Props) {
                 type="datetime-local"
                 {...registerDirect("endDate")}
                 aria-label="Auction End Date"
-                min={datetimeLocalString}
+                min={datetimeLocalString} 
               />
               <h4 className={styles.formSectionTitle}>Price </h4>
               <input
@@ -337,7 +338,7 @@ export default function SaleInfo({ nft }: Props) {
                 {...registerDirect("price")}
                 onChange={handleChange}
               />
-              <span style={{ marginLeft: '1%' }}>{"  (~$" + (price).toFixed(2) + ")"
+              <span style={{ marginLeft: '1%' }}>{"  (~$" + (USDollar.format(Number(price.toFixed(2)))) + ")"
               }</span>
               <div className={styles.btnContainer}>
                 <Web3Button

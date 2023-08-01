@@ -26,13 +26,13 @@ const NFTComponent = React.memo(
           "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD"
         );
         const data = await response.json();
-        setUsdPrice(data.USD)
+        setUsdPrice(data.USD);
       } catch (error) {
-        console.error('Error fetching ETH price:', error);
+        console.error("Error fetching ETH price:", error);
         return null;
       }
     }
-
+    let USDollar = new Intl.NumberFormat("en-DE");
     const { contract: marketplace, isLoading: loadingContract } = useContract(
       MARKETPLACE_ADDRESS,
       "marketplace-v3" // contract-type.
@@ -51,11 +51,11 @@ const NFTComponent = React.memo(
         tokenId: nft.metadata.id,
       });
 
-    console.log("nft", nft)
+    console.log("nft", nft);
 
     useEffect(() => {
       getEthPrice();
-    }, [])
+    }, []);
     return (
       <>
         {/* <ThirdwebNftMedia metadata={nft.metadata} className={styles.nftImage} /> */}
@@ -75,8 +75,16 @@ const NFTComponent = React.memo(
                   {`${directListing[0]?.currencyValuePerToken.displayValue}
           ${directListing[0]?.currencyValuePerToken.symbol}`}
                   {"  ($" +
-                    (Number(directListing[0]?.currencyValuePerToken.displayValue) * usdPrice).toFixed(2) + ")"
-                  }
+                    USDollar.format(
+                      Number(
+                        (
+                          Number(
+                            directListing[0].currencyValuePerToken.displayValue
+                          ) * usdPrice
+                        ).toFixed(2)
+                      )
+                    ) +
+                    ")"}
                 </p>
               </div>
             </div>

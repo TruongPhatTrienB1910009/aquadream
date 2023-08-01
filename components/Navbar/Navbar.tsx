@@ -32,6 +32,12 @@ export function Navbart() {
   const address = useAddress();
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [colorUrl, setColorUrl] = useState(false);
+  useEffect(() => {
+    if (router.pathname === "/sell" || router.pathname === "/buy")
+      setColorUrl(true);
+    else setColorUrl(false);
+  }, [router.pathname]);
   useEffect(() => {
     const handleRouteChange = (url: String) => {
       if (typeof window !== undefined && window.screen.width <= 991.98) {
@@ -75,9 +81,6 @@ export function Navbart() {
                   }}
                 >
                   <Image
-                    style={{
-                      marginLeft: "10px",
-                    }}
                     width={70}
                     height={70}
                     src={logo}
@@ -103,7 +106,6 @@ export function Navbart() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      
                     }}
                   >
                     <Nav>
@@ -136,7 +138,16 @@ export function Navbart() {
                         <div className={styles.headerIcon}>
                           <FontAwesomeIcon icon={faGamepad} />
                         </div>
-                        <span>Mini Game</span>
+                        <span
+                          style={{
+                            color:
+                              router.pathname.toString() === "/minigame"
+                                ? "#0294fe"
+                                : "",
+                          }}
+                        >
+                          Mini Game
+                        </span>
                       </div>
                     </Link>
                     <div style={{ display: "flex" }}>
@@ -147,13 +158,22 @@ export function Navbart() {
                         <FontAwesomeIcon icon={faCartShopping} />
                       </div>
                       <NavDropdown
-                        title="Marketplace"
+                        title={
+                          <span
+                            style={{
+                              color: colorUrl ? "#0294fe" : "",
+                              textDecoration: colorUrl ? "underline" : "none",
+                            }}
+                          >
+                            Marketplace
+                          </span>
+                        }
                         className={styles.navDropdown}
                         show={showDropdown}
                         id="dropdown-toggler"
                         onMouseEnter={handleDropdownOpen}
                         onMouseLeave={handleDropdownClose}
-                        onClick={()=>setShowDropdown(!showDropdown)}
+                        onClick={() => setShowDropdown(!showDropdown)}
                       >
                         <Link className={styles.linkDropdown} href="/buy">
                           <div className={styles.headerLinkDropdown}>
@@ -176,7 +196,10 @@ export function Navbart() {
                       </NavDropdown>
                     </div>
 
-                    <Link className={styles.navMiniGame} href="/">
+                    <Link
+                      className={styles.navMiniGame}
+                      href="javascript:void(0)"
+                    >
                       <div className={styles.headerLink}>
                         <div className={styles.headerIcon}>
                           <FontAwesomeIcon icon={faGamepad} />

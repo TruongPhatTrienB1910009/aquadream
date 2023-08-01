@@ -28,6 +28,7 @@ import toast, { Toaster } from "react-hot-toast";
 import toastStyle from "../../util/toastConfig";
 import { ethers } from "ethers";
 import { Breadcrumb } from "react-bootstrap";
+import Link from "next/link";
 
 const INITIAL_COUNT = 0;
 const Index = () => {
@@ -257,9 +258,10 @@ const Index = () => {
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
       <Breadcrumb className={styles.containerMini}>
-        <Breadcrumb.Item className={styles.containerMiniItem} href="/">
-          {" "}
-          <FontAwesomeIcon icon={faHome} /> Home
+        <Breadcrumb.Item active className={styles.containerMiniItem}>
+          <Link href="/">
+            <FontAwesomeIcon icon={faHome} /> Home
+          </Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item active>Mini Game</Breadcrumb.Item>
       </Breadcrumb>
