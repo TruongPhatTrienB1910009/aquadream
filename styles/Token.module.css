@@ -107,7 +107,7 @@
 .imageContainerSell {
   position: relative;
   border: 1px solid #ccc;
-  max-width: 380px !important;
+  width: 360px !important;
   border-radius: 6px;
   height: auto;
 }
