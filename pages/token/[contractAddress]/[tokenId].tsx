@@ -52,6 +52,7 @@ export default function TokenPage() {
   const address = useAddress();
   const router = useRouter();
   const sdk = new ThirdwebSDK(NETWORK);
+  let USDollar = new Intl.NumberFormat('en-DE');
 
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
@@ -277,7 +278,7 @@ export default function TokenPage() {
                                     {" " +
                                       directListing[0]?.currencyValuePerToken.symbol}
                                     {"  ($" +
-                                      (Number(directListing[0]?.currencyValuePerToken.displayValue) * usdPrice).toFixed(2) + ")"
+                                      (USDollar.format(Number((Number(directListing[0].currencyValuePerToken.displayValue) * usdPrice).toFixed(2)))) + ")"
                                     }
                                   </div>
 
@@ -384,16 +385,16 @@ export default function TokenPage() {
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>From</p>
                           <p className={styles.traitValue}>
-                            {event.log_events[0].decoded.params[0].value?.slice(0, 4)}...
-                            {event.log_events[0].decoded.params[0].value?.slice(-2)}
+                            {/* {event.log_events[0].decoded.params[0].value?.slice(0, 4)}...
+                            {event.log_events[0].decoded.params[0].value?.slice(-2)} */}
                           </p>
                         </div>
 
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>To</p>
                           <p className={styles.traitValue}>
-                            {event.log_events[0].decoded.params[1].value?.slice(0, 4)}...
-                            {event.log_events[0].decoded.params[1].value?.slice(-2)}
+                            {/* {event.log_events[0].decoded.params[1].value?.slice(0, 4)}...
+                            {event.log_events[0].decoded.params[1].value?.slice(-2)} */}
                           </p>
                         </div>
 

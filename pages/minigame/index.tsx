@@ -37,7 +37,7 @@ const Index = () => {
     minigameABI
   );
   const address = useAddress();
-  const startDate = new Date("July 30, 2023 14:43:00");
+  const startDate = new Date("August 4, 2023 14:43:00");
 
   const dateTimeAfterThreeDays = startDate;
   const [time, setTime] = useState(0);
