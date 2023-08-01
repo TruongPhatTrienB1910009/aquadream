@@ -335,16 +335,17 @@ export default function TokenPage() {
                                     });
                                   }}
                                   onError={(e) => {
-                                    (e as any).info.reason !== "user rejected transaction"
-                                      ? toast(
-                                        "Please try again. Confirm the transaction and make sure you are paying enough gas!",
-                                        {
-                                          icon: "❌",
-                                          style: toastStyle,
-                                          position: "bottom-center",
-                                        }
-                                      )
-                                      : "";
+                                    console.log("(e as any).info.reason", (e as any).info.reason)
+                                    // (e as any).info.reason !== "user rejected transaction"
+                                    //   ? toast(
+                                    //     "Please try again. Confirm the transaction and make sure you are paying enough gas!",
+                                    //     {
+                                    //       icon: "❌",
+                                    //       style: toastStyle,
+                                    //       position: "bottom-center",
+                                    //     }
+                                    //   )
+                                    //   : "";
                                   }}
                                 >
                                   Buy at asking price

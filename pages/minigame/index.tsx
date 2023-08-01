@@ -5,7 +5,7 @@ import React, { useEffect, useState, useRef } from "react";
 import styles from "./minigame.module.css";
 import dynamic from "next/dynamic";
 import { MediaRenderer, useOwnedNFTs } from "@thirdweb-dev/react";
-
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import Skeleton from "../../components/Skeleton/Skeleton";
 
 import {
@@ -20,7 +20,7 @@ const CountdownTimer = dynamic(
   { ssr: false }
 );
 import { ConnectWallet } from "@thirdweb-dev/react";
-import { MINI_GAME_ADDRESS } from "../../const/contractAddresses";
+import { MINI_GAME_ADDRESS, NETWORK } from "../../const/contractAddresses";
 import minigameABI from "../../const/abi/minigame.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -36,7 +36,7 @@ const Index = () => {
     minigameABI
   );
   const address = useAddress();
-  const startDate = new Date("July 30, 2023 14:43:00");
+  const startDate = new Date("Aug 2, 2023 14:43:00");
 
   const dateTimeAfterThreeDays = startDate;
   const [time, setTime] = useState(0);
@@ -57,6 +57,8 @@ const Index = () => {
   //loading when claim ETH
   const [loadingClaim, setLoadingClaim] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [idData, setIdData] = useState(-1);
+  const [tmp, setTmp] = useState(-1);
 
   const { data: NFTs } = useOwnedNFTs(miniGameContract, address);
 
@@ -113,8 +115,7 @@ const Index = () => {
           style: toastStyle,
           position: "bottom-center",
         });
-        tokenOfOwner();
-        getDataNFT();
+        GetOwned();
       }
     } catch (error) {
       const err = (error as any).info.reason;
@@ -130,7 +131,7 @@ const Index = () => {
   const claimETH = async () => {
     try {
       setLoadingClaim(true);
-      const data = await miniGameContract?.call("claimETH", [], {
+      const data = await miniGameContract?.call("claimReward", [idData], {
         value: 0,
       });
       if (data) {
@@ -139,7 +140,8 @@ const Index = () => {
           style: toastStyle,
           position: "bottom-center",
         });
-        GetClaim();
+        GetOwned();
+        GetClaim(dataNft.id);
       }
     } catch (error) {
       console.log(error);
@@ -156,10 +158,20 @@ const Index = () => {
       }
     }
   };
-  const GetClaim = async () => {
+
+  const GetClaim = async (_tok: any) => {
     try {
-      const data = await miniGameContract?.call("nfts", [tokenOfOwnerByIndex]);
-      setClaim(data);
+      if (prevCountRef.current !== idData) {
+        setTmp(1);
+      }
+      if (address) {
+        const data = await miniGameContract?.call("nfts", [_tok]);
+        if (data) {
+          setClaim(data);
+        } else {
+          setClaim([]);
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -173,46 +185,27 @@ const Index = () => {
       setTotalMinted(0);
     }
   };
-  const tokenOfOwner = async () => {
-    setIsLoading(false);
-    if (address) {
-      try {
-        const data = await miniGameContract?.call("tokenOfOwnerByIndex", [
-          address,
-          0,
-        ]);
-        const index = new BigNumber(data.toString()).toNumber();
-        if (index !== -1) {
-          setTokenOfOwnerByIndex(index);
-        }
-      } catch (e) {
-        console.log(e);
-        setTokenOfOwnerByIndex(-1);
-      }
-    } else {
-      setTokenOfOwnerByIndex(-1);
-    }
-  };
 
-  const getDataNFT = async () => {
+  const sdk = new ThirdwebSDK(NETWORK);
+
+  const GetOwned = async () => {
     try {
-      if (
-        tokenOfOwnerByIndex !== -1 &&
-        prevCountRef.current !== tokenOfOwnerByIndex
-      ) {
-        const data = await miniGameContract?.call("tokenURI", [
-          tokenOfOwnerByIndex,
-        ]);
-        if (data !== undefined) {
-          fetch(data)
-            .then((res) => res.json())
-            .then((data) => {
-              setDataNft(data);
-            });
-        }
+      const contract = await sdk.getContract(MINI_GAME_ADDRESS);
+      if (address) {
+        const ownedTokenIds1 = await contract.erc721.getOwned(address);
+        const data1 = ownedTokenIds1[0].metadata.id;
+        const index = new BigNumber(data1.toString()).toNumber();
+        setIdData(index);
+        const data2 = ownedTokenIds1[0].metadata;
+        setDataNft(data2);
+      } else {
+        setIdData(-1);
+        setDataNft([]);
       }
     } catch (e) {
-      console.log(error);
+      console.log(e);
+      setIdData(-1);
+      setDataNft([]);
     }
   };
 
@@ -236,15 +229,18 @@ const Index = () => {
       console.log(e);
     }
   };
+
   GetTotalMinted();
-  getDataNFT();
   checkBalanceOf();
   useEffect(() => {
     setDataNft(null);
+    setTmp(-1);
     checkDate();
+    GetOwned();
+    GetClaim(idData);
     if (address !== null) {
       checkMinted();
-      tokenOfOwner();
+      GetClaim(idData);
       checkBalanceOf();
       if (status.message !== "") {
         setOpenToast(true);
@@ -252,18 +248,11 @@ const Index = () => {
       GetTotalMinted();
     }
     GetTotalMinted();
-    prevCountRef.current = tokenOfOwnerByIndex;
-    if (tokenOfOwnerByIndex !== -1) GetClaim();
-  }, [
-    address,
-    minted,
-    status.message,
-    tokenOfOwnerByIndex,
-    totalMinted,
-    balanceOf,
-    time,
-  ]);
-
+    prevCountRef.current = idData;
+    if (idData) {
+      GetClaim(idData);
+    }
+  }, [address, idData, minted, status.message, totalMinted, balanceOf, time]);
   return (
     <>
       <Toaster position="bottom-center" reverseOrder={false} />
@@ -278,7 +267,7 @@ const Index = () => {
       {balanceOf > 0 && minted === 1 && chainId === 84531 ? (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            {!dataNft || !isLoading ? (
+            {!dataNft || !isLoading || tmp === -1 ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
                   <Skeleton key={index} width={"100%"} height="412px" />
@@ -413,7 +402,7 @@ const Index = () => {
       ) : (
         <div className={styles.minigameContainer}>
           <div className={styles.leftSide}>
-            {!isLoading && address && tokenOfOwnerByIndex !== -1 ? (
+            {!isLoading && address && idData !== -1 ? (
               [...Array(1)].map((_, index) => (
                 <div key={index} className={styles.nftContainer}>
                   <Skeleton key={index} width={"100%"} height="522px" />
