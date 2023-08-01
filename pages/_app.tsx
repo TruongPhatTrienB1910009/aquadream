@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { ThirdwebProvider, ThirdwebSDKProvider } from "@thirdweb-dev/react";
 import { Navbart } from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import NextNProgress from "nextjs-progressbar";
@@ -19,7 +19,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             "chain": "ETH",
             "rpc": [
               "https://base-goerli.rpc.thirdweb.com",
-              // "https://base.blockscout.com"
+              "https://goerli.base.org",
+              "https://base-goerli.blockscout.com/"
             ],
             "faucets": [
               "https://www.coinbase.com/faucets/base-ethereum-goerli-faucet"
@@ -62,7 +63,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         }
         supportedChains={[NETWORK]}
-      // clientId="f0b31bf9f18c5fe4f8e10b51fc47a1f03b6a4f9b459728ab9b035bf41ee9e369376b3ab0f9d01e401d14e1a919b97fd09cad5d8a40afa76ec9ac4e164b5fb3c4"
+        clientId="f0b31bf9f18c5fe4f8e10b51fc47a1f03b6a4f9b459728ab9b035bf41ee9e369376b3ab0f9d01e401d14e1a919b97fd09cad5d8a40afa76ec9ac4e164b5fb3c4"
       >
 
         <NextNProgress

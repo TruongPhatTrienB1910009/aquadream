@@ -29,7 +29,7 @@
   align-items: center;
   /* padding: 8px; */
   transition: all 0.25s ease-in-out;
-  box-shadow: #4D88A2  0px 10px 29px 10px;
+  box-shadow: 3px 4px 9px 9px rgba(55, 66, 120);
   border-radius: 15px;
 }
 
@@ -66,7 +66,6 @@
 
 .nftName {
   text-overflow: ellipsis;
-  white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
   color: black;

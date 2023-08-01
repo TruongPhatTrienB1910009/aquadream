@@ -2,15 +2,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { useEffect, useState } from "react";
-import { Network, Alchemy } from "alchemy-sdk";
 import { MARKETPLACE_ADDRESS, NETWORK } from "../../../const/contractAddresses";
 import { useContract, useNFT, useNFTs } from "@thirdweb-dev/react";
-
-const settings = {
-  apiKey: process.env.ALCHEMY_API_KEY as string,
-  network: Network.ETH_GOERLI,
-};
-const alchemy = new Alchemy(settings);
 
 export const GetNFTs = (account: any) => {
   const [nftList, setNftList] = useState<any[]>([]);
@@ -115,6 +108,6 @@ export const getEventsApi = async (address: any, tokenId: any) => {
    
   const res = await fetch(`https://api.covalenthq.com/v1/base-testnet/tokens/${address}/nft_transactions/${tokenId}/?no-spam=false`, {method: 'GET', headers: headers})
   const data = await res.json();
-  console.log(data.data.items[0].nft_transactions);
+  // console.log(data.data.items[0]);
   return data.data.items[0].nft_transactions;
 }
