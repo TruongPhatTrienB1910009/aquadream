@@ -15,7 +15,7 @@ import {
 } from "@thirdweb-dev/react";
 import React, { useEffect, useState } from "react";
 import Container from "../../../components/Container/Container";
-import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import {
   ETHERSCAN_URL,
   MARKETPLACE_ADDRESS,
@@ -32,7 +32,6 @@ import { getABI, getEventsApi } from "../../../components/NFT/hook/getNFTs";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { ethers } from "ethers";
 
 type Props = {
   nft: any;
@@ -51,7 +50,10 @@ export default function TokenPage() {
   const [loadingChange, setLoadingChange] = useState(false);
   const address = useAddress();
   const router = useRouter();
-  const sdk = new ThirdwebSDK(NETWORK);
+  
+  const sdk = new ThirdwebSDK({
+    ...NETWORK
+  });
 
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
@@ -90,7 +92,7 @@ export default function TokenPage() {
 
         if (contract) {
           setNftCollection(contract);
-          console.log(contract);
+          console.log("contract1", contract);
           try {
             const data = await contract.erc721.get(router.query.tokenId as string);
             console.log(router.query.contractAddress as string)
@@ -98,6 +100,19 @@ export default function TokenPage() {
               setNFT(data)
               // console.log(await contract.events.getAllEvents())
               const events = await getEventsApi(router.query.contractAddress as string, router.query.tokenId as string);
+
+              // try {
+              //   const eventsA = await contract.events.getEvents("Transfer", {
+              //     filters: {
+              //       tokenId: data.metadata.id,
+              //     },
+              //     order: "desc",
+              //   });
+  
+              //   console.log(eventsA)
+              // } catch (error) {
+              //   console.log(error)
+              // }
 
               if (events) {
                 setTransferEvents(events);
@@ -384,16 +399,43 @@ export default function TokenPage() {
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>From</p>
                           <p className={styles.traitValue}>
-                            {event.log_events[0].decoded.params[0].value?.slice(0, 4)}...
-                            {event.log_events[0].decoded.params[0].value?.slice(-2)}
+                            {
+                              (event.log_events[1]) ?
+                              (
+                                <>
+                                  {event.log_events[1].decoded.params[0].value?.slice(0, 4)}...
+                                  {event.log_events[1].decoded.params[0].value?.slice(-2)}
+                                </>
+                              ) : (
+                                <>
+                                  {event.log_events[0].decoded.params[0].value?.slice(0, 4)}...
+                                  {event.log_events[0].decoded.params[0].value?.slice(-2)}
+                                </>
+                              )
+                            }
                           </p>
                         </div>
 
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>To</p>
                           <p className={styles.traitValue}>
-                            {event.log_events[0].decoded.params[1].value?.slice(0, 4)}...
-                            {event.log_events[0].decoded.params[1].value?.slice(-2)}
+                            {/* {event.log_events[0].decoded.params[1].value?.slice(0, 4)}...
+                            {event.log_events[0].decoded.params[1].value?.slice(-2)} */}
+
+                            {
+                              (event.log_events[1]) ?
+                              (
+                                <>
+                                  {event.log_events[1].decoded.params[1].value?.slice(0, 4)}...
+                                  {event.log_events[1].decoded.params[1].value?.slice(-2)}
+                                </>
+                              ) : (
+                                <>
+                                  {event.log_events[0].decoded.params[1].value?.slice(0, 4)}...
+                                  {event.log_events[0].decoded.params[1].value?.slice(-2)}
+                                </>
+                              )
+                            }
                           </p>
                         </div>
 
