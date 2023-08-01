@@ -51,7 +51,7 @@ export default function TokenPage() {
   const address = useAddress();
   const router = useRouter();
   const sdk = new ThirdwebSDK(NETWORK);
-
+  let USDollar = new Intl.NumberFormat('en-DE');
   // Connect to marketplace smart contract
   const { contract: marketplace, isLoading: loadingContract } = useContract(
     MARKETPLACE_ADDRESS,

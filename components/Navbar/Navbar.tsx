@@ -81,9 +81,6 @@ export function Navbart() {
                   }}
                 >
                   <Image
-                    style={{
-                      marginLeft: "10px",
-                    }}
                     width={70}
                     height={70}
                     src={logo}
