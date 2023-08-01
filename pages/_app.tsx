@@ -63,7 +63,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         }
         supportedChains={[NETWORK]}
-        clientId="f0b31bf9f18c5fe4f8e10b51fc47a1f03b6a4f9b459728ab9b035bf41ee9e369376b3ab0f9d01e401d14e1a919b97fd09cad5d8a40afa76ec9ac4e164b5fb3c4"
+        // clientId="f0b31bf9f18c5fe4f8e10b51fc47a1f03b6a4f9b459728ab9b035bf41ee9e369376b3ab0f9d01e401d14e1a919b97fd09cad5d8a40afa76ec9ac4e164b5fb3c4"
       >
 
         <NextNProgress
