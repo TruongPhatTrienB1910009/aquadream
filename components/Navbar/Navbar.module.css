@@ -23,7 +23,7 @@
   height: 100px;
   align-items: center;
 }
-.navDropdown div{
+.navDropdown div {
   margin-top: 0 !important;
 }
 .linkDropdown {
@@ -226,12 +226,12 @@
     float: left;
     display: block;
   }
-  .navDropdown{
+  .navDropdown {
     height: auto;
     align-items: normal;
     display: block;
   }
-  .navMiniGame{
+  .navMiniGame {
     display: block;
     height: auto;
   }

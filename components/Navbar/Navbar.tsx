@@ -103,7 +103,6 @@ export function Navbart() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      
                     }}
                   >
                     <Nav>
@@ -153,7 +152,7 @@ export function Navbart() {
                         id="dropdown-toggler"
                         onMouseEnter={handleDropdownOpen}
                         onMouseLeave={handleDropdownClose}
-                        onClick={()=>setShowDropdown(!showDropdown)}
+                        onClick={() => setShowDropdown(!showDropdown)}
                       >
                         <Link className={styles.linkDropdown} href="/buy">
                           <div className={styles.headerLinkDropdown}>
