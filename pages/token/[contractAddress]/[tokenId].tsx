@@ -32,7 +32,11 @@ import { getABI, getEventsApi } from "../../../components/NFT/hook/getNFTs";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-
+import dynamic from "next/dynamic";
+const CountdownTimer = dynamic(
+  () => import("../../../components/MiniGame/Timer/CountdownTimer"),
+  { ssr: false }
+);
 type Props = {
   nft: any;
 };
@@ -44,6 +48,7 @@ export default function TokenPage() {
   const [usdPrice, setUsdPrice] = useState(0);
   const chainId = useChainId();
   const [{ data, error, loading }, switchNetwork] = useNetwork();
+  const [endDate, setEndDate] = useState<any>([]);
   // loading
   const [loadingMint, setLoadingMint] = useState(false);
   //loading when change network
@@ -98,19 +103,19 @@ export default function TokenPage() {
               setNFT(data)
               // console.log(await contract.events.getAllEvents())
               const events = await getEventsApi(router.query.contractAddress as string, router.query.tokenId as string);
-              console.log(events);
-              try {
-                const eventsA = await contract.events.getEvents("Transfer", {
-                  filters: {
-                    tokenId: data.metadata.id,
-                  },
-                  order: "desc",
-                });
+
+              // try {
+              //   const eventsA = await contract.events.getEvents("Transfer", {
+              //     filters: {
+              //       tokenId: data.metadata.id,
+              //     },
+              //     order: "desc",
+              //   });
   
-                console.log(eventsA)
-              } catch (error) {
-                console.log(error)
-              }
+              //   console.log(eventsA)
+              // } catch (error) {
+              //   console.log(error)
+              // }
 
               if (events) {
                 setTransferEvents(events);
@@ -198,8 +203,23 @@ export default function TokenPage() {
       year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
   }
 
+  function getDuration() {
+    if (directListing?.[0]) {
+      const time = new Date(
+        directListing[0].startTimeInSeconds * 1000 +
+        (directListing[0].endTimeInSeconds -
+          directListing[0].startTimeInSeconds) *
+        1000
+      )
+      
+      
+      setEndDate(time);
+    }
+  }
+
   useEffect(() => {
     GetABIForNftCollection();
+    getDuration();
   }, [router.query.contractAddress, directListing?.[0]]);
 
   return (
@@ -296,11 +316,8 @@ export default function TokenPage() {
                                   </div>
 
                                   <div className={styles.endTime}>
-                                    <span>Sale ends</span>
-                                    <input
-                                      type="datetime-local"
-                                      value={datetimeLocalString}
-                                      disabled />
+                                    <span>Sale ends:</span>
+                                      <CountdownTimer targetDate={endDate}/>
                                   </div>
                                 </>
                               ) : (

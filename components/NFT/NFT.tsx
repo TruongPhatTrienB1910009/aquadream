@@ -51,8 +51,6 @@ const NFTComponent = React.memo(
         tokenId: nft.metadata.id,
       });
 
-    console.log("nft", nft);
-
     useEffect(() => {
       getEthPrice();
     }, []);
