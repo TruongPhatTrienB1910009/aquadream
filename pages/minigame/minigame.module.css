@@ -7,7 +7,7 @@
 /* left side */
 
 .leftSide {
-  width: 45%;
+  width: 50%;
   height: 50%;
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@
   align-items: center;
   /* padding: 8px; */
   transition: all 0.25s ease-in-out;
-  box-shadow: 3px 4px 9px 9px rgba(55, 66, 120);
+  box-shadow: #4d88a2 0px 10px 29px 10px;
   border-radius: 15px;
 }
 
@@ -85,8 +85,7 @@
 .rightSide {
   width: 50%;
   height: 50%;
-  margin-top: 30px;
-  display: flex;
+  margin-top: 50px;
   align-items: center;
   justify-content: center;
 }
@@ -165,6 +164,24 @@
   .minigameContainer {
     flex-direction: column;
   }
+  .leftSide {
+    width: 100%;
+  }
+  .rightSide {
+    width: 100%;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: justify;
+  }
+}
+
+/* @media (max-width: 750px) {
+  .minigameContainer {
+    flex-direction: column;
+  }
 
   .leftSide {
     width: 100%;
@@ -197,4 +214,4 @@
   .content button {
     margin-top: 30px;
   }
-}
+} */
