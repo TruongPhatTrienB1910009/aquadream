@@ -32,7 +32,11 @@ import { getABI, getEventsApi } from "../../../components/NFT/hook/getNFTs";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-
+import dynamic from "next/dynamic";
+const CountdownTimer = dynamic(
+  () => import("../../../components/MiniGame/Timer/CountdownTimer"),
+  { ssr: false }
+);
 type Props = {
   nft: any;
 };
@@ -44,6 +48,7 @@ export default function TokenPage() {
   const [usdPrice, setUsdPrice] = useState(0);
   const chainId = useChainId();
   const [{ data, error, loading }, switchNetwork] = useNetwork();
+  const [endDate, setEndDate] = useState<any>([]);
   // loading
   const [loadingMint, setLoadingMint] = useState(false);
   //loading when change network
@@ -198,8 +203,23 @@ export default function TokenPage() {
       year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
   }
 
+  function getDuration() {
+    if (directListing?.[0]) {
+      const time = new Date(
+        directListing[0].startTimeInSeconds * 1000 +
+        (directListing[0].endTimeInSeconds -
+          directListing[0].startTimeInSeconds) *
+        1000
+      )
+      
+      
+      setEndDate(time);
+    }
+  }
+
   useEffect(() => {
     GetABIForNftCollection();
+    getDuration();
   }, [router.query.contractAddress, directListing?.[0]]);
 
   return (
@@ -296,11 +316,8 @@ export default function TokenPage() {
                                   </div>
 
                                   <div className={styles.endTime}>
-                                    <span>Sale ends</span>
-                                    <input
-                                      type="datetime-local"
-                                      value={datetimeLocalString}
-                                      disabled />
+                                    <span>Sale ends:</span>
+                                      <CountdownTimer targetDate={endDate}/>
                                   </div>
                                 </>
                               ) : (
@@ -399,16 +416,16 @@ export default function TokenPage() {
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>From</p>
                           <p className={styles.traitValue}>
-                            {/* {event.log_events[0].decoded.params[0].value?.slice(0, 4)}...
-                            {event.log_events[0].decoded.params[0].value?.slice(-2)} */}
+                            {event.from_address?.slice(0, 4)}...
+                            {event.from_address?.slice(-2)}
                           </p>
                         </div>
 
                         <div className={styles.eventContainer}>
                           <p className={styles.traitName}>To</p>
                           <p className={styles.traitValue}>
-                            {/* {event.log_events[0].decoded.params[1].value?.slice(0, 4)}...
-                            {event.log_events[0].decoded.params[1].value?.slice(-2)} */}
+                            {event.to_address?.slice(0, 4)}...
+                            {event.to_address?.slice(-2)}
                           </p>
                         </div>
 

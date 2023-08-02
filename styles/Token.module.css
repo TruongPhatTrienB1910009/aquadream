@@ -55,18 +55,18 @@
 
 .image {
   border-radius: 6px;
-  width: 360px;
-  height: 360px;
+  width: 360px !important;
+  height: 360px !important;
   background-color: rgba(255, 255, 255, 0.04);
   margin: 0 auto;
-  object-fit: cover;
+  object-fit: cover !important;
 }
 
 .imageBuy {
   border-radius: 6px;
   width: 360px !important;
   height: 360px !important;
-  object-fit: cover;
+  object-fit: cover !important;
   background-color: rgba(255, 255, 255, 0.04);
   margin: 0 auto;
 }
