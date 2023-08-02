@@ -61,4 +61,8 @@
   line-height: 1rem;
 }
 
-@media (max-width: 360px) {}
+@media (max-width: 400px) {
+  .show_counter .countdown{
+    margin: 0;
+  }
+}
