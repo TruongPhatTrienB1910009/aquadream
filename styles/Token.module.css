@@ -64,8 +64,8 @@
 
 .imageBuy {
   border-radius: 6px;
-  width: 360px;
-  height: 360px;
+  width: 360px !important;
+  height: 360px !important;
   object-fit: cover;
   background-color: rgba(255, 255, 255, 0.04);
   margin: 0 auto;
@@ -107,7 +107,7 @@
 .imageContainerSell {
   position: relative;
   border: 1px solid #ccc;
-  max-width: 380px !important;
+  width: 360px !important;
   border-radius: 6px;
   height: auto;
 }
@@ -466,7 +466,7 @@
   }
 
   .imageBuy {
-    width: 100%;
+    width: 100% !important;
     height: 300px;
   }
 
