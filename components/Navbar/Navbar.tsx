@@ -59,6 +59,9 @@ export function Navbart() {
   const handleDropdownClose = () => {
     setShowDropdown(false);
   };
+  const handleDropdownOnClick = () => {
+    setShowDropdown(!showDropdown);
+  };
   return (
     <>
       <div className={styles.navContainer}>
@@ -173,7 +176,7 @@ export function Navbart() {
                         id="dropdown-toggler"
                         onMouseEnter={handleDropdownOpen}
                         onMouseLeave={handleDropdownClose}
-                        onClick={() => setShowDropdown(!showDropdown)}
+                        onClick={handleDropdownOnClick}
                       >
                         <Link className={styles.linkDropdown} href="/buy">
                           <div className={styles.headerLinkDropdown}>

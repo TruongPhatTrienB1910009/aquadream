@@ -244,7 +244,6 @@
   flex-grow: 1;
   gap: 4px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 8px 12px;
   min-width: 128px;
   border-radius: 16px;
   min-height: 32px;
@@ -475,5 +474,10 @@
   .imageContainerSell {
     width: 360px;
     padding: 5px;
+  }
+}
+@media (max-width: 500px){
+  .endTime span{
+    margin-right: 0;
   }
 }
