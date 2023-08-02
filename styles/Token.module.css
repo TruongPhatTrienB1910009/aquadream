@@ -476,3 +476,8 @@
     padding: 5px;
   }
 }
+@media (max-width: 500px){
+  .endTime span{
+    margin-right: 0;
+  }
+}
