@@ -84,16 +84,16 @@ const Sell = () => {
         <div className={tokenPageStyles.containerSell} style={{ marginTop: 0 }}>
           <div className={tokenPageStyles.metadataContainerSell}>
             <div className={tokenPageStyles.imageContainerSell}>
-              {/* <ThirdwebNftMedia
+              <ThirdwebNftMedia
                 metadata={selectedNft.metadata}
                 className={tokenPageStyles.image}
-              /> */}
+              />
 
-              <img
+              {/* <img
                 src={selectedNft.metadata.image!}
                 alt=""
                 className={tokenPageStyles.image}
-              />
+              /> */}
             </div>
           </div>
 
