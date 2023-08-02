@@ -6,7 +6,9 @@
   background: rgba(255, 255, 255, 0.04);
   object-fit: cover !important;
 }
-
+.nftImage button{
+  display: none !important;
+}
 .nftTokenId {
   font-size: 12px;
   margin: 0px;
