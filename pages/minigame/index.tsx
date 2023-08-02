@@ -368,8 +368,8 @@ const Index = () => {
                 }}
               >
                 When you mint an NFT, you will receive a Silver NFT or a Gold
-                NFT. If you get a silver NFT you will be able to win 0.004 ETH,
-                if you mint NFT you will be able to win 0.005 ETH and you can
+                NFT. If you get a silver NFT you will be able to win 0.002 ETH,
+                if you mint NFT you will be able to win 0.003 ETH and you can
                 claim immediately to your wallet.
               </div>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
@@ -409,7 +409,10 @@ const Index = () => {
                 </div>
               ))
             ) : (
-              <div className={styles.nftContainer}>
+              <div
+                className={styles.nftContainer}
+                style={{ marginTop: "50px" }}
+              >
                 <img
                   className={styles.nftImage}
                   src="/images/cardSecret.jpg"
@@ -439,9 +442,9 @@ const Index = () => {
                 }}
               >
                 When you mint an NFT, you will receive a Silver NFT or a Gold
-                NFT. If you get a silver NFT you will be able to win 0.004 ETH,
-                if you mint NFT you will be able to win 0.005 ETH and you can
-                claim immediately to your wallet.
+                NFT. If you get a silver NFT you will be able to win{" "}
+                <b>0.002 ETH</b>, if you mint NFT you will be able to win{" "}
+                <b>0.003 ETH</b> and you can claim immediately to your wallet.
               </div>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
 
