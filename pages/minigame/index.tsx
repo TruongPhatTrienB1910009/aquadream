@@ -47,7 +47,6 @@ const Index = () => {
   const [balanceOf, setBalanceOf] = useState(0);
   const [minted, setMinted] = useState(0);
   const [dataNft, setDataNft] = useState<any>([]);
-  const [tokenOfOwnerByIndex, setTokenOfOwnerByIndex] = useState(-1);
   const [totalMinted, setTotalMinted] = useState(0);
   //get nftType claim
   const [claim, setClaim] = useState([]);
@@ -359,20 +358,20 @@ const Index = () => {
                   className={styles.icon}
                 />
               </div> */}
-              <h1>Lucky octopus</h1>
+              <h1>Lucky Octopus</h1>
               <div
                 style={{
-                  marginTop: "20px",
+                  marginBottom: "15px",
                   display: "inline",
                   float: "right",
-                  marginBottom: "20px",
+                  marginTop: "15px",
                   fontSize: "18px",
                 }}
               >
                 When you mint an NFT, you will receive a Silver NFT or a Gold
-                NFT. If you get a silver NFT you will be able to win 0.002 ETH,
-                if you mint NFT you will be able to win 0.003 ETH and you can
-                claim immediately to your wallet.
+                NFT. If you get a silver NFT you will be able to win{" "}
+                <b>0.002 ETH</b>, if you get a gold NFT you will be able to win{" "}
+                <b>0.003 ETH</b> and you can claim immediately to your wallet.
               </div>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
               <div
@@ -432,20 +431,20 @@ const Index = () => {
                   className={styles.icon}
                 />
               </div>
-              <h1>Lucky octopus</h1>
+              <h1>Lucky Octopus</h1>
               <div
                 className={styles.contenta}
                 style={{
-                  marginBottom: "20px",
+                  marginBottom: "15px",
                   display: "inline",
                   float: "right",
-                  marginTop: "20px",
+                  marginTop: "15px",
                   fontSize: "18px",
                 }}
               >
                 When you mint an NFT, you will receive a Silver NFT or a Gold
                 NFT. If you get a silver NFT you will be able to win{" "}
-                <b>0.002 ETH</b>, if you mint NFT you will be able to win{" "}
+                <b>0.002 ETH</b>, if you get a gold NFT you will be able to win{" "}
                 <b>0.003 ETH</b> and you can claim immediately to your wallet.
               </div>
               <CountdownTimer targetDate={dateTimeAfterThreeDays} />
@@ -462,7 +461,7 @@ const Index = () => {
               </p>
               <p
                 className={styles.contenta}
-                style={{ fontSize: "18px", marginTop: "10px" }}
+                style={{ fontSize: "15px", marginTop: "5px" }}
               >
                 Prepare 0.00065 ETH to mint
               </p>
