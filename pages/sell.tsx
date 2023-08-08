@@ -16,6 +16,7 @@ import { Breadcrumb } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import Link from "next/link";
 const Sell = () => {
   // Load all of the NFTs from the NFT Collection
   // const { contract } = useContract(NFT_COLLECTION_ADDRESS);
@@ -23,7 +24,6 @@ const Sell = () => {
   // const { data, isLoading } = useOwnedNFTs(contract, address);
 
   const { nftList: data, isLoadingNFTs: isLoading } = GetNFTs(address);
-
 
   const [selectedNft, setSelectedNft] = useState<NFTType>();
   const [nftSellDetail, setnftSellDetail] = useState(false);
@@ -45,10 +45,12 @@ const Sell = () => {
       ) : (
         <Breadcrumb className={tokenPageStyles.Breadcrumb}>
           <Breadcrumb.Item
+            active
             className={tokenPageStyles.BreadcrumbSellItem}
-            href="/"
           >
-            <FontAwesomeIcon icon={faHome} /> Home
+            <Link href="/">
+              <FontAwesomeIcon icon={faHome} /> Home
+            </Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item
             href="/sell"
@@ -82,12 +84,16 @@ const Sell = () => {
         <div className={tokenPageStyles.containerSell} style={{ marginTop: 0 }}>
           <div className={tokenPageStyles.metadataContainerSell}>
             <div className={tokenPageStyles.imageContainerSell}>
-              {/* <ThirdwebNftMedia
+              <ThirdwebNftMedia
                 metadata={selectedNft.metadata}
                 className={tokenPageStyles.image}
-              /> */}
+              />
 
-              <img src={selectedNft.metadata.image!} alt="" className={tokenPageStyles.image} />
+              {/* <img
+                src={selectedNft.metadata.image!}
+                alt=""
+                className={tokenPageStyles.image}
+              /> */}
             </div>
           </div>
 

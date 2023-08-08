@@ -314,3 +314,9 @@
     background-color: #146ea2;
   }
 }
+@media (max-width: 500px){
+  .headerLinkDropdown{
+    margin: 0.5rem !important;
+    padding: 10px 120px 10px 10px;
+  }
+}

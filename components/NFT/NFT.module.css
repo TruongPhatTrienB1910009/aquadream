@@ -1,12 +1,14 @@
 .nftImage {
   /* Override default NFT renderer width */
-  width: 360px;
-  height: 360px;
-  border-radius: 8px;
+  width: 360px !important;
+  height: 360px !important;
+  /* border-radius: 8px !important; */
   background: rgba(255, 255, 255, 0.04);
-  object-fit: cover;
+  object-fit: cover !important;
 }
-
+.nftImage button{
+  display: none !important;
+}
 .nftTokenId {
   font-size: 12px;
   margin: 0px;
@@ -87,7 +89,7 @@
 
 @media (max-width: 390px) {
   .nftImage {
-    width: 100%;
-    height: 300px;
+    width: 100% !important;
+    height: 300px !important;
   }
 }
